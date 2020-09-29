@@ -26,6 +26,8 @@ public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
+	float speed = 0.05f;
+
 private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
