@@ -11,6 +11,8 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 
+#include <vector>
+
 class Application
 {
 public:
@@ -23,7 +25,7 @@ public:
 
 private:
 
-	p2List<Module*> list_modules;
+	std::vector<Module*> modules;
 
 public:
 
