@@ -43,6 +43,18 @@
     <ClCompile Include="Primitive.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>Engine\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>Engine\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -96,6 +108,24 @@
     <ClInclude Include="Primitive.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_rectpack.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_textedit.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imstb_truetype.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -109,6 +139,9 @@
     </Filter>
     <Filter Include="Engine\Tools">
       <UniqueIdentifier>{0c1ecca8-671a-4fab-bd90-2d84ae29c686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Imgui">
+      <UniqueIdentifier>{8e7385c8-c3f6-44eb-a0a2-727feac768ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
