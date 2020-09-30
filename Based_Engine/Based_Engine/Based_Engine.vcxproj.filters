@@ -81,15 +81,6 @@
     <ClInclude Include="Color.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
