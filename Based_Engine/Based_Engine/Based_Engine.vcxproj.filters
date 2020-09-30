@@ -55,6 +55,9 @@
     <ClCompile Include="imgui_widgets.cpp">
       <Filter>Engine\Imgui</Filter>
     </ClCompile>
+    <ClCompile Include="imgui_impl_opengl3.cpp">
+      <Filter>Engine\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -115,6 +118,9 @@
       <Filter>Engine\Imgui</Filter>
     </ClInclude>
     <ClInclude Include="imstb_truetype.h">
+      <Filter>Engine\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_opengl3.h">
       <Filter>Engine\Imgui</Filter>
     </ClInclude>
   </ItemGroup>
