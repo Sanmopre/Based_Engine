@@ -40,8 +40,6 @@
     <ClCompile Include="Primitive.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="External\ImGui\imgui.cpp">
       <Filter>Engine\ImGui</Filter>
     </ClCompile>
@@ -60,7 +58,6 @@
     <ClCompile Include="External\ImGui\imgui_impl_sdl.cpp">
       <Filter>Engine\ImGui\impl</Filter>
     </ClCompile>
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -102,8 +99,6 @@
     <ClInclude Include="Primitive.h">
       <Filter>Engine</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="External\ImGui\imgui.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
@@ -128,7 +123,6 @@
     <ClInclude Include="External\ImGui\imconfig.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -143,14 +137,12 @@
     <Filter Include="Engine\Tools">
       <UniqueIdentifier>{0c1ecca8-671a-4fab-bd90-2d84ae29c686}</UniqueIdentifier>
     </Filter>
-<<<<<<< Updated upstream
-=======
     <Filter Include="Engine\ImGui">
       <UniqueIdentifier>{b148fc02-87b1-4b5f-b329-00dcfc5d4aae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\ImGui\impl">
       <UniqueIdentifier>{edd1c75a-a277-4099-8e7f-9eaa5fc788aa}</UniqueIdentifier>
     </Filter>
->>>>>>> Stashed changes
+
   </ItemGroup>
 </Project>
