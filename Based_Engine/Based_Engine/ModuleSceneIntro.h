@@ -5,7 +5,7 @@
 #define BOUNCER_TIME 200
 
 struct PhysBody3D;
-class Cube;
+class Plane;
 
 class ModuleSceneIntro : public Module
 {
@@ -17,5 +17,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-public:
+private:
+
+	Plane* plane;
 };

@@ -19,6 +19,9 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(0.0f, 2.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	plane = new Plane(0, 1, 0, 0);
+	plane->axis = true;
+
 	return ret;
 }
 
@@ -27,15 +30,16 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+	delete plane;
+
 	return true;
 }
 
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	Plane plane(0, 1, 0, 0);
-	plane.axis = true;
-	plane.Render();
+
+	plane->Render();
 
 	return UPDATE_CONTINUE;
 }
