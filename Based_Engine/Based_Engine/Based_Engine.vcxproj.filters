@@ -58,6 +58,9 @@
     <ClCompile Include="External\ImGui\imgui_impl_sdl.cpp">
       <Filter>Engine\ImGui\impl</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleGui.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -123,6 +126,9 @@
     <ClInclude Include="External\ImGui\imconfig.h">
       <Filter>Engine\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleGui.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -143,6 +149,5 @@
     <Filter Include="Engine\ImGui\impl">
       <UniqueIdentifier>{edd1c75a-a277-4099-8e7f-9eaa5fc788aa}</UniqueIdentifier>
     </Filter>
-
   </ItemGroup>
 </Project>
