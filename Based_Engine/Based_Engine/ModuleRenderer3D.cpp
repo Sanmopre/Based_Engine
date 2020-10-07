@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "SDL_opengl.h"
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -121,6 +124,7 @@ update_status ModuleRenderer3D::PreUpdate()
 update_status ModuleRenderer3D::PostUpdate()
 {
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -133,6 +137,7 @@ bool ModuleRenderer3D::CleanUp()
 
 	return true;
 }
+
 
 
 void ModuleRenderer3D::OnResize(int width, int height)

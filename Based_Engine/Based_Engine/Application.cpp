@@ -12,13 +12,14 @@ Application::Application()
 	modules.reserve(10);
 
 	// Main Modules
-	AddModule(window);
+	AddModule(window);	
 	AddModule(renderer3D);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(gui);
-	// Scenes
 	AddModule(scene_intro);
+
+	//UI last
+	AddModule(gui);
 }
 
 Application::~Application()

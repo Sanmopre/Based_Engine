@@ -5,6 +5,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -42,8 +43,33 @@ update_status ModuleGui::Update()
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
+
+	//Main Menu
+	ImGui::Begin("BASED Engine");
+	if (ImGui::BeginMenu("Help")) 
+	{
+		if (ImGui::MenuItem("Show ImGui demo"))
+		showcase = !showcase;
+		
+		if (ImGui::MenuItem("Documentation")) 
+		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
+		if (ImGui::MenuItem("Download latest"))
+		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+		
+		if (ImGui::MenuItem("Report a bug")) 
+		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
+		if (ImGui::MenuItem("About"))
+		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
+		ImGui::EndMenu();
+	}
+	ImGui::End();
+
 	//demo window
-	ImGui::ShowDemoWindow(&show_demo_window);
+	if (showcase)
+		ImGui::ShowDemoWindow(&show_demo_window);
 
 
 	//UI rendering
