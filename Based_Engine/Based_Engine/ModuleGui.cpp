@@ -44,8 +44,11 @@ update_status ModuleGui::Update()
 	ImGui::NewFrame();
 
 
-	//Main Menu
-	ImGui::Begin("BASED Engine");
+	//TOP BAR MENU
+	ImGui::BeginMainMenuBar();
+	if (ImGui::BeginMenu("Files")){
+		ImGui::EndMenu();
+	}
 	if (ImGui::BeginMenu("Help")) 
 	{
 		if (ImGui::MenuItem("Show ImGui demo"))
@@ -64,6 +67,22 @@ update_status ModuleGui::Update()
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
 		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Quit")) {
+		ImGui::EndMenu();
+	}
+	ImGui::EndMainMenuBar();
+
+
+	ImGui::Begin("BASED Engine");
+
+	if (ImGui::BeginCombo("", "Window")) {
+		ImGui::EndCombo();
+	}
+
+	if (ImGui::BeginCombo("", "Application")) {
+		ImGui::EndCombo();
 	}
 	ImGui::End();
 
