@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include <GL/glew.h>
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -26,6 +27,17 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
+		//IMGUI Window settings
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+
 		//Create window
 		int width = SCREEN_WIDTH * SCREEN_SIZE;
 		int height = SCREEN_HEIGHT * SCREEN_SIZE;
@@ -55,7 +67,15 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
+		//OPENGL FLAGS
+		flags |= SDL_WINDOW_OPENGL;
+		flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
+
+		gl_context = SDL_GL_CreateContext(window);
+		SDL_GL_MakeCurrent(window, gl_context);
+		SDL_GL_SetSwapInterval(1);
 
 		if(window == NULL)
 		{
@@ -68,6 +88,8 @@ bool ModuleWindow::Init()
 			screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
+
+	GLenum err = glewInit();
 
 	return ret;
 }
