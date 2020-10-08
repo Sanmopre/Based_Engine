@@ -29,6 +29,8 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+	SDL_StartTextInput();
+
 	return ret;
 }
 

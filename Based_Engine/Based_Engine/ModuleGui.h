@@ -14,4 +14,5 @@ public:
 	bool CleanUp();
 private:
 	bool showcase = false;
+	char* buff;
 };

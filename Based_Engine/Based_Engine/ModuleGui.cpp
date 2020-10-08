@@ -30,6 +30,7 @@ bool ModuleGui::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
+	buff = "YO MOMMA";
 
 	return ret;
 }
@@ -87,7 +88,10 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::LabelText("App name", "BASED Engine");
+			ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "BASED Engine");
+			ImGui::InputText("App name", buff, sizeof(buff));
+			//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			//	int a = 0;
 		}
 
 		if (ImGui::CollapsingHeader("Window"))
@@ -104,24 +108,24 @@ update_status ModuleGui::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
+
 		}
 
 	}
 	ImGui::End();
 
-
-
 	//demo window
 	if (showcase)
+	{
 		ImGui::ShowDemoWindow(&show_demo_window);
-
-
-
+		if (!show_demo_window)
+			showcase = false;
+	}
+		
 	//UI rendering	
 	ImGui::EndFrame();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	
 	
 	return UPDATE_CONTINUE;
 }
