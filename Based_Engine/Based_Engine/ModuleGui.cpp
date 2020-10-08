@@ -7,6 +7,7 @@
 #include "misc/cpp/imgui_stdlib.h" //ENABLE THE INPUT TEXT FUNCTIONS WITH STD::STRING
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include <string> 
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -39,9 +40,13 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
+	//window refresh calculations
+	EnumDisplaySettingsA(NULL,0,&devmode);
+	int frequency = devmode.dmDisplayFrequency;
+
 
 	bool show_demo_window = true;
-
+	
 	//create new ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -89,12 +94,25 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "BASED Engine");
 			ImGui::InputText("App name", &app_name);
 		}
 
 		if (ImGui::CollapsingHeader("Window"))
-		{
+		{			
+
+			ImGui::Checkbox("Active", &active_window);
+			ImGui::Text("Refresh rate:");
+			ImGui::SameLine();
+		
+			char refresh[5];
+			sprintf(refresh, "%d", frequency);
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), refresh);
+
+			ImGui::SliderInt("Brightness",&brightness,0,100);
+			ImGui::SliderInt("Width", &width, 1, 2000);
+			ImGui::SliderInt("Height", &height, 1, 2000);
+
+
 		}
 
 		if (ImGui::CollapsingHeader("File System"))
@@ -126,6 +144,7 @@ update_status ModuleGui::Update(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
+
 	return UPDATE_CONTINUE;
 }
 
