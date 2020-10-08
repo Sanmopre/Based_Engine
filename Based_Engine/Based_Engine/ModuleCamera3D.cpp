@@ -35,7 +35,7 @@ bool ModuleCamera3D::CleanUp()
 }
 
 // -----------------------------------------------------------------
-update_status ModuleCamera3D::Update()
+update_status ModuleCamera3D::Update(float dt)
 {
 	vec3 newPos(0, 0, 0);
 

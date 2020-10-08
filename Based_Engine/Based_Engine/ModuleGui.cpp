@@ -35,7 +35,7 @@ bool ModuleGui::Start()
 }
 
 // Update: draw background
-update_status ModuleGui::Update()
+update_status ModuleGui::Update(float dt)
 {	
 
 	bool show_demo_window = true;

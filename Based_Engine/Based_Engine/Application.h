@@ -37,6 +37,9 @@ public:
 
 private:
 
+	Timer	ms_timer;
+	float	dt;
+
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
