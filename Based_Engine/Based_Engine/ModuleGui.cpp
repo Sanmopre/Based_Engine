@@ -97,20 +97,31 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::CollapsingHeader("Window"))
 		{			
 
-			ImGui::Checkbox("Active", &active_window);
+
+			//Window refresh			
 			ImGui::Text("Refresh rate:");
 			ImGui::SameLine();
-
-			//Window refresh
 			char refresh[5];
 			sprintf(refresh, "%d", GetWindowRefresh());
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), refresh);
 
+			//Brightness
 			ImGui::SliderFloat("Brightness",&brightness,0.0f,1.0f);
-			ImGui::SliderInt("Width", &width, 1, 2000);
-			ImGui::SliderInt("Height", &height, 1, 2000);
 
+			//Window size
+			ImGui::NewLine();
+			ImGui::InputInt("Width", &width, 1, 2000);
+			ImGui::InputInt("Height", &height, 1, 2000);
+			ImGui::Button("Apply", ImVec2(50, 25));
 
+			//Window checkboxes
+			ImGui::NewLine();
+			ImGui::Checkbox("Fullscreen",&fullscreen);
+			ImGui::SameLine();
+			ImGui::Checkbox("Resizable", &resizable);
+			ImGui::Checkbox("Borderless",&borderless );
+			ImGui::SameLine();
+			ImGui::Checkbox("Full Desktop", &full_desktop);
 		}
 
 		if (ImGui::CollapsingHeader("File System"))

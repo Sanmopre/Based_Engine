@@ -24,7 +24,12 @@ private:
 	int height = 10;
 	int width = 10;
 
-	DEVMODEA devmode;
+	//window checkboxes
+	bool fullscreen = false;
+	bool resizable = true;
+	bool borderless = false;
+	bool full_desktop = false;
 
+	DEVMODEA devmode;
 	std::string app_name;
 };
