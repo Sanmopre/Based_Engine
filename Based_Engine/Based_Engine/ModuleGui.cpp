@@ -4,6 +4,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "misc/cpp/imgui_stdlib.h" //ENABLE THE INPUT TEXT FUNCTIONS WITH STD::STRING
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
@@ -30,7 +31,7 @@ bool ModuleGui::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
-	buff = "YO MOMMA";
+	app_name = "";
 
 	return ret;
 }
@@ -89,9 +90,7 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::CollapsingHeader("Application"))
 		{
 			ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "BASED Engine");
-			ImGui::InputText("App name", buff, sizeof(buff));
-			//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-			//	int a = 0;
+			ImGui::InputText("App name", &app_name);
 		}
 
 		if (ImGui::CollapsingHeader("Window"))

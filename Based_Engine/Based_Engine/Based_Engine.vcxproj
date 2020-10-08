@@ -91,6 +91,7 @@
     <ClInclude Include="External\ImGui\imstb_rectpack.h" />
     <ClInclude Include="External\ImGui\imstb_textedit.h" />
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
+    <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Light.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="External\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="External\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="External\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

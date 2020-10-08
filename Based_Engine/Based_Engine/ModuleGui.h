@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 
+#include <string>
 
 class ModuleGui : public Module
 {
@@ -14,5 +15,6 @@ public:
 	bool CleanUp();
 private:
 	bool showcase = false;
-	char* buff;
+
+	std::string app_name;
 };
