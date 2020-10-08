@@ -22,8 +22,10 @@ bool ModuleGui::Start()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsClassic();
+	//ImGui::StyleColorsClassic();
 	//ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+
 
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
@@ -55,7 +57,7 @@ update_status ModuleGui::Update()
 	{
 		if (ImGui::MenuItem("Show ImGui demo"))
 			showcase = !showcase;
-		
+	
 		if (ImGui::MenuItem("Documentation")) 
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
@@ -67,6 +69,8 @@ update_status ModuleGui::Update()
 
 		if (ImGui::MenuItem("About"))
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
+		ImGui::ShowStyleSelector("Style selector");
 
 		ImGui::EndMenu();
 	}
@@ -81,23 +85,31 @@ update_status ModuleGui::Update()
 	//Main window
 	if (ImGui::Begin("BASED Engine"))
 	{
-		ImGui::BeginChild("1", { 1,1 });
-		if (ImGui::Begin("a"))
+		if (ImGui::CollapsingHeader("Application"))
 		{
-
-			int it = 0;
-			ImGui::SliderInt("dawg", &it, 0, 100);
-			ImGui::End();
+			ImGui::LabelText("App name", "BASED Engine");
 		}
-		ImGui::EndChild();
 
-		int et = 10;
-		ImGui::SliderInt("a", &et, 0, 100);
+		if (ImGui::CollapsingHeader("Window"))
+		{
+		}
 
-		int at = 20;
-		ImGui::SliderInt("b", &at, 0, 100);
+		if (ImGui::CollapsingHeader("File System"))
+		{
+		}
+
+		if (ImGui::CollapsingHeader("Input"))
+		{
+		}
+
+		if (ImGui::CollapsingHeader("Hardware"))
+		{
+		}
+
 	}
 	ImGui::End();
+
+
 
 	//demo window
 	if (showcase)
