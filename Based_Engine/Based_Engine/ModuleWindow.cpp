@@ -110,6 +110,11 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+void ModuleWindow::WindowBrightness(float value)
+{
+	SDL_SetWindowBrightness(window, value);
+}
+
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);

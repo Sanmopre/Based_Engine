@@ -17,7 +17,7 @@ public:
 
 	bool Init();
 	bool CleanUp();
-
+	void WindowBrightness(float value);
 	void SetTitle(const char* title);
 
 public:

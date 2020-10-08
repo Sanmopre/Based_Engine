@@ -13,12 +13,14 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate();
 	bool CleanUp();
+	int GetWindowRefresh();
+
 private:
 
 	bool showcase = false;
 	bool active_window = true;
 
-	int brightness = 50;
+	float brightness = 1.0f;
 	int height = 10;
 	int width = 10;
 

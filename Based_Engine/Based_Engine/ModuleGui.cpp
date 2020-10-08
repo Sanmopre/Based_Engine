@@ -40,9 +40,6 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
-	//window refresh calculations
-	EnumDisplaySettingsA(NULL,0,&devmode);
-	int frequency = devmode.dmDisplayFrequency;
 
 
 	bool show_demo_window = true;
@@ -103,12 +100,13 @@ update_status ModuleGui::Update(float dt)
 			ImGui::Checkbox("Active", &active_window);
 			ImGui::Text("Refresh rate:");
 			ImGui::SameLine();
-		
+
+			//Window refresh
 			char refresh[5];
-			sprintf(refresh, "%d", frequency);
+			sprintf(refresh, "%d", GetWindowRefresh());
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), refresh);
 
-			ImGui::SliderInt("Brightness",&brightness,0,100);
+			ImGui::SliderFloat("Brightness",&brightness,0.0f,1.0f);
 			ImGui::SliderInt("Width", &width, 1, 2000);
 			ImGui::SliderInt("Height", &height, 1, 2000);
 
@@ -145,6 +143,9 @@ update_status ModuleGui::Update(float dt)
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 
+	//Window brightness
+	App->window->WindowBrightness(brightness);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -159,4 +160,11 @@ update_status ModuleGui::PostUpdate()
 bool ModuleGui::CleanUp()
 {
 	return true;
+}
+
+int ModuleGui::GetWindowRefresh()
+{
+	EnumDisplaySettingsA(NULL, 0, &devmode);
+	int frequency = devmode.dmDisplayFrequency;
+	return frequency;
 }
