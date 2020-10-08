@@ -55,7 +55,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\External\MathGeoLib\libx86\Debug;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\DebugLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -76,7 +76,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Release\Win32;$(ProjectDir)\External\MathGeoLib\libx86\Release;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -46,13 +46,15 @@ update_status ModuleGui::Update()
 
 	//TOP BAR MENU
 	ImGui::BeginMainMenuBar();
+
 	if (ImGui::BeginMenu("Files")){
 		ImGui::EndMenu();
 	}
+
 	if (ImGui::BeginMenu("Help")) 
 	{
 		if (ImGui::MenuItem("Show ImGui demo"))
-		showcase = !showcase;
+			showcase = !showcase;
 		
 		if (ImGui::MenuItem("Documentation")) 
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
@@ -72,17 +74,28 @@ update_status ModuleGui::Update()
 	if (ImGui::BeginMenu("Quit")) {
 		ImGui::EndMenu();
 	}
+
 	ImGui::EndMainMenuBar();
 
+	ImGuiID id = 1;
+	//Main window
+	if (ImGui::Begin("BASED Engine"))
+	{
+		ImGui::BeginChild("1", { 1,1 });
+		if (ImGui::Begin("a"))
+		{
 
-	ImGui::Begin("BASED Engine");
+			int it = 0;
+			ImGui::SliderInt("dawg", &it, 0, 100);
+			ImGui::End();
+		}
+		ImGui::EndChild();
 
-	if (ImGui::BeginCombo("", "Window")) {
-		ImGui::EndCombo();
-	}
+		int et = 10;
+		ImGui::SliderInt("a", &et, 0, 100);
 
-	if (ImGui::BeginCombo("", "Application")) {
-		ImGui::EndCombo();
+		int at = 20;
+		ImGui::SliderInt("b", &at, 0, 100);
 	}
 	ImGui::End();
 
@@ -91,7 +104,9 @@ update_status ModuleGui::Update()
 		ImGui::ShowDemoWindow(&show_demo_window);
 
 
-	//UI rendering
+
+	//UI rendering	
+	ImGui::EndFrame();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
