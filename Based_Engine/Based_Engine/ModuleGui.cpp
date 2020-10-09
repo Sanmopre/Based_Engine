@@ -79,8 +79,8 @@ update_status ModuleGui::Update(float dt)
 		ImGui::EndMenu();
 	}
 
-	if (ImGui::BeginMenu("Quit")) {
-		ImGui::EndMenu();
+	if (ImGui::Button("Quit", ImVec2(40, 20))) {
+		return UPDATE_STOP;
 	}
 
 	ImGui::EndMainMenuBar();
