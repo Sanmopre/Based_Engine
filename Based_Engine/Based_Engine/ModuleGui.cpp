@@ -115,12 +115,12 @@ update_status ModuleGui::Update(float dt)
 			ImGui::InputInt("Height", &height, 1, 2000);
 			if (ImGui::Button("Apply", ImVec2(50, 25))) 
 			{
-				SDL_SetWindowSize(App->window->window, width, height);
+				App->window->WindowResize(width, height);
 			}
 
 			//Window checkboxes
 			ImGui::NewLine();
-			ImGui::Checkbox("Fullscreen",&fullscreen);
+			ImGui::Checkbox("Fullscreen", &fullscreen);
 			ImGui::SameLine();
 			ImGui::Checkbox("Resizable", &resizable);
 			ImGui::Checkbox("Borderless",&borderless );
@@ -166,6 +166,15 @@ update_status ModuleGui::Update(float dt)
 
 update_status ModuleGui::PostUpdate()
 {
+
+	if (fullscreen) 
+	{
+		App->window->WindowSetFullscreen();
+	}
+	else 
+	{
+		App->window->WindowSetWindowed();
+	}
 
 	return UPDATE_CONTINUE;
 }

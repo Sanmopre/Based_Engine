@@ -115,6 +115,24 @@ void ModuleWindow::WindowBrightness(float value)
 	SDL_SetWindowBrightness(window, value);
 }
 
+void ModuleWindow::WindowResize(int width, int height)
+{
+	SDL_SetWindowSize(window, width, height);
+}
+
+void ModuleWindow::WindowSetFullscreen()
+{
+	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN;
+	SDL_SetWindowFullscreen(window, flags);
+
+}
+
+void ModuleWindow::WindowSetWindowed()
+{
+	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | 0;
+	SDL_SetWindowFullscreen(window, flags);
+}
+
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);

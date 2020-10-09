@@ -18,6 +18,9 @@ public:
 	bool Init();
 	bool CleanUp();
 	void WindowBrightness(float value);
+	void WindowResize(int width, int height);
+	void WindowSetFullscreen();
+	void WindowSetWindowed();
 	void SetTitle(const char* title);
 
 public:
