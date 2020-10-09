@@ -141,6 +141,32 @@ update_status ModuleGui::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
+			SDL_VERSION(&compiled);
+			ImGui::Text("SDL Version:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "2.0.12");
+
+			char cpu[5];
+			sprintf(cpu, "%d", SDL_GetCPUCount());
+			ImGui::Text("CPU cores:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), cpu);
+
+			char cpucache[5];
+			sprintf(cpucache, "%d", SDL_GetCPUCacheLineSize());
+			ImGui::Text("CPU cache line size:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), cpucache);
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "kb");
+
+			char ram[20];
+			sprintf(ram, "%d", SDL_GetSystemRAM()/1000);
+			ImGui::Text("RAM:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), ram);
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "GB");
 
 		}
 
@@ -160,6 +186,7 @@ update_status ModuleGui::Update(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
+
 
 
 

@@ -31,6 +31,8 @@ private:
 	bool borderless;
 	bool full_desktop;
 
+
+	SDL_version compiled;
 	DEVMODEA devmode;
 	std::string app_name;
 };
