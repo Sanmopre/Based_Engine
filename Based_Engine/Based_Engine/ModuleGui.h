@@ -2,6 +2,7 @@
 #include "Module.h"
 
 #include <string>
+#include <vector>
 
 class ModuleGui : public Module
 {
@@ -15,6 +16,7 @@ public:
 	bool CleanUp();
 	int GetWindowRefresh();
 
+
 private:
 
 	bool showcase;
@@ -26,6 +28,8 @@ private:
 	int width;
 	int mon_height;
 	int mon_width;
+	int fps_cap;
+	std::vector<int> fps_log;
 
 	//window checkboxes
 	bool fullscreen;
@@ -37,4 +41,5 @@ private:
 	SDL_version compiled;
 	DEVMODEA devmode;
 	std::string app_name;
+	std::string organization;
 };

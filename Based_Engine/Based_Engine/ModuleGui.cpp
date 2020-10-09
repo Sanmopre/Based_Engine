@@ -37,7 +37,10 @@ bool ModuleGui::Start()
 	showcase = false;
 	active_window = true;
 	brightness = 1.0f;
-	app_name = "";
+	fps_cap = 60;
+	app_name = "BASED Engine";
+	organization = "UPC CITM";
+	fps_log.reserve(20);
 
 	return true;
 }
@@ -45,7 +48,7 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
-
+	static float arr[1] = {dt};
 
 	bool show_demo_window = true;
 	
@@ -98,6 +101,12 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::CollapsingHeader("Application"))
 		{
 			ImGui::InputText("App name", &app_name);
+			ImGui::InputText("Organization", &organization);
+
+			ImGui::InputInt("Framerate cap", &fps_cap, 1, 240);
+			ImGui::NewLine();
+
+			ImGui::PlotHistogram("Miliseconds", arr, IM_ARRAYSIZE(arr), 0, NULL, 0.0f, 1.0f, ImVec2(0, 80.0f));
 		}
 
 		if (ImGui::CollapsingHeader("Window"))
@@ -190,9 +199,6 @@ update_status ModuleGui::Update(float dt)
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 
-
-
-
 	return UPDATE_CONTINUE;
 }
 
@@ -242,3 +248,4 @@ int ModuleGui::GetWindowRefresh()
 	int frequency = devmode.dmDisplayFrequency;
 	return frequency;
 }
+
