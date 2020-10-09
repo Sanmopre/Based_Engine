@@ -83,6 +83,7 @@ update_status ModuleGui::Update(float dt)
 		return UPDATE_STOP;
 	}
 
+
 	ImGui::EndMainMenuBar();
 
 	ImGuiID id = 1;
@@ -112,7 +113,10 @@ update_status ModuleGui::Update(float dt)
 			ImGui::NewLine();
 			ImGui::InputInt("Width", &width, 1, 2000);
 			ImGui::InputInt("Height", &height, 1, 2000);
-			ImGui::Button("Apply", ImVec2(50, 25));
+			if (ImGui::Button("Apply", ImVec2(50, 25))) 
+			{
+				SDL_SetWindowSize(App->window->window, width, height);
+			}
 
 			//Window checkboxes
 			ImGui::NewLine();
