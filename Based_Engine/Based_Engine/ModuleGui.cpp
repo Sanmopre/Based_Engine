@@ -19,22 +19,25 @@ ModuleGui::~ModuleGui()
 // Load assets
 bool ModuleGui::Start()
 {
-	bool ret = true;
-
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//ImGui::StyleColorsClassic();
-	//ImGui::StyleColorsDark();
-	//ImGui::StyleColorsLight();
-
-
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
+	//Initialize variables
+	height = SCREEN_HEIGHT * SCREEN_SIZE;
+	width = SCREEN_WIDTH * SCREEN_SIZE;
+	fullscreen = false;
+	resizable = true;
+	borderless = false;
+	full_desktop = false;
+	showcase = false;
+	active_window = true;
+	brightness = 1.0f;
 	app_name = "";
 
-	return ret;
+	return true;
 }
 
 // Update: draw background
@@ -158,8 +161,7 @@ update_status ModuleGui::Update(float dt)
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 
-	//Window brightness
-	App->window->WindowBrightness(brightness);
+
 
 	return UPDATE_CONTINUE;
 }
@@ -167,6 +169,7 @@ update_status ModuleGui::Update(float dt)
 update_status ModuleGui::PostUpdate()
 {
 
+	//Manage window stats
 	if (fullscreen) 
 	{
 		App->window->WindowSetFullscreen();
@@ -175,6 +178,15 @@ update_status ModuleGui::PostUpdate()
 	{
 		App->window->WindowSetWindowed();
 	}
+
+	//Window brightness
+	App->window->WindowBrightness(brightness);
+
+	//Window resize
+	App->window->WindowResizable(resizable);
+
+	App->window->WindowBorderless(!borderless);
+	///////////////////
 
 	return UPDATE_CONTINUE;
 }

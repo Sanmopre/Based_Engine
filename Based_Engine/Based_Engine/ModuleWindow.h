@@ -21,6 +21,8 @@ public:
 	void WindowResize(int width, int height);
 	void WindowSetFullscreen();
 	void WindowSetWindowed();
+	void WindowBorderless(bool win = false);
+	void WindowResizable(bool res = true);
 	void SetTitle(const char* title);
 
 public:

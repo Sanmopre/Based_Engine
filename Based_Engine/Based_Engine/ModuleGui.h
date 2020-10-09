@@ -17,18 +17,19 @@ public:
 
 private:
 
-	bool showcase = false;
-	bool active_window = true;
+	bool showcase;
+	bool active_window;
 
-	float brightness = 1.0f;
-	int height = 10;
-	int width = 10;
+	//window stats
+	float brightness;
+	int height;
+	int width;
 
 	//window checkboxes
-	bool fullscreen = false;
-	bool resizable = true;
-	bool borderless = false;
-	bool full_desktop = false;
+	bool fullscreen;
+	bool resizable;
+	bool borderless;
+	bool full_desktop;
 
 	DEVMODEA devmode;
 	std::string app_name;

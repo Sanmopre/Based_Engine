@@ -133,6 +133,28 @@ void ModuleWindow::WindowSetWindowed()
 	SDL_SetWindowFullscreen(window, flags);
 }
 
+void ModuleWindow::WindowBorderless(bool win)
+{
+	if (win) {
+		SDL_SetWindowBordered(window, SDL_TRUE);
+	}
+	else {
+		SDL_SetWindowBordered(window, SDL_FALSE);
+	}
+}
+
+void ModuleWindow::WindowResizable(bool res)
+{
+	if (res) 
+	{
+		SDL_SetWindowResizable(window, SDL_TRUE);
+	}
+	else 
+	{
+		SDL_SetWindowResizable(window, SDL_FALSE);
+	}
+}
+
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
