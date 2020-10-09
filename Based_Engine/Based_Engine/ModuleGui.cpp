@@ -7,6 +7,7 @@
 #include "misc/cpp/imgui_stdlib.h" //ENABLE THE INPUT TEXT FUNCTIONS WITH STD::STRING
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
+#include "wtypes.h"
 #include <string> 
 
 ModuleGui::ModuleGui(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -28,6 +29,7 @@ bool ModuleGui::Start()
 	//Initialize variables
 	height = SCREEN_HEIGHT * SCREEN_SIZE;
 	width = SCREEN_WIDTH * SCREEN_SIZE;
+	App->window->GetDesktopResolution(mon_width, mon_height);
 	fullscreen = false;
 	resizable = true;
 	borderless = false;
@@ -197,6 +199,12 @@ update_status ModuleGui::Update(float dt)
 update_status ModuleGui::PostUpdate()
 {
 
+	if (full_desktop) 
+	{
+		App->window->WindowResize(mon_width, mon_height);
+		fullscreen = true;
+	}
+
 	//Manage window stats
 	if (fullscreen) 
 	{
@@ -215,6 +223,8 @@ update_status ModuleGui::PostUpdate()
 
 	App->window->WindowBorderless(!borderless);
 	///////////////////
+
+
 
 	return UPDATE_CONTINUE;
 }

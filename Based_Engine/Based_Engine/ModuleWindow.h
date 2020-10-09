@@ -23,6 +23,7 @@ public:
 	void WindowSetWindowed();
 	void WindowBorderless(bool win = false);
 	void WindowResizable(bool res = true);
+	void GetDesktopResolution(int& horizontal, int& vertical);
 	void SetTitle(const char* title);
 
 public:

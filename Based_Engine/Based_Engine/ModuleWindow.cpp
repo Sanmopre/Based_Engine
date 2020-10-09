@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "wtypes.h"
 #include <GL/glew.h>
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -153,6 +154,15 @@ void ModuleWindow::WindowResizable(bool res)
 	{
 		SDL_SetWindowResizable(window, SDL_FALSE);
 	}
+}
+
+void ModuleWindow::GetDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	GetWindowRect(hDesktop, &desktop);
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
 }
 
 void ModuleWindow::SetTitle(const char* title)

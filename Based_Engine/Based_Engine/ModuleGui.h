@@ -24,6 +24,8 @@ private:
 	float brightness;
 	int height;
 	int width;
+	int mon_height;
+	int mon_width;
 
 	//window checkboxes
 	bool fullscreen;
