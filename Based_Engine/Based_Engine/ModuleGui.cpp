@@ -100,8 +100,6 @@ update_status ModuleGui::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Window"))
 		{			
-
-
 			//Window refresh			
 			ImGui::Text("Refresh rate:");
 			ImGui::SameLine();
@@ -133,6 +131,9 @@ update_status ModuleGui::Update(float dt)
 
 		if (ImGui::CollapsingHeader("File System"))
 		{
+			ImGui::Text("Base Path:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "(C:)Pog/Pog/PogU");
 		}
 
 		if (ImGui::CollapsingHeader("Input"))
