@@ -22,7 +22,6 @@ bool ModuleGui::Start()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
@@ -96,8 +95,6 @@ update_status ModuleGui::Update(float dt)
 	if (ImGui::Button("Quit", ImVec2(40, 20))) {
 		return UPDATE_STOP;
 	}
-
-
 	ImGui::EndMainMenuBar();
 
 	ImGuiID id = 1;
@@ -253,7 +250,7 @@ update_status ModuleGui::Update(float dt)
 
 update_status ModuleGui::PostUpdate()
 {
-
+	App->window->UpdateWindowSize();
 	if (full_desktop) 
 	{
 		App->window->WindowResize(mon_width, mon_height);

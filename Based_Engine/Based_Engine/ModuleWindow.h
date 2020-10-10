@@ -25,6 +25,7 @@ public:
 	void WindowResizable(bool res = true);
 	void GetDesktopResolution(int& horizontal, int& vertical);
 	void SetTitle(const char* title);
+	void UpdateWindowSize();
 
 public:
 	//The window we'll be rendering to

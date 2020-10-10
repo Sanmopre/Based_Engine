@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 #include "wtypes.h"
 #include <GL/glew.h>
 
@@ -168,4 +169,11 @@ void ModuleWindow::GetDesktopResolution(int& horizontal, int& vertical)
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void ModuleWindow::UpdateWindowSize()
+{
+	int x, y;
+	SDL_GetWindowSize(window,&x, &y);
+	App->renderer3D->OnResize(x, y);
 }
