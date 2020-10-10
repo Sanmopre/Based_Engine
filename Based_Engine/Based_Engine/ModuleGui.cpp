@@ -84,11 +84,23 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::MenuItem("Report a bug")) 
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
-		if (ImGui::MenuItem("About"))
-		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+
 
 		ImGui::ShowStyleSelector("Style selector");
-
+		
+		if (ImGui::CollapsingHeader("About"))
+		{
+			ImGui::Text("BASED engine.");
+			ImGui::Text("The future of 3D Graphics by Santiago Moliner and David Rami.");
+			ImGui::Text("Source code:    https://github.com/Sanmopre/Based_Engine");
+			ImGui::NewLine();
+			ImGui::Text("3rd party libraries used: ");
+			ImGui::Text(" - SDL");
+			ImGui::Text(" - OpenGL");
+			ImGui::Text(" - Glew");
+			ImGui::Text(" - JSON parser");
+			ImGui::Text(" - MathGeoLib");
+		}
 		ImGui::EndMenu();
 	}
 
