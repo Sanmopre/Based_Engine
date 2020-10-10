@@ -191,8 +191,6 @@ update_status ModuleGui::Update(float dt)
 				ImGui::Text("NavInputs pressed:");  for (int i = 0; i < IM_ARRAYSIZE(io.NavInputs); i++) if (io.NavInputsDownDuration[i] == 0.0f) { ImGui::SameLine(); ImGui::Text("[%d]", i); }
 				ImGui::Text("NavInputs duration:"); for (int i = 0; i < IM_ARRAYSIZE(io.NavInputs); i++) if (io.NavInputsDownDuration[i] >= 0.0f) { ImGui::SameLine(); ImGui::Text("[%d] %.2f", i, io.NavInputsDownDuration[i]); }
 
-
-
 				ImGui::TreePop();
 			}
 		}
@@ -225,13 +223,22 @@ update_status ModuleGui::Update(float dt)
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), ram);
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "GB");
-
 		}
-
 	}
 	ImGui::End();
 
-	//demo window
+	//Console
+	if(ImGui::Begin("Console"))
+	{
+		std::vector<std::string> logs = GetLogs();
+		for (std::vector<std::string>::iterator l = logs.begin(); l != logs.end(); l++)
+		{
+			ImGui::Text((*l).c_str());
+		}
+	}
+	ImGui::End();
+
+	//Demo window
 	if (showcase)
 	{
 		ImGui::ShowDemoWindow(&show_demo_window);

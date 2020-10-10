@@ -80,6 +80,8 @@ int main(int argc, char ** argv)
 		}
 	}
 
+	EraseGetLogs();
+
 	delete App;
 	LOG("Exiting game '%s'...\n", TITLE);
 	return main_return;
