@@ -40,7 +40,7 @@ bool ModuleGui::Start()
 	fps_cap = 60;
 	app_name = "BASED Engine";
 	organization = "UPC CITM";
-	fps_log.reserve(20);
+
 
 	return true;
 }
@@ -48,10 +48,16 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
-	static float arr[1] = {dt};
 
-	bool show_demo_window = true;
+	MoveOne(fps, HISTOGRAM_SIZE);
+	fps[HISTOGRAM_SIZE - 1] = 1/dt;
+
+	MoveOne(dt_log, HISTOGRAM_SIZE);
+	dt_log[HISTOGRAM_SIZE - 1] = dt;
 	
+	bool show_demo_window = false;
+	
+
 	//create new ImGui frame
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -102,11 +108,14 @@ update_status ModuleGui::Update(float dt)
 		{
 			ImGui::InputText("App name", &app_name);
 			ImGui::InputText("Organization", &organization);
-
 			ImGui::InputInt("Framerate cap", &fps_cap, 1, 240);
-			ImGui::NewLine();
 
-			ImGui::PlotHistogram("Miliseconds", arr, IM_ARRAYSIZE(arr), 0, NULL, 0.0f, 1.0f, ImVec2(0, 80.0f));
+			//Histograms
+			ImGui::NewLine();
+			ImGui::PlotHistogram("FPS", fps, IM_ARRAYSIZE(fps), 0, NULL, 0.0f, 100.0f, ImVec2(0, 80.0f));
+
+			ImGui::NewLine();
+			ImGui::PlotHistogram("Delta time", dt_log, IM_ARRAYSIZE(dt_log), 0, NULL, 0.0f, 0.05f, ImVec2(0, 80.0f));
 		}
 
 		if (ImGui::CollapsingHeader("Window"))
@@ -247,5 +256,13 @@ int ModuleGui::GetWindowRefresh()
 	EnumDisplaySettingsA(NULL, 0, &devmode);
 	int frequency = devmode.dmDisplayFrequency;
 	return frequency;
+}
+
+void ModuleGui::MoveOne(float* array, int size)
+{
+	for (int i = 0; i < size - 1; i++) 
+	{
+		array[i] = array[i + 1];
+	}
 }
 

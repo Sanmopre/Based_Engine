@@ -15,6 +15,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	int GetWindowRefresh();
+	void MoveOne(float* array, int size);
 
 
 private:
@@ -29,7 +30,9 @@ private:
 	int mon_height;
 	int mon_width;
 	int fps_cap;
-	std::vector<int> fps_log;
+	float fps[HISTOGRAM_SIZE];
+	float dt_log[HISTOGRAM_SIZE];
+
 
 	//window checkboxes
 	bool fullscreen;
