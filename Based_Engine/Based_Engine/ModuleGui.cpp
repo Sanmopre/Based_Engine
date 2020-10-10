@@ -55,7 +55,7 @@ update_status ModuleGui::Update(float dt)
 	MoveOne(dt_log, HISTOGRAM_SIZE);
 	dt_log[HISTOGRAM_SIZE - 1] = dt;
 	
-	bool show_demo_window = false;
+	bool show_demo_window;
 	
 
 	//create new ImGui frame
@@ -112,10 +112,14 @@ update_status ModuleGui::Update(float dt)
 
 			//Histograms
 			ImGui::NewLine();
-			ImGui::PlotHistogram("FPS", fps, IM_ARRAYSIZE(fps), 0, NULL, 0.0f, 100.0f, ImVec2(0, 80.0f));
+			char title[30] = "";
+			sprintf_s(title, 25, "Framerate: %.1f", fps[HISTOGRAM_SIZE - 1]);
+			ImGui::PlotHistogram("FPS", fps, IM_ARRAYSIZE(fps), 0, title, 0.0f, 100.0f, ImVec2(300, 90.0f));
 
 			ImGui::NewLine();
-			ImGui::PlotHistogram("Delta time", dt_log, IM_ARRAYSIZE(dt_log), 0, NULL, 0.0f, 0.05f, ImVec2(0, 80.0f));
+			char title_dt[30] = "";
+			sprintf_s(title_dt, 25, "Delta time: %f", dt_log[HISTOGRAM_SIZE - 1]);
+			ImGui::PlotHistogram("Delta time", dt_log, IM_ARRAYSIZE(dt_log), 0, title_dt, 0.0f, 0.05f, ImVec2(300, 90.0f));
 		}
 
 		if (ImGui::CollapsingHeader("Window"))
