@@ -236,6 +236,19 @@ update_status ModuleGui::Update(float dt)
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "GB");
 		}
+
+		if (ImGui::CollapsingHeader("OpenGl Options"))
+		{
+
+			ImGui::Checkbox("GL_DEPTH_TEST", &depth);
+			ImGui::SameLine();
+			ImGui::Checkbox("GL_CULL_FACE", &cull_face);
+			ImGui::Checkbox("GL_LIGHTING", &lighting);
+			ImGui::SameLine();
+			ImGui::Checkbox("GL_COLOR_MATERIAL", &color_material);
+			ImGui::Checkbox("GL_TEXTURE_2D", &texture2d);
+			
+		}
 	}
 	ImGui::End();
 

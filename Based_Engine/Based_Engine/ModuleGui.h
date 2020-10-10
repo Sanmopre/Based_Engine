@@ -16,7 +16,7 @@ public:
 	bool CleanUp();
 	int GetWindowRefresh();
 	void MoveOne(float* array, int size);
-
+	//void Manage
 
 private:
 
@@ -32,7 +32,13 @@ private:
 	int fps_cap;
 	float fps[HISTOGRAM_SIZE];
 	float dt_log[HISTOGRAM_SIZE];
-
+	
+	//OpenGl checkboxes
+	bool depth;
+	bool cull_face;
+	bool lighting;
+	bool color_material;
+	bool texture2d;
 
 	//window checkboxes
 	bool fullscreen;
