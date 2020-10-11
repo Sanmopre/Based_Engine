@@ -3,6 +3,7 @@
 #include "ModuleGui.h"
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
+#include "SDL_opengl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" //ENABLE THE INPUT TEXT FUNCTIONS WITH STD::STRING
 #include "ModuleWindow.h"
@@ -47,7 +48,6 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
-
 	MoveOne(fps, HISTOGRAM_SIZE);
 	fps[HISTOGRAM_SIZE - 1] = 1/dt;
 
@@ -282,33 +282,8 @@ update_status ModuleGui::Update(float dt)
 
 update_status ModuleGui::PostUpdate()
 {
-	App->window->UpdateWindowSize();
-	if (full_desktop) 
-	{
-		App->window->WindowResize(mon_width, mon_height);
-		fullscreen = true;
-	}
-
-	//Manage window stats
-	if (fullscreen) 
-	{
-		App->window->WindowSetFullscreen();
-	}
-	else 
-	{
-		App->window->WindowSetWindowed();
-	}
-
-	//Window brightness
-	App->window->WindowBrightness(brightness);
-
-	//Window resize
-	App->window->WindowResizable(resizable);
-
-	App->window->WindowBorderless(!borderless);
-	///////////////////
-
-
+	UpdateWindowStats();
+	ManageOpenGlCheckboxes();
 
 	return UPDATE_CONTINUE;
 }
@@ -333,5 +308,88 @@ void ModuleGui::MoveOne(float* array, int size)
 	{
 		array[i] = array[i + 1];
 	}
+}
+
+void ModuleGui::ManageOpenGlCheckboxes()
+{
+	
+	if (depth) 
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else 
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+
+
+	if (cull_face) 
+	{
+		glEnable(GL_CULL_FACE);
+	}
+	else 
+	{
+		glDisable(GL_CULL_FACE);
+	}
+
+
+	if (lighting)
+	{
+		glEnable(GL_LIGHTING);
+	}
+	else
+	{
+		glDisable(GL_LIGHTING);
+	}
+
+
+	if (color_material)
+	{
+		glEnable(GL_COLOR_MATERIAL);
+	}
+	else
+	{
+		glDisable(GL_COLOR_MATERIAL);
+	}
+
+
+
+	if (texture2d)
+	{
+		glEnable(GL_TEXTURE_2D);
+	}
+	else
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
+	
+
+}
+
+void ModuleGui::UpdateWindowStats()
+{
+	App->window->UpdateWindowSize();
+	if (full_desktop)
+	{
+		App->window->WindowResize(mon_width, mon_height);
+		fullscreen = true;
+	}
+
+	if (fullscreen)
+	{
+		App->window->WindowSetFullscreen();
+	}
+	else
+	{
+		App->window->WindowSetWindowed();
+	}
+
+	//Window brightness
+	App->window->WindowBrightness(brightness);
+
+	//Window resize
+	App->window->WindowResizable(resizable);
+
+	App->window->WindowBorderless(!borderless);
 }
 

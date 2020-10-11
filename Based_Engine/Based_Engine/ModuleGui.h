@@ -16,7 +16,8 @@ public:
 	bool CleanUp();
 	int GetWindowRefresh();
 	void MoveOne(float* array, int size);
-	//void Manage
+	void ManageOpenGlCheckboxes();
+	void UpdateWindowStats();
 
 private:
 
