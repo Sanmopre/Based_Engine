@@ -112,6 +112,8 @@ update_status ModuleGui::Update(float dt)
 			ImGui::InputText("Organization", &organization);
 			ImGui::InputInt("Framerate cap", &fps_cap, 1, 240);
 
+			App->FPS = fps_cap;
+
 			//Histograms
 			ImGui::NewLine();
 			MoveOne(fps, HISTOGRAM_SIZE);

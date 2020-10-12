@@ -39,7 +39,7 @@ enum update_status
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define FPS 60
+//#define FPS 60
 #define TITLE "BASED Engine"
 
 #endif
