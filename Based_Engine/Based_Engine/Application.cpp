@@ -62,6 +62,7 @@ void Application::FinishUpdate()
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
+	starting_tick = SDL_GetTicks();
 	update_status ret = UPDATE_CONTINUE;
 	PrepareUpdate();
 	
@@ -90,6 +91,11 @@ update_status Application::Update()
 	}
 
 	FinishUpdate();
+
+	if ((1000 / FPS) > SDL_GetTicks() - starting_tick) {
+		SDL_Delay(1000/FPS - (SDL_GetTicks() - starting_tick));
+	}
+
 	return ret;
 }
 

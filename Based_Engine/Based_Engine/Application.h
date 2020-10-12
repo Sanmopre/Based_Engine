@@ -39,6 +39,7 @@ private:
 
 	Timer	ms_timer;
 	float	dt;
+	Uint32 starting_tick;
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
