@@ -20,6 +20,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	plane = new Plane(0, 1, 0, 0);
+	sphere = new Sphere(1);
 	plane->axis = true;
 
 	return ret;
@@ -31,6 +32,7 @@ bool ModuleSceneIntro::CleanUp()
 	LOG("Unloading Intro scene");
 
 	delete plane;
+	delete sphere;
 
 	return true;
 }
@@ -40,6 +42,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 
 	plane->Render();
+	sphere->Render();
 
 	return UPDATE_CONTINUE;
 }

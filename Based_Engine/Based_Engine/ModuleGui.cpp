@@ -48,11 +48,6 @@ bool ModuleGui::Start()
 // Update: draw background
 update_status ModuleGui::Update(float dt)
 {	
-	MoveOne(fps, HISTOGRAM_SIZE);
-	fps[HISTOGRAM_SIZE - 1] = 1/dt;
-
-	MoveOne(dt_log, HISTOGRAM_SIZE);
-	dt_log[HISTOGRAM_SIZE - 1] = dt;
 	
 	bool show_demo_window;
 	
@@ -74,7 +69,6 @@ update_status ModuleGui::Update(float dt)
 	{
 		if (ImGui::MenuItem("Show ImGui demo"))
 			showcase = !showcase;
-	
 		if (ImGui::MenuItem("Documentation")) 
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
@@ -84,10 +78,9 @@ update_status ModuleGui::Update(float dt)
 		if (ImGui::MenuItem("Report a bug")) 
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
-
-
 		ImGui::ShowStyleSelector("Style selector");
-		
+		ImGui::BeginMenuBar();
+		ImGui::EndMenuBar();
 		if (ImGui::CollapsingHeader("About"))
 		{
 			ImGui::Text("BASED engine.");
@@ -121,11 +114,15 @@ update_status ModuleGui::Update(float dt)
 
 			//Histograms
 			ImGui::NewLine();
+			MoveOne(fps, HISTOGRAM_SIZE);
+			fps[HISTOGRAM_SIZE - 1] = 1 / dt;
 			char title[30] = "";
 			sprintf_s(title, 25, "Framerate: %.1f", fps[HISTOGRAM_SIZE - 1]);
 			ImGui::PlotHistogram("FPS", fps, IM_ARRAYSIZE(fps), 0, title, 0.0f, 100.0f, ImVec2(300, 90.0f));
 
 			ImGui::NewLine();
+			MoveOne(dt_log, HISTOGRAM_SIZE);
+			dt_log[HISTOGRAM_SIZE - 1] = dt;
 			char title_dt[30] = "";
 			sprintf_s(title_dt, 25, "Delta time: %f", dt_log[HISTOGRAM_SIZE - 1]);
 			ImGui::PlotHistogram("Delta time", dt_log, IM_ARRAYSIZE(dt_log), 0, title_dt, 0.0f, 0.05f, ImVec2(300, 90.0f));
@@ -276,7 +273,6 @@ update_status ModuleGui::Update(float dt)
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
-
 	return UPDATE_CONTINUE;
 }
 
