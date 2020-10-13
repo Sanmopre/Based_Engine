@@ -40,7 +40,7 @@ bool ModuleGui::Start()
 	fps_cap = 60;
 	app_name = "BASED Engine";
 	organization = "UPC CITM";
-
+	inputlog = "";
 
 	return true;
 }
@@ -258,6 +258,16 @@ update_status ModuleGui::Update(float dt)
 		for (std::vector<std::string>::iterator l = logs.begin(); l != logs.end(); l++)
 		{
 			ImGui::Text((*l).c_str());
+		}
+		if (ImGui::InputText("", &inputlog, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			LOG("%s", inputlog.c_str());
+			if (*inputlog.begin() == '/')
+			{
+				inputlog.erase(inputlog.begin());
+
+			}
+			inputlog = "";
 		}
 	}
 	ImGui::End();

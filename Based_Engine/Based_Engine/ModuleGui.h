@@ -52,4 +52,6 @@ private:
 	DEVMODEA devmode;
 	std::string app_name;
 	std::string organization;
+
+	std::string inputlog;
 };
