@@ -1,3 +1,4 @@
+#include <GL/glew.h>
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
@@ -116,6 +117,21 @@ update_status ModuleRenderer3D::PreUpdate()
 
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleRenderer3D::Update(float dt)
+{
+	uint my_id = 0; 
+	glGenBuffers(1, (GLuint*)&(my_id)); 
+	glBindBuffer(GL_ARRAY_BUFFER, my_id); 
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+
+	glEnableClientState(GL_VERTEX_ARRAY); 
+	glBindBuffer(GL_ARRAY_BUFFER, my_id); 
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+//	glDrawArrays(GL_TRIANGLES, 0, num_vertices);glDisableClientState(GL_VERTEX_ARRAY);
 
 	return UPDATE_CONTINUE;
 }
