@@ -79,8 +79,7 @@ update_status ModuleGui::Update(float dt)
 		ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
 
 		ImGui::ShowStyleSelector("Style selector");
-		ImGui::BeginMenuBar();
-		ImGui::EndMenuBar();
+
 		if (ImGui::CollapsingHeader("About"))
 		{
 			ImGui::Text("BASED engine.");
@@ -112,6 +111,7 @@ update_status ModuleGui::Update(float dt)
 			ImGui::InputText("Organization", &organization);
 			ImGui::InputInt("Framerate cap", &fps_cap, 1, 240);
 
+			if(fps_cap > 0)
 			App->FPS = fps_cap;
 
 			//Histograms
