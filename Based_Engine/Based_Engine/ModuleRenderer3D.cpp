@@ -135,12 +135,19 @@ update_status ModuleRenderer3D::Update(float dt)
 	uint my_id = 0; 
 	glGenBuffers(1, (GLuint*)&(my_id)); 
 	glBindBuffer(GL_ARRAY_BUFFER, my_id); 
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+
+	uint my_indices = 0;
+	glGenBuffers(1, (GLuint*)&(my_indices)); 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices); 
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
 
 	glEnableClientState(GL_VERTEX_ARRAY); 
-	glBindBuffer(GL_ARRAY_BUFFER, my_id); 
+	//glBindBuffer(GL_ARRAY_BUFFER, my_id); 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-//	glDrawArrays(GL_TRIANGLES, 0, num_vertices);glDisableClientState(GL_VERTEX_ARRAY);
+	//glDrawArrays(GL_TRIANGLES, 0, num_vertices);glDisableClientState(GL_VERTEX_ARRAY);
+	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
 
 	return UPDATE_CONTINUE;
 }

@@ -6,7 +6,7 @@
 
 struct PhysBody3D;
 class Plane;
-class Sphere;
+
 
 class ModuleSceneIntro : public Module
 {
@@ -21,5 +21,5 @@ public:
 private:
 
 	Plane* plane;
-	Sphere* sphere;
+
 };
