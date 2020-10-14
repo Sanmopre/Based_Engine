@@ -64,6 +64,9 @@
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp">
       <Filter>Engine\ImGui\misc\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Assimp.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">

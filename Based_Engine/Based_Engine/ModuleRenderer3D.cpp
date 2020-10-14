@@ -6,11 +6,15 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "cimport.h"
+#include "scene.h"
+#include "postprocess.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+
 }
 
 // Destructor
