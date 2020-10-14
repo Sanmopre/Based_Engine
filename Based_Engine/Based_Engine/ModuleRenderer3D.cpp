@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "Assimp.h"
 #include "cimport.h"
 #include "scene.h"
 #include "postprocess.h"
@@ -26,7 +27,7 @@ bool ModuleRenderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
-	
+
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
 	if(context == NULL)
@@ -35,6 +36,10 @@ bool ModuleRenderer3D::Init()
 		ret = false;
 	}
 	
+	//Initialize assimp debbuger
+	Simp::InitializeDebugger();
+
+
 	if(ret == true)
 	{
 		//Use Vsync
@@ -154,7 +159,7 @@ bool ModuleRenderer3D::CleanUp()
 	LOG("Destroying 3D Renderer");
 
 	SDL_GL_DeleteContext(context);
-
+	Simp::CleanDebugger();
 	return true;
 }
 
