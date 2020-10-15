@@ -39,7 +39,6 @@ bool ModuleRenderer3D::Init()
 	//Initialize assimp debbuger
 	Simp::InitializeDebugger();
 
-
 	if(ret == true)
 	{
 		//Use Vsync
@@ -112,6 +111,19 @@ bool ModuleRenderer3D::Init()
 	return ret;
 }
 
+bool ModuleRenderer3D::Start()
+{
+	glGenBuffers(1, (GLuint*) & (my_id));
+	glBindBuffer(GL_ARRAY_BUFFER, my_id);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*) & (my_indices));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
+
+	return true;
+}
+
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate()
 {
@@ -132,16 +144,7 @@ update_status ModuleRenderer3D::PreUpdate()
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	uint my_id = 0; 
-	glGenBuffers(1, (GLuint*)&(my_id)); 
-	glBindBuffer(GL_ARRAY_BUFFER, my_id); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
-
-	uint my_indices = 0;
-	glGenBuffers(1, (GLuint*)&(my_indices)); 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices); 
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
-
+	
 	glEnableClientState(GL_VERTEX_ARRAY); 
 	//glBindBuffer(GL_ARRAY_BUFFER, my_id); 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);

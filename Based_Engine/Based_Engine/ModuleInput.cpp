@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "imgui_impl_sdl.h"
+#include "imgui.h"
 
 #define MAX_KEYS 300
 
@@ -24,6 +25,7 @@ bool ModuleInput::Init()
 	bool ret = true;
 	SDL_Init(0);
 	
+
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -39,7 +41,7 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 	SDL_PumpEvents();
-	
+	ImGuiIO io = ImGui::GetIO();
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	
 	for(int i = 0; i < MAX_KEYS; ++i)
@@ -61,6 +63,8 @@ update_status ModuleInput::PreUpdate()
 	}
 	
 	Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
+	mouse_x_motion = io.MouseDelta.x;
+	mouse_y_motion = io.MouseDelta.y;
 	
 	mouse_x /= SCREEN_SIZE;
 	mouse_y /= SCREEN_SIZE;
@@ -83,42 +87,7 @@ update_status ModuleInput::PreUpdate()
 				mouse_buttons[i] = KEY_IDLE;
 		}
 	}
-	//
-	//mouse_x_motion = mouse_y_motion = 0;
-	//textinput = ' ';
-	//
-	//bool quit = false;
-	//SDL_Event e;
-	//while(SDL_PollEvent(&e))
-	//{
-	//	switch (e.type)
-	//	{
-	//	case SDL_MOUSEWHEEL:
-	//		mouse_z = e.wheel.y;
-	//		break;
-	//	
-	//	case SDL_MOUSEMOTION:
-	//		mouse_x = e.motion.x / SCREEN_SIZE;
-	//		mouse_y = e.motion.y / SCREEN_SIZE;
-	//	
-	//		mouse_x_motion = e.motion.xrel / SCREEN_SIZE;
-	//		mouse_y_motion = e.motion.yrel / SCREEN_SIZE;
-	//		break;
-	//
-	//	case SDL_QUIT:
-	//		quit = true;
-	//		break;
-	//
-	//	case SDL_WINDOWEVENT:
-	//	{
-	//		if (e.window.event == SDL_WINDOWEVENT_RESIZED)
-	//			App->renderer3D->OnResize(e.window.data1, e.window.data2);
-	//	}
-	//	case SDL_TEXTINPUT:
-	//		textinput = *e.text.text;
-	//		break;
-	//	}
-	//}
+
 	bool quit = false;
 
 	SDL_Event event;
