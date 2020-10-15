@@ -64,6 +64,9 @@
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp">
       <Filter>Engine\ImGui\misc\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="MeshClass.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -136,6 +139,9 @@
       <Filter>Engine\ImGui\misc\cpp</Filter>
     </ClInclude>
     <ClInclude Include="Assimp.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshClass.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>

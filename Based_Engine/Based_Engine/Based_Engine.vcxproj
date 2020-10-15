@@ -96,6 +96,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Assimp.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="MeshClass.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleGui.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MeshClass.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />

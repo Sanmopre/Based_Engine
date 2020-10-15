@@ -2,17 +2,9 @@
 #include "scene.h"
 #include "postprocess.h"
 #include "Globals.h"
+#include "MeshClass.h"
 
 namespace Simp {
-
-	struct VertexData {
-		uint id_index = 0;
-		uint num_index = 0;
-		uint* index = nullptr;
-		uint id_vertex = 0;
-		uint num_vertex = 0;
-		float* vertex = nullptr;
-	};
 
 	void InitializeDebugger() {
 		struct aiLogStream stream;
@@ -28,6 +20,14 @@ namespace Simp {
 		const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 		if (scene != nullptr && scene->HasMeshes()) {
 			// Use scene->mNumMeshes to iterate on scene->mMeshes array  
+
+            // Use scene->mNumMeshes to iterate on scene->mMeshes array
+
+            for (int i = 0; i < scene->mNumMeshes; i++)
+            {
+               // Mesh* new_mesh = new Mesh();
+            }
+
 			aiReleaseImport(scene);
 		}
 	}
