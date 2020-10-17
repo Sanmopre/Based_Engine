@@ -1,22 +1,40 @@
 
 #include "Globals.h"
+#include "Color.h"
+#include "Math/float3.h"
+#include "Math/float2.h"
 
-struct Mesh {
+#include <vector>
 
-	Mesh() {};
+struct Vertex
+{
+	float3 Position;
+	float3 Normal;
+	float2 TexCoords;
+};
 
-	enum Buffers
-	{
-		index,
-		vertex,
-		maxBuffers
-	};
+class Mesh
+{
+public:
+	Mesh(std::vector<Vertex> vertices, std::vector<uint> indices);
+	~Mesh();
 
-	uint buffersId[maxBuffers];
-	uint buffersSize[maxBuffers];
+	void GenerateBuffers();
 
-	uint* indices = nullptr;
-	float* vertices = nullptr;
+	void Render(bool globalWireMode = false) const;
+	void InnerRender() const;
 
-	//uint buffer;
+public:
+	uint idVertex;
+	std::vector<Vertex>       vertices;
+
+	uint idIndex; 
+	std::vector<uint> indices;
+
+	uint VAO;
+
+private:
+	Color color;
+	bool wire, noFace;
+
 };

@@ -7,10 +7,12 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
+#include "Math/float3.h"
+#include "Math/float2.h"
 
 namespace Simp {
 
-    std::vector<Mesh*> mesh_vec;
+	std::vector<Mesh*> mesh_vec;
 
 	void InitializeDebugger() {
 		struct aiLogStream stream;
@@ -22,63 +24,68 @@ namespace Simp {
 		aiDetachAllLogStreams();
 	}
 
-	void LoadFile(char* file_path) {
+	std::vector<Mesh> LoadFile(char* file_path) {
+		
 		const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
-		if (scene != nullptr && scene->HasMeshes()) {
 
-            for (int i = 0; i < scene->mNumMeshes; i++)
-            {
-                Mesh* mesh = new Mesh();
+		std::vector<Mesh> loadedMeshes;
 
-                mesh->buffersId[Mesh::vertex] = 0;
-                mesh->buffersId[Mesh::index] = 0;
+		if (scene != nullptr && scene->HasMeshes())
+		{
+			// Use scene->mNumMeshes to iterate on scene->mMeshes array
+			for (int i = 0; i < scene->mNumMeshes; i++)
+			{
+				std::vector<Vertex> vertices;
+				std::vector<uint> indices;
 
+				aiMesh* mesh = scene->mMeshes[i];
 
-                mesh->buffersSize[Mesh::vertex] = scene->mMeshes[i]->mNumVertices;
-                mesh->vertices = new float[mesh->buffersSize[Mesh::vertex] * 3];
-                memcpy(mesh->vertices, scene->mMeshes[i]->mVertices, sizeof(float) * mesh->buffersSize[Mesh::vertex] * 3);
-                LOG("New mesh with %d vertices", mesh->buffersSize[Mesh::vertex]);
+				for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+				{
+					Vertex vertex;
 
-                if (scene->mMeshes[i]->HasFaces())
-                {
-                    mesh->buffersSize[Mesh::index] = scene->mMeshes[i]->mNumFaces * 3;
-                    mesh->indices = new uint[mesh->buffersSize[Mesh::index]];
-                    for (uint f = 0; f < scene->mMeshes[i]->mNumFaces; ++f)
-                    {
-                        if (scene->mMeshes[i]->mFaces[f].mNumIndices != 3)
-                        {
-                            LOG("WARNING, geometery face with != 3 indices!");
-                        }
-                        else
-                        {
-                            memcpy(&mesh->indices[f * 3], scene->mMeshes[i]->mFaces[f].mIndices, 3 * sizeof(uint));
-                        }
+					float3 vector;
+					vector.x = mesh->mVertices[i].x;
+					vector.y = mesh->mVertices[i].y;
+					vector.z = mesh->mVertices[i].z;
+					vertex.Position = vector;
 
-                    }
-                }
-                
-                //VERTEX BUFFER
-                glGenBuffers(1, (GLuint*)&(mesh->buffersId[Mesh::vertex]));
-                glBindBuffer(GL_ARRAY_BUFFER, mesh->buffersId[Mesh::vertex]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->buffersSize[Mesh::vertex] * 3, mesh->vertices, GL_STATIC_DRAW);
-                glBindBuffer(GL_ARRAY_BUFFER, 0);
+					if (mesh->HasNormals())
+					{
+						vector.x = mesh->mNormals[i].x;
+						vector.y = mesh->mNormals[i].y;
+						vector.z = -1 * mesh->mNormals[i].z;
+						vertex.Normal = vector;
+					}
 
-                //INDEX BUFFER
-                if (mesh->indices != nullptr)
-                {
-                    
-                    glGenBuffers(1, (GLuint*)&(mesh->buffersId[Mesh::index]));
-                    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->buffersId[Mesh::vertex]);
-                    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->buffersSize[Mesh::index], mesh->indices, GL_STATIC_DRAW);
-                    glBindBuffer(GL_ARRAY_BUFFER, 0);
-                }
+					if (mesh->mTextureCoords[0]) 
+					{
+						float2 vec;
+						vec.x = mesh->mTextureCoords[0][i].x;
+						vec.y = mesh->mTextureCoords[0][i].y;
+						vertex.TexCoords = vec;
+					}
+					else
+						vertex.TexCoords = float2(0.0f, 0.0f);
 
-                //MESH VECTOR
-               mesh_vec.push_back(mesh);
-            }
+					vertices.push_back(vertex);
+				}
 
-			aiReleaseImport(scene);
+				for (uint i = 0; i < mesh->mNumFaces; i++)
+				{
+					aiFace face = mesh->mFaces[i];
+					assert(face.mNumIndices == 3);
+
+					for (uint j = 0; j < face.mNumIndices; j++)
+						indices.push_back(face.mIndices[j]);
+				}
+
+				loadedMeshes.push_back(Mesh(vertices, indices));
+			}
+				aiReleaseImport(scene);
 		}
-	}
 
+		return loadedMeshes;
+
+	}
 }

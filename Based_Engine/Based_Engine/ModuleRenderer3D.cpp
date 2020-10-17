@@ -113,7 +113,9 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	Simp::LoadFile("");
+	//load mesh (PagChomp)
+	std::vector<Mesh> warriorScene = Simp::LoadFile("teapot.FBX");
+	meshes.insert(meshes.end(), warriorScene.begin(), warriorScene.end());
 	return true;
 }
 
@@ -137,7 +139,19 @@ update_status ModuleRenderer3D::PreUpdate()
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-	
+
+		if (wireframe_mode) {	
+			BeginDebugMode();
+			WireframeDraw(dt);
+			EndDebugMode();
+		}
+		else {
+			BeginDrawMode();
+			Draw(dt);		
+			EndDrawMode();
+		}
+
+		EndDebugMode();
 
 
 	return UPDATE_CONTINUE;
@@ -147,14 +161,6 @@ update_status ModuleRenderer3D::Update(float dt)
 update_status ModuleRenderer3D::PostUpdate()
 {
 	SDL_GL_SwapWindow(App->window->window);
-
-	std::vector<Mesh*>::iterator item = Simp::mesh_vec.begin();
-
-	for (; item != Simp::mesh_vec.end(); ++item)
-	{
-		DrawMesh((*item));
-	}
-
 
 	return UPDATE_CONTINUE;
 }
@@ -184,12 +190,67 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-void ModuleRenderer3D::DrawMesh(Mesh* mesh)
+void ModuleRenderer3D::GenerateFrameBuffers(int width, int height)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffersId[Mesh::vertex]);
-	glVertexPointer(3, GL_FLOAT, 0, mesh->vertices);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->buffersId[Mesh::index]);
-	glDrawElements(GL_TRIANGLES, mesh->buffersSize[Mesh::index], GL_UNSIGNED_INT, NULL);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glGenFramebuffers(1, &frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+
+	glGenTextures(1, &texColorBuffer);
+	glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texColorBuffer, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+void ModuleRenderer3D::BeginDebugMode()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
+void ModuleRenderer3D::EndDebugMode()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void ModuleRenderer3D::BeginDrawMode()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void ModuleRenderer3D::EndDrawMode()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+update_status ModuleRenderer3D::Draw(float dt)
+{
+	for (uint i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].Render(true);
+	}
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleRenderer3D::WireframeDraw(float dt)
+{
+
+	for (uint i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].Render(true);
+	}
+	
+	return UPDATE_CONTINUE;
+}
+
+

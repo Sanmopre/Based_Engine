@@ -246,8 +246,10 @@ update_status ModuleGui::Update(float dt)
 			ImGui::SameLine();
 			ImGui::Checkbox("GL_COLOR_MATERIAL", &color_material);
 			ImGui::Checkbox("GL_TEXTURE_2D", &texture2d);
-			
+			ImGui::Checkbox("WIREFRAME_MODE", &App->renderer3D->wireframe_mode);
 		}
+
+
 	}
 	ImGui::End();
 

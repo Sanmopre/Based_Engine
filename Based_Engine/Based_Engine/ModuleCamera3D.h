@@ -26,7 +26,7 @@ public:
 	
 	vec3 X, Y, Z, Position, Reference;
 
-	float speed = 0.05f;
+	float speed = 0.25f;
 
 private:
 
