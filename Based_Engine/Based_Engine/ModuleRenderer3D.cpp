@@ -113,14 +113,7 @@ bool ModuleRenderer3D::Init()
 
 bool ModuleRenderer3D::Start()
 {
-	glGenBuffers(1, (GLuint*) & (my_id));
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * num_vertices * 3, vertices, GL_STATIC_DRAW);
-
-	glGenBuffers(1, (GLuint*) & (my_indices));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * num_indices, indices, GL_STATIC_DRAW);
-
+	Simp::LoadFile("");
 	return true;
 }
 
@@ -145,12 +138,7 @@ update_status ModuleRenderer3D::PreUpdate()
 update_status ModuleRenderer3D::Update(float dt)
 {
 	
-	glEnableClientState(GL_VERTEX_ARRAY); 
-	//glBindBuffer(GL_ARRAY_BUFFER, my_id); 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//glDrawArrays(GL_TRIANGLES, 0, num_vertices);glDisableClientState(GL_VERTEX_ARRAY);
-	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, NULL);
+
 
 	return UPDATE_CONTINUE;
 }
@@ -159,6 +147,14 @@ update_status ModuleRenderer3D::Update(float dt)
 update_status ModuleRenderer3D::PostUpdate()
 {
 	SDL_GL_SwapWindow(App->window->window);
+
+	std::vector<Mesh*>::iterator item = Simp::mesh_vec.begin();
+
+	for (; item != Simp::mesh_vec.end(); ++item)
+	{
+		DrawMesh((*item));
+	}
+
 
 	return UPDATE_CONTINUE;
 }
@@ -186,4 +182,14 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void ModuleRenderer3D::DrawMesh(Mesh* mesh)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffersId[Mesh::vertex]);
+	glVertexPointer(3, GL_FLOAT, 0, mesh->vertices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->buffersId[Mesh::index]);
+	glDrawElements(GL_TRIANGLES, mesh->buffersSize[Mesh::index], GL_UNSIGNED_INT, NULL);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }

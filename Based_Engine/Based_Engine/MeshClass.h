@@ -1,17 +1,22 @@
 
 #include "Globals.h"
 
-class Mesh {
+struct Mesh {
 
+	Mesh() {};
 
-public:
-	Mesh();
-	~Mesh();
-	uint id_index = 0;
-	uint num_index = 0;
-	uint* index = nullptr;
+	enum Buffers
+	{
+		index,
+		vertex,
+		maxBuffers
+	};
 
-	uint id_vertex = 0;
-	uint num_vertex = 0;
-	float* vertex = nullptr;
+	uint buffersId[maxBuffers];
+	uint buffersSize[maxBuffers];
+
+	uint* indices = nullptr;
+	float* vertices = nullptr;
+
+	//uint buffer;
 };
