@@ -11,11 +11,11 @@ public:
 
 	void Start();
 
-	void PreUpdate();
-	void Update();
-	void PostUpdate();
+	virtual void PreUpdate();
+	virtual void Update();
+	virtual void PostUpdate();
 	char* GetName();
-	void CleanUp();
+	virtual void CleanUp();
 
 public:	
 
