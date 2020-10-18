@@ -73,6 +73,9 @@
     <ClCompile Include="GUIclass.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI_MainMenu.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="GUIclass.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="UI_MainMenu.h">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -181,6 +187,9 @@
     </Filter>
     <Filter Include="Engine\ImGui\misc\cpp">
       <UniqueIdentifier>{9db9f6b6-de0c-4d74-8314-dd192a0fb6d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\UI_Windows">
+      <UniqueIdentifier>{a9ebfe37-0889-44fa-bcb7-9661173b689e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

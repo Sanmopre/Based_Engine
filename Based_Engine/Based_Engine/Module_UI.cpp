@@ -3,12 +3,20 @@
 #include "Module_UI.h"
 #include "GUIclass.h"
 
+#include "UI_MainMenu.h"
+
 Module_UI::Module_UI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
 Module_UI::~Module_UI()
 {
+}
+
+bool Module_UI::Start()
+{
+	gui.push_back(mainmenu = new MainMenu(true));
+	return true;
 }
 
 update_status Module_UI::PreUpdate()
@@ -46,6 +54,8 @@ update_status Module_UI::PostUpdate()
 			gui[i]->PostUpdate();
 		}
 	}
+
+
 	return UPDATE_CONTINUE;
 }
 

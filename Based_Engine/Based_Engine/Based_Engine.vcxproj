@@ -108,6 +108,7 @@
     <ClInclude Include="Module_UI.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UI_MainMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Module_UI.cpp" />
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UI_MainMenu.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

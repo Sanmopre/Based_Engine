@@ -5,6 +5,7 @@
 
 #include<vector>
 class GUI;
+class MainMenu;
 
 class Module_UI : public Module
 {
@@ -14,13 +15,14 @@ public:
 
 	// Destructor
 	virtual ~Module_UI();
+	bool Start();
 	update_status PreUpdate();
 	update_status Update(float dt);
 	update_status PostUpdate();
 	bool CleanUp();
 
 public:
-
+	
 	std::vector<GUI*> gui;
-
+	MainMenu* mainmenu;
 };
