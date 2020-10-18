@@ -1,9 +1,10 @@
 #include "GUIclass.h"
 
-GUI::GUI(char* ui_name, bool is_enabled)
+GUI::GUI(char* ui_name, bool is_enabled, Application* application)
 {
 	name = ui_name;
 	enabled = is_enabled;
+	App = application;
 }
 
 GUI::~GUI()
@@ -18,7 +19,7 @@ void GUI::PreUpdate()
 {
 }
 
-void GUI::Update()
+void GUI::Update(float dt)
 {
 }
 

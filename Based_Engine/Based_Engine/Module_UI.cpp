@@ -15,7 +15,16 @@ Module_UI::~Module_UI()
 
 bool Module_UI::Start()
 {
-	gui.push_back(mainmenu = new MainMenu(true));
+	gui.push_back(mainmenu = new MainMenu(true,App));
+
+	for (uint i = 0; i < gui.size(); i++)
+	{
+		if (gui[i]->enabled == true)
+		{
+			gui[i]->Start();
+		}
+	}
+
 	return true;
 }
 
@@ -38,7 +47,7 @@ update_status Module_UI::Update(float dt)
 	{
 		if (gui[i]->enabled == true)
 		{
-			gui[i]->Update();
+			gui[i]->Update(dt);
 		}
 	}
 
