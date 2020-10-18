@@ -67,6 +67,12 @@
     <ClCompile Include="MeshClass.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Module_UI.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIclass.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -142,6 +148,12 @@
       <Filter>Engine\Tools</Filter>
     </ClInclude>
     <ClInclude Include="MeshClass.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Module_UI.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIclass.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>

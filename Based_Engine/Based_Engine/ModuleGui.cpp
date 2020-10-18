@@ -101,10 +101,14 @@ update_status ModuleGui::Update(float dt)
 	}
 	ImGui::EndMainMenuBar();
 
-	ImGuiID id = 1;
+	//ImGuiID id = 1;
+
 	//Main window
 	if (ImGui::Begin("BASED Engine"))
 	{
+
+
+
 		if (ImGui::CollapsingHeader("Application"))
 		{
 			ImGui::InputText("App name", &app_name);
