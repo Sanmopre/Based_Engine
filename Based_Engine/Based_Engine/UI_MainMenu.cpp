@@ -50,13 +50,6 @@ void MainMenu::Update(float dt)
 {
 	bool show_demo_window;
 
-
-	//create new ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
-	ImGui::NewFrame();
-
-
 	//TOP BAR MENU
 	ImGui::BeginMainMenuBar();
 
@@ -283,11 +276,6 @@ void MainMenu::Update(float dt)
 		if (!show_demo_window)
 			showcase = false;
 	}
-
-	//UI rendering	
-	ImGui::EndFrame();
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 void MainMenu::PostUpdate()

@@ -20,6 +20,7 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate();
 	bool CleanUp();
+	void CreateDocking();
 
 public:
 	
