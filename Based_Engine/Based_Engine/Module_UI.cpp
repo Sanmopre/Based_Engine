@@ -10,6 +10,7 @@
 #include "UI_MainMenu.h"
 #include "UI_Console.h"
 #include "UI_Topbar.h"
+#include "UI_Scene.h"
 
 Module_UI::Module_UI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -21,11 +22,17 @@ Module_UI::~Module_UI()
 
 bool Module_UI::Start()
 {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
+	ImGui_ImplOpenGL3_Init("#version 130");
+
 
 	gui.push_back(mainmenu = new MainMenu(true,App));
 	gui.push_back(console = new Console(true, App));
 	gui.push_back(topbar = new Topbar(true, App));
-	
+	gui.push_back(scene = new Scene(true, App));
+
 	for (uint i = 0; i < gui.size(); i++)
 	{
 		if (gui[i]->enabled == true)
@@ -44,7 +51,7 @@ update_status Module_UI::PreUpdate()
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	//WCreateDocking();
+	//CreateDocking();
 
 
 	for (uint i = 0; i < gui.size(); i++)
@@ -160,4 +167,9 @@ void Module_UI::CreateDocking()
 	}
 
 	ImGui::End();
+}
+
+void Module_UI::SceneSize(float& width, float& height)
+{
+
 }

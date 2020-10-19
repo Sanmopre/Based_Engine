@@ -25,10 +25,6 @@ MainMenu::~MainMenu()
 
 void MainMenu::Start()
 {
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
-	ImGui_ImplOpenGL3_Init("#version 130");
 	//Initialize variables
 	height = SCREEN_HEIGHT * SCREEN_SIZE;
 	width = SCREEN_WIDTH * SCREEN_SIZE;

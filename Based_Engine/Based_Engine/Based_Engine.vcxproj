@@ -109,6 +109,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UI_Console.h" />
     <ClInclude Include="UI_MainMenu.h" />
+    <ClInclude Include="UI_Scene.h" />
     <ClInclude Include="UI_Topbar.h" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UI_Console.cpp" />
     <ClCompile Include="UI_MainMenu.cpp" />
+    <ClCompile Include="UI_Scene.cpp" />
     <ClCompile Include="UI_Topbar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

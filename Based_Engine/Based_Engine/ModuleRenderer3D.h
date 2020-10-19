@@ -47,6 +47,7 @@ public:
 	
 	uint frameBuffer;
 	uint texColorBuffer;
+	uint depthBuffer;
 
 	bool wireframe_mode = true;
 };

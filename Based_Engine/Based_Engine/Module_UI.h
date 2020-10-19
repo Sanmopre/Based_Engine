@@ -8,6 +8,7 @@ class GUI;
 class MainMenu;
 class Console;
 class Topbar;
+class Scene;
 
 class Module_UI : public Module
 {
@@ -23,6 +24,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void CreateDocking();
+	void SceneSize(float& width, float& height);
 
 public:
 	
@@ -31,4 +33,5 @@ public:
 	MainMenu* mainmenu;
 	Console* console;
 	Topbar* topbar;
+	Scene* scene;
 };

@@ -79,6 +79,9 @@
     <ClCompile Include="UI_Topbar.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Scene.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -166,6 +169,9 @@
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
     <ClInclude Include="UI_Topbar.h">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Scene.h">
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
   </ItemGroup>
