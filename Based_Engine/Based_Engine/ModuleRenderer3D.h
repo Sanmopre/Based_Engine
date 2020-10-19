@@ -32,6 +32,7 @@ public:
 
 	void BeginDrawMode();
 	void EndDrawMode();
+	void ActivateMeshNormals(bool c);
 
 	update_status Draw(float dt);
 	update_status WireframeDraw(float dt);
@@ -50,4 +51,5 @@ public:
 	uint depthBuffer;
 
 	bool wireframe_mode = true;
+	bool show_normals = false;
 };

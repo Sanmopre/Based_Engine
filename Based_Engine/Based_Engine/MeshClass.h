@@ -24,6 +24,8 @@ public:
 	void Render(bool globalWireMode = false) const;
 	void InnerRender() const;
 
+	void DrawNormals() const;
+
 public:
 	uint idVertex;
 	std::vector<Vertex>       vertices;
@@ -32,7 +34,7 @@ public:
 	std::vector<uint> indices;
 
 	uint VAO;
-
+	bool drawnormals = false;
 private:
 	Color color;
 	bool wire, noFace;

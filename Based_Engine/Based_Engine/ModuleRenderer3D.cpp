@@ -140,6 +140,9 @@ update_status ModuleRenderer3D::PreUpdate()
 update_status ModuleRenderer3D::Update(float dt)
 {
 
+
+	ActivateMeshNormals(show_normals);
+	
 		if (wireframe_mode) {	
 			BeginDebugMode();
 			WireframeDraw(dt);
@@ -240,6 +243,14 @@ void ModuleRenderer3D::BeginDrawMode()
 void ModuleRenderer3D::EndDrawMode()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void ModuleRenderer3D::ActivateMeshNormals(bool c)
+{
+	for (uint i = 0; i < meshes.size(); i++)
+	{
+		meshes[i].drawnormals = c;
+	}
 }
 
 update_status ModuleRenderer3D::Draw(float dt)

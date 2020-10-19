@@ -53,6 +53,8 @@ void Mesh::Render(bool globalWireMode) const
 {
 	glPushMatrix();
 	glColor3f(color.r, color.g, color.b);
+	if(drawnormals)
+	DrawNormals();
 	InnerRender();
 	glPopMatrix();
 }
@@ -71,4 +73,54 @@ void Mesh::InnerRender() const
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+}
+
+void Mesh::DrawNormals() const
+{
+	glLineWidth(2.0f);
+
+	glBegin(GL_LINES);
+
+
+	for (uint i = 0, j = 0; i < vertices.size(); i++)
+	{
+		//Draw Vertex Normals-----------------------
+		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
+
+		float3 vector = vertices[i].Position;
+		float3 normals = vector + vertices[i].Normal * 2;
+
+		glVertex3f(vector.x, vector.y, vector.z); glVertex3f(normals.x, normals.y, normals.z);
+
+		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+		j++;
+
+		//Draw Faces normals-------------------
+		if (j == 3)
+		{
+			float3 P0 = vertices[i - 2].Position;
+			float3 P1 = vertices[i - 1].Position;
+			float3 P2 = vertices[i].Position;
+
+			float3 V0 = P0 - P1;
+			float3 V1 = P2 - P1;
+
+			//Normal of the face
+			float3 N = V1.Cross(V0);
+			N.Normalize();
+
+			// Center of the triangle
+			float3 P = (P0 + P1 + P2) / 3.0;
+
+			float3 normal = P + N * 2;
+
+			glVertex3f(P.x, P.y, P.z); glVertex3f(normal.x, normal.y, normal.z);
+
+			j = 0;
+		}
+	}
+
+	glEnd();
+
+	glLineWidth(1.0f);
 }
