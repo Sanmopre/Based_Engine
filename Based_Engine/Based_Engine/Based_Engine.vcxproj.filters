@@ -73,6 +73,12 @@
     <ClCompile Include="UI_MainMenu.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Console.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Topbar.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -154,6 +160,12 @@
       <Filter>Engine\Tools</Filter>
     </ClInclude>
     <ClInclude Include="UI_MainMenu.h">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Console.h">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Topbar.h">
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
   </ItemGroup>

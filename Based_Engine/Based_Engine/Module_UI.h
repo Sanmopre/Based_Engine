@@ -6,6 +6,8 @@
 #include<vector>
 class GUI;
 class MainMenu;
+class Console;
+class Topbar;
 
 class Module_UI : public Module
 {
@@ -25,5 +27,8 @@ public:
 public:
 	
 	std::vector<GUI*> gui;
+
 	MainMenu* mainmenu;
+	Console* console;
+	Topbar* topbar;
 };

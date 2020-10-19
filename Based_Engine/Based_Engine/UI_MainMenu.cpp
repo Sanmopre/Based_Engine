@@ -5,7 +5,7 @@
 #include "imgui_impl_sdl.h"
 #include "SDL_opengl.h"
 #include "imgui_impl_opengl3.h"
-#include "misc/cpp/imgui_stdlib.h" //ENABLE THE INPUT TEXT FUNCTIONS WITH STD::STRING
+#include "misc/cpp/imgui_stdlib.h" 
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 #include "wtypes.h"
@@ -37,69 +37,17 @@ void MainMenu::Start()
 	resizable = true;
 	borderless = false;
 	full_desktop = false;
-	showcase = false;
-	active_window = true;
 	brightness = 1.0f;
 	fps_cap = 60;
 	app_name = "BASED Engine";
 	organization = "UPC CITM";
-	inputlog = "";
 }
 
 void MainMenu::Update(float dt)
 {
-	bool show_demo_window;
-
-	//TOP BAR MENU
-	ImGui::BeginMainMenuBar();
-
-	if (ImGui::BeginMenu("Files")) {
-		ImGui::EndMenu();
-	}
-
-	if (ImGui::BeginMenu("Help"))
-	{
-		if (ImGui::MenuItem("Show ImGui demo"))
-			showcase = !showcase;
-		if (ImGui::MenuItem("Documentation"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
-
-		if (ImGui::MenuItem("Download latest"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
-
-		if (ImGui::MenuItem("Report a bug"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
-
-		ImGui::ShowStyleSelector("Style selector");
-
-		if (ImGui::CollapsingHeader("About"))
-		{
-			ImGui::Text("BASED engine.");
-			ImGui::Text("The future of 3D Graphics by Santiago Moliner and David Rami.");
-			ImGui::Text("Source code:    https://github.com/Sanmopre/Based_Engine");
-			ImGui::NewLine();
-			ImGui::Text("3rd party libraries used: ");
-			ImGui::Text(" - SDL");
-			ImGui::Text(" - OpenGL");
-			ImGui::Text(" - Glew");
-			ImGui::Text(" - JSON parser");
-			ImGui::Text(" - MathGeoLib");
-		}
-		ImGui::EndMenu();
-	}
-
-	if (ImGui::Button("Quit", ImVec2(40, 20))) {
-	}
-	ImGui::EndMainMenuBar();
-
-	//ImGuiID id = 1;
-
 	//Main window
 	if (ImGui::Begin("BASED Engine"))
 	{
-
-
-
 		if (ImGui::CollapsingHeader("Application"))
 		{
 			ImGui::InputText("App name", &app_name);
@@ -243,39 +191,8 @@ void MainMenu::Update(float dt)
 			ImGui::Checkbox("GL_TEXTURE_2D", &texture2d);
 			ImGui::Checkbox("WIREFRAME_MODE", &App->renderer3D->wireframe_mode);
 		}
-
-
 	}
 	ImGui::End();
-
-	//Console
-	if (ImGui::Begin("Console"))
-	{
-		std::vector<std::string> logs = GetLogs();
-		for (std::vector<std::string>::iterator l = logs.begin(); l != logs.end(); l++)
-		{
-			ImGui::Text((*l).c_str());
-		}
-		if (ImGui::InputText("", &inputlog, ImGuiInputTextFlags_EnterReturnsTrue))
-		{
-			LOG("%s", inputlog.c_str());
-			if (*inputlog.begin() == '/')
-			{
-				inputlog.erase(inputlog.begin());
-
-			}
-			inputlog = "";
-		}
-	}
-	ImGui::End();
-
-	//Demo window
-	if (showcase)
-	{
-		ImGui::ShowDemoWindow(&show_demo_window);
-		if (!show_demo_window)
-			showcase = false;
-	}
 }
 
 void MainMenu::PostUpdate()

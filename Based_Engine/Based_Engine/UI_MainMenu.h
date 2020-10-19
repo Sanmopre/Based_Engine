@@ -20,9 +20,6 @@ public:
 
 private:
 
-	bool showcase;
-	bool active_window;
-
 	//window stats
 	float brightness;
 	int height;
@@ -51,6 +48,4 @@ private:
 	DEVMODEA devmode;
 	std::string app_name;
 	std::string organization;
-
-	std::string inputlog;
 };
