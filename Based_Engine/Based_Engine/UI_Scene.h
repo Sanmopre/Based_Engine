@@ -11,6 +11,7 @@ public:
 	void Update(float dt);
 	void Cleanup();
 
+	void OnResize(ImVec2 newWindowSize);
 
 private:
 	ImVec2 windowSize;

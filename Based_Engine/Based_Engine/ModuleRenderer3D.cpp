@@ -9,6 +9,7 @@
 #include "Assimp.h"
 #include "cimport.h"
 #include "scene.h"
+#include "Primitive.h"
 #include "postprocess.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -74,6 +75,7 @@ bool ModuleRenderer3D::Init()
 		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Check for error
 		error = glGetError();
@@ -104,9 +106,6 @@ bool ModuleRenderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 	}
-
-	// Projection matrix for
-	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return ret;
 }
@@ -139,31 +138,24 @@ update_status ModuleRenderer3D::PreUpdate()
 
 update_status ModuleRenderer3D::Update(float dt)
 {
-
-
 	ActivateMeshNormals(show_normals);
-	
-		if (wireframe_mode) {	
-			BeginDebugMode();
-			WireframeDraw(dt);
-			EndDebugMode();
-		}
-		else {
-			BeginDrawMode();
-			Draw(dt);		
-			EndDrawMode();
-		}
 
+	BeginDrawMode();
+	if (wireframe_mode) {
+		BeginDebugMode();
+		WireframeDraw();
 		EndDebugMode();
-
-
+	}
+	else {
+		Draw();
+	}
+	EndDrawMode();
 	return UPDATE_CONTINUE;
 }
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate()
 {
-
 	SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;
@@ -176,6 +168,7 @@ bool ModuleRenderer3D::CleanUp()
 
 	SDL_GL_DeleteContext(context);
 	Simp::CleanDebugger();
+	meshes.clear();
 	return true;
 }
 
@@ -183,15 +176,20 @@ bool ModuleRenderer3D::CleanUp()
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
-	glViewport(0, 0, width, height);
+	if (width == 0 || height == 0)
+		return;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	ProjectionMatrix = perspective(60.0f, width / height, 0.125f, 512.0f);
 	glLoadMatrixf(&ProjectionMatrix);
 
+	glViewport(0, 0, width, height);
+
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glLoadMatrixf(App->camera->GetViewMatrix());
+
+	GenerateFrameBuffers(width, height);
 }
 
 void ModuleRenderer3D::GenerateFrameBuffers(int width, int height)
@@ -238,6 +236,8 @@ void ModuleRenderer3D::BeginDrawMode()
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
+
+
 }
 
 void ModuleRenderer3D::EndDrawMode()
@@ -253,7 +253,7 @@ void ModuleRenderer3D::ActivateMeshNormals(bool c)
 	}
 }
 
-update_status ModuleRenderer3D::Draw(float dt)
+update_status ModuleRenderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
 	{
@@ -263,7 +263,7 @@ update_status ModuleRenderer3D::Draw(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer3D::WireframeDraw(float dt)
+update_status ModuleRenderer3D::WireframeDraw()
 {
 
 	for (uint i = 0; i < meshes.size(); i++)

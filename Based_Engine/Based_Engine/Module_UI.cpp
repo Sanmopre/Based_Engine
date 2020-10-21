@@ -27,6 +27,11 @@ bool Module_UI::Start()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;      
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;        
 
 	gui.push_back(mainmenu = new MainMenu(true,App));
 	gui.push_back(console = new Console(true, App));
@@ -51,7 +56,7 @@ update_status Module_UI::PreUpdate()
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	//CreateDocking();
+	CreateDocking();
 
 
 	for (uint i = 0; i < gui.size(); i++)

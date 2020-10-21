@@ -3,11 +3,13 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+struct PhysBody3D;
 
 
 #define MAX_LIGHTS 8
 
 struct Mesh;
+class Plane;
 
 class ModuleRenderer3D : public Module
 {
@@ -34,8 +36,8 @@ public:
 	void EndDrawMode();
 	void ActivateMeshNormals(bool c);
 
-	update_status Draw(float dt);
-	update_status WireframeDraw(float dt);
+	update_status Draw();
+	update_status WireframeDraw();
 
 public:
 
@@ -52,4 +54,7 @@ public:
 
 	bool wireframe_mode = true;
 	bool show_normals = false;
+
+private:
+
 };
