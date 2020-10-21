@@ -1,8 +1,8 @@
 #include "imgui.h"
-#include "GUIclass.h"
+#include "UI.h"
 #include "Module.h"
 
-class Topbar : public GUI
+class Topbar : public UI
 {
 public:
 	Topbar(bool isActive, Application* application);

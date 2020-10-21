@@ -1,10 +1,10 @@
 #pragma once
 
 #include "imgui.h"
-#include "GUIclass.h"
+#include "UI.h"
 #include "Module.h"
 
-class MainMenu : public GUI
+class MainMenu : public UI
 {
 public:
 	MainMenu(bool isActive, Application* application);

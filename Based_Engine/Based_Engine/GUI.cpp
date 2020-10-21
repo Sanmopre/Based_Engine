@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
-#include "Module_UI.h"
-#include "GUIclass.h"
+#include "GUI.h"
+#include "UI.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -12,15 +12,15 @@
 #include "UI_Topbar.h"
 #include "UI_Scene.h"
 
-Module_UI::Module_UI(Application* app, bool start_enabled) : Module(app, start_enabled)
+GUI::GUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
 
-Module_UI::~Module_UI()
+GUI::~GUI()
 {
 }
 
-bool Module_UI::Start()
+bool GUI::Start()
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -49,7 +49,7 @@ bool Module_UI::Start()
 	return true;
 }
 
-update_status Module_UI::PreUpdate()
+update_status GUI::PreUpdate()
 {
 	//NEW GUI FRAME
 	ImGui_ImplOpenGL3_NewFrame();
@@ -69,7 +69,7 @@ update_status Module_UI::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-update_status Module_UI::Update(float dt)
+update_status GUI::Update(float dt)
 {
 
 	for (uint i = 0; i < gui.size(); i++)
@@ -88,7 +88,7 @@ update_status Module_UI::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status Module_UI::PostUpdate()
+update_status GUI::PostUpdate()
 {
 	for (uint i = 0; i < gui.size(); i++)
 	{
@@ -102,7 +102,7 @@ update_status Module_UI::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
-bool Module_UI::CleanUp()
+bool GUI::CleanUp()
 {
 	for (uint i = 0; i < gui.size(); i++)
 	{
@@ -118,7 +118,7 @@ bool Module_UI::CleanUp()
 	return true;
 }
 
-void Module_UI::CreateDocking()
+void GUI::CreateDocking()
 {
 	static bool optFullscreen = true;
 	static bool optPadding = false;
@@ -174,7 +174,7 @@ void Module_UI::CreateDocking()
 	ImGui::End();
 }
 
-void Module_UI::SceneSize(float& width, float& height)
+void GUI::SceneSize(float& width, float& height)
 {
 
 }

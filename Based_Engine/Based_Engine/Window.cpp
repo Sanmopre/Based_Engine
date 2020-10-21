@@ -1,23 +1,23 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include "wtypes.h"
 #include <GL/glew.h>
 
-ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
+Window::Window(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
 	screen_surface = NULL;
 }
 
 // Destructor
-ModuleWindow::~ModuleWindow()
+Window::~Window()
 {
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool Window::Init()
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -97,7 +97,7 @@ bool ModuleWindow::Init()
 }
 
 // Called before quitting
-bool ModuleWindow::CleanUp()
+bool Window::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
@@ -112,30 +112,30 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
-void ModuleWindow::WindowBrightness(float value)
+void Window::WindowBrightness(float value)
 {
 	SDL_SetWindowBrightness(window, value);
 }
 
-void ModuleWindow::WindowResize(int width, int height)
+void Window::WindowResize(int width, int height)
 {
 	SDL_SetWindowSize(window, width, height);
 }
 
-void ModuleWindow::WindowSetFullscreen()
+void Window::WindowSetFullscreen()
 {
 	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN;
 	SDL_SetWindowFullscreen(window, flags);
 
 }
 
-void ModuleWindow::WindowSetWindowed()
+void Window::WindowSetWindowed()
 {
 	Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | 0;
 	SDL_SetWindowFullscreen(window, flags);
 }
 
-void ModuleWindow::WindowBorderless(bool win)
+void Window::WindowBorderless(bool win)
 {
 	if (win) {
 		SDL_SetWindowBordered(window, SDL_TRUE);
@@ -145,7 +145,7 @@ void ModuleWindow::WindowBorderless(bool win)
 	}
 }
 
-void ModuleWindow::WindowResizable(bool res)
+void Window::WindowResizable(bool res)
 {
 	if (res) 
 	{
@@ -157,7 +157,7 @@ void ModuleWindow::WindowResizable(bool res)
 	}
 }
 
-void ModuleWindow::GetDesktopResolution(int& horizontal, int& vertical)
+void Window::GetDesktopResolution(int& horizontal, int& vertical)
 {
 	RECT desktop;
 	const HWND hDesktop = GetDesktopWindow();
@@ -166,14 +166,13 @@ void ModuleWindow::GetDesktopResolution(int& horizontal, int& vertical)
 	vertical = desktop.bottom;
 }
 
-void ModuleWindow::SetTitle(const char* title)
+void Window::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
 
-void ModuleWindow::UpdateWindowSize()
+void Window::UpdateWindowSize()
 {
 	int x, y;
 	SDL_GetWindowSize(window,&x, &y);
-	App->renderer3D->OnResize(x, y);
 }

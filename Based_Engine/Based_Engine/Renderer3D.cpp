@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleRenderer3D.h"
+#include "Renderer3D.h"
 #include "SDL_opengl.h"
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -14,17 +14,17 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
-ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
+Renderer3D::Renderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
 }
 
 // Destructor
-ModuleRenderer3D::~ModuleRenderer3D()
+Renderer3D::~Renderer3D()
 {}
 
 // Called before render is available
-bool ModuleRenderer3D::Init()
+bool Renderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
@@ -110,7 +110,7 @@ bool ModuleRenderer3D::Init()
 	return ret;
 }
 
-bool ModuleRenderer3D::Start()
+bool Renderer3D::Start()
 {
 	//load mesh (PagChomp)
 	std::vector<Mesh> warriorScene = Simp::LoadFile("teapot.FBX");
@@ -119,9 +119,9 @@ bool ModuleRenderer3D::Start()
 }
 
 // PreUpdate: clear buffer
-update_status ModuleRenderer3D::PreUpdate()
+update_status Renderer3D::PreUpdate()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_FRAMEBUFFER | GL_RENDERBUFFER);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
@@ -136,7 +136,7 @@ update_status ModuleRenderer3D::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer3D::Update(float dt)
+update_status Renderer3D::Update(float dt)
 {
 	ActivateMeshNormals(show_normals);
 
@@ -154,7 +154,7 @@ update_status ModuleRenderer3D::Update(float dt)
 }
 
 // PostUpdate present buffer to screen
-update_status ModuleRenderer3D::PostUpdate()
+update_status Renderer3D::PostUpdate()
 {
 	SDL_GL_SwapWindow(App->window->window);
 
@@ -162,7 +162,7 @@ update_status ModuleRenderer3D::PostUpdate()
 }
 
 // Called before quitting
-bool ModuleRenderer3D::CleanUp()
+bool Renderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
@@ -174,7 +174,7 @@ bool ModuleRenderer3D::CleanUp()
 
 
 
-void ModuleRenderer3D::OnResize(int width, int height)
+void Renderer3D::OnResize(int width, int height)
 {
 	if (width == 0 || height == 0)
 		return;
@@ -192,7 +192,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	GenerateFrameBuffers(width, height);
 }
 
-void ModuleRenderer3D::GenerateFrameBuffers(int width, int height)
+void Renderer3D::GenerateFrameBuffers(int width, int height)
 {
 	glGenFramebuffers(1, &frameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
@@ -221,17 +221,17 @@ void ModuleRenderer3D::GenerateFrameBuffers(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ModuleRenderer3D::BeginDebugMode()
+void Renderer3D::BeginDebugMode()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-void ModuleRenderer3D::EndDebugMode()
+void Renderer3D::EndDebugMode()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void ModuleRenderer3D::BeginDrawMode()
+void Renderer3D::BeginDrawMode()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -240,12 +240,12 @@ void ModuleRenderer3D::BeginDrawMode()
 
 }
 
-void ModuleRenderer3D::EndDrawMode()
+void Renderer3D::EndDrawMode()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ModuleRenderer3D::ActivateMeshNormals(bool c)
+void Renderer3D::ActivateMeshNormals(bool c)
 {
 	for (uint i = 0; i < meshes.size(); i++)
 	{
@@ -253,7 +253,7 @@ void ModuleRenderer3D::ActivateMeshNormals(bool c)
 	}
 }
 
-update_status ModuleRenderer3D::Draw()
+update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
 	{
@@ -263,7 +263,7 @@ update_status ModuleRenderer3D::Draw()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer3D::WireframeDraw()
+update_status Renderer3D::WireframeDraw()
 {
 
 	for (uint i = 0; i < meshes.size(); i++)

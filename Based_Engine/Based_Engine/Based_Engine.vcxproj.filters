@@ -1,21 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="ModuleCamera3D.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleInput.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleRenderer3D.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleWindow.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
@@ -61,15 +46,6 @@
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp">
       <Filter>Engine\ImGui\misc\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="MeshClass.cpp">
-      <Filter>Engine\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Module_UI.cpp">
-      <Filter>Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="GUIclass.cpp">
-      <Filter>Engine\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="UI_MainMenu.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
@@ -82,24 +58,30 @@
     <ClCompile Include="UI_Scene.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Camera3D.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer3D.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleCamera3D.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleInput.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleRenderer3D.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleSceneIntro.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModuleWindow.h">
       <Filter>Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
@@ -153,15 +135,6 @@
     <ClInclude Include="Assimp.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="MeshClass.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Module_UI.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="GUIclass.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="UI_MainMenu.h">
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
@@ -173,6 +146,27 @@
     </ClInclude>
     <ClInclude Include="UI_Scene.h">
       <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera3D.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer3D.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

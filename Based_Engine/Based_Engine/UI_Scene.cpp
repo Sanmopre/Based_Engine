@@ -7,12 +7,12 @@
 #include "SDL_opengl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include "wtypes.h"
 #include <string> 
 
-Scene::Scene(bool isActive, Application* application) : GUI("Console", isActive, App)
+Scene::Scene(bool isActive, Application* application) : UI("Console", isActive, App)
 {
 	App = application;
 }

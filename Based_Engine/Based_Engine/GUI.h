@@ -4,20 +4,20 @@
 #include "Application.h"
 
 #include<vector>
-class GUI;
+class UI;
 class MainMenu;
 class Console;
 class Topbar;
 class Scene;
 
-class Module_UI : public Module
+class GUI : public Module
 {
 public:
 
-	Module_UI(Application* app, bool start_enabled = true);
+	GUI(Application* app, bool start_enabled = true);
 
 	// Destructor
-	virtual ~Module_UI();
+	virtual ~GUI();
 	bool Start();
 	update_status PreUpdate();
 	update_status Update(float dt);
@@ -28,7 +28,7 @@ public:
 
 public:
 	
-	std::vector<GUI*> gui;
+	std::vector<UI*> gui;
 
 	MainMenu* mainmenu;
 	Console* console;

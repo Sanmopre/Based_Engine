@@ -7,14 +7,15 @@
 #include "SDL_opengl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include "wtypes.h"
 #include <string> 
 
-Console::Console(bool isActive, Application* application) : GUI("Console", isActive, App)
+Console::Console(bool isActive, Application* application) : UI("Console", isActive, App)
 {
 	App = application;
+	inputlog = "";
 }
 
 Console::~Console()
@@ -30,7 +31,7 @@ void Console::Update(float dt)
 		{
 			ImGui::Text((*l).c_str());
 		}
-		if (ImGui::InputText("", &inputlog, ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText(" ", &inputlog, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			LOG("%s", inputlog.c_str());
 			if (*inputlog.begin() == '/')

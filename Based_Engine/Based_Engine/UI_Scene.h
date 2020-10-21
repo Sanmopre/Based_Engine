@@ -1,8 +1,8 @@
 #include "imgui.h"
-#include "GUIclass.h"
+#include "UI.h"
 #include "Module.h"
 
-class Scene : public GUI
+class Scene : public UI
 {
 public:
 	Scene(bool isActive, Application* application);

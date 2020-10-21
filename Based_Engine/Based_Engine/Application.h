@@ -3,24 +3,22 @@
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
-#include "ModuleWindow.h"
-#include "ModuleInput.h"
-#include "ModuleSceneIntro.h"
-#include "ModuleRenderer3D.h"
-#include "ModuleCamera3D.h"
-#include "Module_UI.h"
+#include "Window.h"
+#include "Input.h"
+#include "Renderer3D.h"
+#include "Camera3D.h"
+#include "GUI.h"
 
 #include <vector>
 
 class Application
 {
 public:
-	ModuleWindow* window;
-	ModuleInput* input;
-	ModuleSceneIntro* scene_intro;
-	ModuleRenderer3D* renderer3D;
-	ModuleCamera3D* camera;
-	Module_UI* ui;
+	Window* window;
+	Input* input;
+	Renderer3D* renderer3D;
+	Camera3D* camera;
+	GUI* ui;
 
 private:
 

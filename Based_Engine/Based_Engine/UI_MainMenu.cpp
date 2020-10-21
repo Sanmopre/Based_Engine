@@ -6,22 +6,18 @@
 #include "SDL_opengl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
-#include "ModuleWindow.h"
-#include "ModuleRenderer3D.h"
+#include "Window.h"
+#include "Renderer3D.h"
 #include "wtypes.h"
 #include <string> 
 #include "UI_MainMenu.h"
 
-MainMenu::MainMenu(bool isActive, Application* application) : GUI("Main Menu", isActive, App)
+MainMenu::MainMenu(bool isActive, Application* application) : UI("Main Menu", isActive, App)
 {
 	App = application;
 }
 
-MainMenu::~MainMenu()
-{
-}
-
-
+MainMenu::~MainMenu() {}
 
 void MainMenu::Start()
 {
@@ -177,7 +173,6 @@ void MainMenu::Update(float dt)
 
 		if (ImGui::CollapsingHeader("OpenGl Options"))
 		{
-
 			ImGui::Checkbox("GL_DEPTH_TEST", &depth);
 			ImGui::SameLine();
 			ImGui::Checkbox("GL_CULL_FACE", &cull_face);
@@ -255,8 +250,6 @@ void MainMenu::ManageOpenGlCheckboxes()
 		glDisable(GL_COLOR_MATERIAL);
 	}
 
-
-
 	if (texture2d)
 	{
 		glEnable(GL_TEXTURE_2D);
@@ -265,7 +258,6 @@ void MainMenu::ManageOpenGlCheckboxes()
 	{
 		glDisable(GL_TEXTURE_2D);
 	}
-
 }
 
 void MainMenu::UpdateWindowStats()

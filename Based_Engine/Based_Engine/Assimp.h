@@ -3,9 +3,9 @@
 #include "scene.h"
 #include "postprocess.h"
 #include "Globals.h"
-#include "MeshClass.h"
+#include "Mesh.h"
 #include "Application.h"
-#include "ModuleRenderer3D.h"
+#include "Renderer3D.h"
 
 #include "Math/float3.h"
 #include "Math/float2.h"

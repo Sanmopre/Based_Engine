@@ -2,12 +2,11 @@
 
 Application::Application()
 {
-	window = new ModuleWindow(this);
-	input = new ModuleInput(this);
-	scene_intro = new ModuleSceneIntro(this);
-	renderer3D = new ModuleRenderer3D(this);
-	camera = new ModuleCamera3D(this);
-	ui = new Module_UI(this);
+	window = new Window(this);
+	input = new Input(this);
+	renderer3D = new Renderer3D(this);
+	camera = new Camera3D(this);
+	ui = new GUI(this);
 
 	modules.reserve(10);
 
@@ -16,7 +15,6 @@ Application::Application()
 	AddModule(renderer3D);
 	AddModule(camera);
 	AddModule(input);
-	AddModule(scene_intro);
 	AddModule(ui);
 
 	//UI last

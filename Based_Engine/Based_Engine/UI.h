@@ -5,11 +5,11 @@
 
 class Application;
 
-class GUI
+class UI
 {
 public:
-	GUI(char* ui_name, bool is_enabled,Application* application);
-	virtual ~GUI();
+	UI(char* ui_name, bool is_enabled,Application* application);
+	virtual ~UI();
 
 	virtual void Start();
 	virtual void PreUpdate();
