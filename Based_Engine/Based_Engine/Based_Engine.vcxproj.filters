@@ -79,6 +79,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UI_GameObjects.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_GameObjects.h">
+      <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

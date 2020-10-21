@@ -11,6 +11,7 @@
 #include "UI_Console.h"
 #include "UI_Topbar.h"
 #include "UI_Scene.h"
+#include "UI_GameObjects.h"
 
 GUI::GUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -37,6 +38,7 @@ bool GUI::Start()
 	gui.push_back(console = new Console(true, App));
 	gui.push_back(topbar = new Topbar(true, App));
 	gui.push_back(scene = new Scene(true, App));
+	gui.push_back(game_objects = new GameObjects(true, App));
 
 	for (uint i = 0; i < gui.size(); i++)
 	{

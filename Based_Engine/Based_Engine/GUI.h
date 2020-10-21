@@ -9,6 +9,7 @@ class MainMenu;
 class Console;
 class Topbar;
 class Scene;
+class GameObjects;
 
 class GUI : public Module
 {
@@ -34,4 +35,5 @@ public:
 	Console* console;
 	Topbar* topbar;
 	Scene* scene;
+	GameObjects* game_objects;
 };
