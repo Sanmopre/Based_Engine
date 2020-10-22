@@ -82,6 +82,9 @@
     <ClCompile Include="UI_GameObjects.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

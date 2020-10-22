@@ -1,6 +1,7 @@
-#include "Globals.h"
 #include "Application.h"
 #include "Input.h"
+#include "Window.h"
+
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 

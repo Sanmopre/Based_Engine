@@ -1,6 +1,6 @@
-#include "Globals.h"
 #include "Application.h"
 #include "Camera3D.h"
+#include "Input.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

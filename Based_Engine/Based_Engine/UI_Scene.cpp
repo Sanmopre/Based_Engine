@@ -1,16 +1,13 @@
-#include "UI_Scene.h"
-#include "Globals.h"
 #include "Application.h"
-#include "Module.h"
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "SDL_opengl.h"
-#include "imgui_impl_opengl3.h"
-#include "misc/cpp/imgui_stdlib.h" 
+#include "UI_Scene.h"
 #include "Window.h"
 #include "Renderer3D.h"
+
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
+
 #include "wtypes.h"
-#include <string> 
 
 Scene::Scene(bool isActive, Application* application) : UI("Console", isActive, App)
 {

@@ -1,12 +1,12 @@
 #pragma once
 #include "Module.h"
-#include "Globals.h"
+
 #include "glmath.h"
 #include "Light.h"
-struct PhysBody3D;
-
 
 #define MAX_LIGHTS 8
+
+struct PhysBody3D;
 
 struct Mesh;
 class B_Plane;

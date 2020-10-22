@@ -1,17 +1,17 @@
-#include "Globals.h"
 #include "Application.h"
 #include "GUI.h"
 #include "UI.h"
+#include "Window.h"
+
+#include "UI_Console.h"
+#include "UI_GameObjects.h"
+#include "UI_MainMenu.h"
+#include "UI_Scene.h"
+#include "UI_Topbar.h"
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
-
-
-#include "UI_MainMenu.h"
-#include "UI_Console.h"
-#include "UI_Topbar.h"
-#include "UI_Scene.h"
-#include "UI_GameObjects.h"
 
 GUI::GUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -29,9 +29,9 @@ bool GUI::Start()
 	ImGui_ImplOpenGL3_Init("#version 130");
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;      
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           
+      
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; 
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;        
 
 	gui.push_back(mainmenu = new MainMenu(true,App));

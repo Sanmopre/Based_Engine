@@ -1,24 +1,26 @@
-#pragma once
-                       
+#pragma once           
 #include "Globals.h"
 #include "Timer.h"
-#include "Module.h"
-#include "Window.h"
-#include "Input.h"
-#include "Renderer3D.h"
-#include "Camera3D.h"
-#include "GUI.h"
 
 #include <vector>
+
+class Module;
+class Camera3D;
+class GUI;
+class Input;
+class Renderer3D;
+class Window;
+class ObjectManager;
 
 class Application
 {
 public:
-	Window* window;
-	Input* input;
-	Renderer3D* renderer3D;
-	Camera3D* camera;
-	GUI* ui;
+	Window* window = nullptr;
+	Input* input = nullptr;
+	Renderer3D* renderer3D = nullptr;
+	Camera3D* camera = nullptr;
+	GUI* ui = nullptr;
+	ObjectManager* objects = nullptr;
 
 private:
 

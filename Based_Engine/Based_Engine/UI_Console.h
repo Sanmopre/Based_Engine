@@ -1,6 +1,4 @@
-#include "imgui.h"
 #include "UI.h"
-#include "Module.h"
 
 class Console : public UI
 {

@@ -96,6 +96,7 @@
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Assimp.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
@@ -124,6 +125,7 @@
     <ClCompile Include="External\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="glmath.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

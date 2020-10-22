@@ -1,9 +1,6 @@
 #pragma once
 #include "Module.h"
-#include "SDL.h"
-#include "Application.h"
 
-#include<vector>
 class UI;
 class MainMenu;
 class Console;

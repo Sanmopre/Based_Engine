@@ -1,16 +1,23 @@
 #include <GL/glew.h>
-#include "Globals.h"
+
 #include "Application.h"
 #include "Renderer3D.h"
+#include "Window.h"
+#include "Camera3D.h"
+
 #include "SDL_opengl.h"
+
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+
 #include "Assimp.h"
 #include "cimport.h"
+
 #include "scene.h"
 #include "Primitive.h"
 #include "postprocess.h"
+
 #include <gl/GL.h>
 #include <gl/GLU.h>
 

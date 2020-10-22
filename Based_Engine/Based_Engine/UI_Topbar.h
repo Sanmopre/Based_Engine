@@ -1,10 +1,10 @@
-#include "imgui.h"
+#pragma once
 #include "UI.h"
-#include "Module.h"
 
 class Topbar : public UI
 {
 public:
+
 	Topbar(bool isActive, Application* application);
 	virtual ~Topbar();
 
@@ -13,7 +13,6 @@ public:
 
 
 public:
-	std::string inputlog;
 
 	bool showcase;
 };

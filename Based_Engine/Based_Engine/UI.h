@@ -1,8 +1,6 @@
 #pragma once
 #include "Globals.h"
 
-#include <vector>
-
 class Application;
 
 class UI

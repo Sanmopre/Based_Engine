@@ -1,6 +1,7 @@
-#include "imgui.h"
+#pragma once
 #include "UI.h"
-#include "Module.h"
+
+#include "imgui.h"
 
 class Scene : public UI
 {

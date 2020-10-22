@@ -1,16 +1,15 @@
 #include "UI_Console.h"
-#include "Globals.h"
+
 #include "Application.h"
-#include "Module.h"
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "SDL_opengl.h"
-#include "imgui_impl_opengl3.h"
-#include "misc/cpp/imgui_stdlib.h" 
 #include "Window.h"
 #include "Renderer3D.h"
+
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
+#include "misc/cpp/imgui_stdlib.h" 
+
 #include "wtypes.h"
-#include <string> 
 
 Console::Console(bool isActive, Application* application) : UI("Console", isActive, App)
 {

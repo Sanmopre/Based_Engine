@@ -1,5 +1,13 @@
 #include "Application.h"
 
+#include "Module.h"
+#include "Window.h"
+#include "Input.h"
+#include "Renderer3D.h"
+#include "Camera3D.h"
+#include "GUI.h"
+#include "ObjectManager.h"
+
 Application::Application()
 {
 	window = new Window(this);
@@ -7,17 +15,17 @@ Application::Application()
 	renderer3D = new Renderer3D(this);
 	camera = new Camera3D(this);
 	ui = new GUI(this);
-
-	modules.reserve(10);
+	objects = new ObjectManager(this);
 
 	// Main Modules
-	AddModule(window);	
-	AddModule(renderer3D);
-	AddModule(camera);
 	AddModule(input);
-	AddModule(ui);
-
+	AddModule(window);	
+	AddModule(camera);
+	AddModule(objects);
+	//Render
+	AddModule(renderer3D);
 	//UI last
+	AddModule(ui);
 }
 
 Application::~Application()
@@ -109,5 +117,5 @@ bool Application::CleanUp()
 
 void Application::AddModule(Module* module)
 {
-	modules.emplace_back(module);
+	modules.push_back(module);
 }
