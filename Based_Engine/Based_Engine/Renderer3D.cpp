@@ -115,6 +115,9 @@ bool Renderer3D::Start()
 	//load mesh (PagChomp)
 	std::vector<Mesh> warriorScene = Simp::LoadFile("teapot.FBX");
 	meshes.insert(meshes.end(), warriorScene.begin(), warriorScene.end());
+
+	plane = new B_Plane(0, 1, 0, 0);
+	plane->axis = true;
 	return true;
 }
 
@@ -142,14 +145,20 @@ update_status Renderer3D::Update(float dt)
 
 	BeginDrawMode();
 	if (wireframe_mode) {
-		BeginDebugMode();
-		WireframeDraw();
+		BeginDebugMode();	
+		WireframeDraw();		
+		plane->Render();
+		
 		EndDebugMode();
 	}
 	else {
+		plane->Render();
 		Draw();
+
 	}
 	EndDrawMode();
+
+
 	return UPDATE_CONTINUE;
 }
 

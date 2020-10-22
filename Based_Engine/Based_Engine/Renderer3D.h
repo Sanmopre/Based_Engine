@@ -9,7 +9,7 @@ struct PhysBody3D;
 #define MAX_LIGHTS 8
 
 struct Mesh;
-class Plane;
+class B_Plane;
 
 class Renderer3D : public Module
 {
@@ -57,4 +57,5 @@ public:
 
 private:
 
+	B_Plane* plane;
 };
