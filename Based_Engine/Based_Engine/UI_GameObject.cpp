@@ -22,7 +22,10 @@ void GameObject_Inspector::Update(float dt)
 			ImGui::InputFloat3("Rotation", rotation);
 			ImGui::InputFloat3("Scale", scale);
 		}
-
 	}
 	ImGui::End();
+}
+
+void GameObject_Inspector::AddComponentUI(Component_ui* component)
+{
 }
