@@ -18,9 +18,9 @@ void GameObject_Inspector::Update(float dt)
 
 		if (ImGui::CollapsingHeader("Transform"))
 		{
-			ImGui::InputInt3("Position",position);
-			ImGui::InputInt3("Rotation", &rotation_x);
-			ImGui::InputInt3("Scale", &scale_x);
+			ImGui::InputFloat3("Position", position);
+			ImGui::InputFloat3("Rotation", rotation);
+			ImGui::InputFloat3("Scale", scale);
 		}
 
 	}

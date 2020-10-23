@@ -1,6 +1,8 @@
 #pragma once
 #include "UI.h"
 
+class GameObject;
+
 class GameObject_Inspector : public UI
 {
 public:
@@ -9,9 +11,11 @@ public:
 
 	void Update(float dt);
 
-	int* position;
-	int rotation_x = 1;
-	int scale_x = 0;
+public:
 
-	char* name = nullptr;
+	GameObject* object;
+
+	float position[3] = { 0, 0, 0 };
+	float rotation[3] = { 0, 0 ,0 };
+	float scale[3] = { 0, 0, 0 };
 };
