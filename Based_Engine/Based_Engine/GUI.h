@@ -7,6 +7,7 @@ class Console;
 class Topbar;
 class Scene;
 class GameObjects;
+class GameObject_Inspector;
 
 class GUI : public Module
 {
@@ -33,4 +34,5 @@ public:
 	Topbar* topbar;
 	Scene* scene;
 	GameObjects* game_objects;
+	GameObject_Inspector* inspector;
 };
