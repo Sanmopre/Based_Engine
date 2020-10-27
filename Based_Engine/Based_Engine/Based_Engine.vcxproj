@@ -97,6 +97,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Assimp.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
