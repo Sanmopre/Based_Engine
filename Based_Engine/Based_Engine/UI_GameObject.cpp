@@ -22,6 +22,16 @@ void GameObject_Inspector::Update(float dt)
 			ImGui::InputFloat3("Rotation", rotation);
 			ImGui::InputFloat3("Scale", scale);
 		}
+
+		if (ImGui::CollapsingHeader("Geometry"))
+		{
+
+		}
+
+		if (ImGui::CollapsingHeader("Material"))
+		{
+
+		}
 	}
 	ImGui::End();
 }

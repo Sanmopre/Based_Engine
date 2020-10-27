@@ -84,7 +84,7 @@ void Mesh::DrawNormals() const
 
 	for (uint i = 0, j = 0; i < vertices.size(); i++)
 	{
-		//Draw Vertex Normals-----------------------
+		//VERTEX NORMALS
 		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
 
 		float3 vector = vertices[i].Position;
@@ -95,7 +95,7 @@ void Mesh::DrawNormals() const
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		j++;
 
-		//Draw Faces normals-------------------
+		//FACE NORMALS
 		if (j == 3)
 		{
 			float3 P0 = vertices[i - 2].Position;
@@ -105,15 +105,13 @@ void Mesh::DrawNormals() const
 			float3 V0 = P0 - P1;
 			float3 V1 = P2 - P1;
 
-			//Normal of the face
+
 			float3 N = V1.Cross(V0);
 			N.Normalize();
 
-			// Center of the triangle
+
 			float3 P = (P0 + P1 + P2) / 3.0;
-
 			float3 normal = P + N * 2;
-
 			glVertex3f(P.x, P.y, P.z); glVertex3f(normal.x, normal.y, normal.z);
 
 			j = 0;

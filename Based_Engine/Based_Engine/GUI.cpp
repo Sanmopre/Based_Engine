@@ -32,8 +32,6 @@ bool GUI::Start()
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
       
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; 
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;        
 
 	gui.push_back(mainmenu = new MainMenu(true,App));
 	gui.push_back(console = new Console(true, App));
@@ -158,22 +156,9 @@ void GUI::CreateDocking()
 	if (optFullscreen)
 		ImGui::PopStyleVar(2);
 
-	// DockSpace
-	ImGuiIO& io = ImGui::GetIO();
-	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
-	{
-		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
-	}
-	else
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		ImGui::Text("ERROR: Docking is not enabled! See Demo > Configuration.");
-		ImGui::Text("Set io.ConfigFlags |= ImGuiConfigFlags_DockingEnable in your code, or ");
-		ImGui::SameLine(0.0f, 0.0f);
-		if (ImGui::SmallButton("click here"))
-			io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-	}
+	ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspaceFlags);
+
 
 	ImGui::End();
 }
