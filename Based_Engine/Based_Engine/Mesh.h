@@ -28,7 +28,7 @@ public:
 
 public:
 	uint idVertex;
-	std::vector<Vertex>       vertices;
+	std::vector<Vertex> vertices;
 
 	uint idIndex; 
 	std::vector<uint> indices;

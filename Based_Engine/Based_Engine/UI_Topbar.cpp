@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "Input.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -66,7 +67,9 @@ void Topbar::Update(float dt)
 		ImGui::EndMenu();
 	}
 
-	if (ImGui::Button("Quit", ImVec2(40, 20))) {
+	if (ImGui::Button("Quit", ImVec2(40, 20))) 
+	{
+		App->input->quit = true;
 	}
 	ImGui::EndMainMenuBar();
 

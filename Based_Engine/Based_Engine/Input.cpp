@@ -11,6 +11,8 @@ Input::Input(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	keyboard = new KEY_STATE[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
+
+	quit = false;
 }
 
 // Destructor
@@ -88,8 +90,6 @@ update_status Input::PreUpdate()
 				mouse_buttons[i] = KEY_IDLE;
 		}
 	}
-
-	bool quit = false;
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

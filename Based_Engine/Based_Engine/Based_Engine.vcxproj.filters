@@ -88,6 +88,9 @@
     <ClCompile Include="UI_GameObject.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -190,6 +193,9 @@
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
     <ClInclude Include="TextureLoader.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>

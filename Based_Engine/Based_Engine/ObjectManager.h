@@ -15,9 +15,12 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-private:
+	GameObject* AddObject(std::string name, GameObject* parent = nullptr);
 
 	std::vector<GameObject*> gameobjects;
+
+private:
+
 	std::vector<GameObject*> buffer;
 	std::vector <std::vector<GameObject*>::iterator> to_delete;
 };
