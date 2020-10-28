@@ -39,6 +39,14 @@ update_status Camera3D::Update(float dt)
 {
 	vec3 newPos(0, 0, 0);
 
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
+	{
+		speed = speed_shift;
+	}
+	else {
+		speed = speed_normal;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
