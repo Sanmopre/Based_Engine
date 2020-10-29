@@ -24,7 +24,13 @@ bool ObjectManager::Start()
 	AddObject("carrot", fridge);
 	AddObject("microwave", room);
 	for (int i = 0; i < 5; i++)
-		AddObject("tree", park);
+	{
+		bool out = false;
+		char n[10];
+		sprintf_s(n, "tree%d", i);
+		std::string name = n;
+		AddObject(name, park);
+	}
 
 	return true;
 }

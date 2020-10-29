@@ -6,18 +6,17 @@
 #include "Module.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-
-#pragma comment( lib, "Based_Engine/External/DevIL_Windows_SDK/libx/x86/ReleaseLib/DevIL.lib" )
-#pragma comment( lib, "Based_Engine/External/DevIL_Windows_SDK/libx/x86/ReleaseLib/ILU.lib" )
-#pragma comment( lib, "Based_Engine/External/DevIL_Windows_SDK/libx/x86/ReleaseLib/ILUT.lib" )
+#include "il.h"
+#include "ilu.h"
+#include "ilut.h"
 
 namespace Texture {
 
 	bool Init() {
 
-	//	ilInit();
-	//	iluInit();
-	//	ilutInit();
+		ilInit();
+		iluInit();
+		ilutInit();
 		return true;
 	}
 }

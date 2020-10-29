@@ -49,13 +49,13 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\DevIL_Windows_SDK\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\DebugLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\DebugLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\DevIL_Windows_SDK\libx\x86\ReleaseLib</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -68,7 +68,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\DevIL_Windows_SDK\include\IL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,7 +76,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\DevIL_Windows_SDK\libx\x86\ReleaseLib</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
