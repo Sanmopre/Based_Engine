@@ -120,9 +120,10 @@ bool Renderer3D::Init()
 bool Renderer3D::Start()
 {
 	//load mesh (PagChomp)
-	std::vector<Mesh> warriorScene = Simp::LoadFile("teapot.FBX");
-	meshes.insert(meshes.end(), warriorScene.begin(), warriorScene.end());
+	std::vector<Mesh> house = Simp::LoadFile("Assets/House/BakerHouse.FBX");
+	meshes.insert(meshes.end(), house.begin(), house.end());
 
+	//Main scene plane
 	plane = new B_Plane(0, 1, 0, 0);
 	plane->axis = true;
 	return true;
