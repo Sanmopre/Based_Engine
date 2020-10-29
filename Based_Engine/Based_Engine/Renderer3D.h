@@ -1,14 +1,13 @@
 #pragma once
 #include "Module.h"
 
-#include "glmath.h"
 #include "Light.h"
 
 #define MAX_LIGHTS 8
 
 struct PhysBody3D;
 
-struct Mesh;
+class Mesh;
 class B_Plane;
 
 class Renderer3D : public Module
@@ -36,12 +35,15 @@ public:
 	void EndDrawMode();
 	void ActivateMeshNormals(bool c);
 
+	void AddMesh(MESH*);
+	void DeleteMesh(MESH*);
+
 	update_status Draw();
 	update_status WireframeDraw();
 
 public:
 
-	std::vector<Mesh> meshes;
+	std::vector<MESH*> meshes;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

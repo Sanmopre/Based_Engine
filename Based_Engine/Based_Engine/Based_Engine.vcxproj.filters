@@ -89,6 +89,15 @@
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Simp.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,9 +153,6 @@
     <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h">
       <Filter>Engine\ImGui\misc\cpp</Filter>
     </ClInclude>
-    <ClInclude Include="Assimp.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="UI_MainMenu.h">
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
@@ -183,9 +189,6 @@
     <ClInclude Include="UI_GameObjects.h">
       <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Engine\Modules</Filter>
     </ClInclude>
@@ -196,6 +199,15 @@
       <Filter>Engine\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Simp.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -226,6 +238,9 @@
     </Filter>
     <Filter Include="Engine\UI_Windows">
       <UniqueIdentifier>{a9ebfe37-0889-44fa-bcb7-9661173b689e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Tools\GameObject">
+      <UniqueIdentifier>{c56cef84-33a2-4c83-b246-d28ab3ad2b90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

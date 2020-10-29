@@ -2,8 +2,6 @@
 #include "Globals.h"
 #include "Timer.h"
 
-#include <vector>
-
 class Module;
 class Camera3D;
 class GUI;

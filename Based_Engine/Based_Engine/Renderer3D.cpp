@@ -11,8 +11,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-#include "Assimp.h"
-#include "cimport.h"
+#include "Simp.h"
+#include "Mesh.h"
 
 #include "scene.h"
 #include "Primitive.h"
@@ -119,10 +119,6 @@ bool Renderer3D::Init()
 
 bool Renderer3D::Start()
 {
-	//load mesh (PagChomp)
-	std::vector<Mesh> house = Simp::LoadFile("Assets/House/BakerHouse.FBX");
-	meshes.insert(meshes.end(), house.begin(), house.end());
-
 	//Main scene plane
 	plane = new B_Plane(0, 1, 0, 0);
 	plane->axis = true;
@@ -265,28 +261,36 @@ void Renderer3D::EndDrawMode()
 void Renderer3D::ActivateMeshNormals(bool c)
 {
 	for (uint i = 0; i < meshes.size(); i++)
-	{
-		meshes[i].drawnormals = c;
-	}
+		for (uint n = 0; n < meshes[i]->size(); n++)
+			(*meshes[i])[n].drawnormals = c;
+}
+
+void Renderer3D::AddMesh(MESH* mesh)
+{
+	meshes.push_back(mesh);
+}
+
+void Renderer3D::DeleteMesh(MESH* mesh)
+{
+	for (std::vector<MESH*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++)
+		if (*itr == mesh)
+			meshes.erase(itr);
 }
 
 update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
-	{
-		meshes[i].Render(true);
-	}
+		for (uint n = 0; n < meshes[i]->size(); n++)
+			(*meshes[i])[n].Render(true);
 
 	return UPDATE_CONTINUE;
 }
 
 update_status Renderer3D::WireframeDraw()
 {
-
 	for (uint i = 0; i < meshes.size(); i++)
-	{
-		meshes[i].Render(true);
-	}
+		for (uint n = 0; n < meshes[i]->size(); n++)
+			(*meshes[i])[n].Render(true);
 	
 	return UPDATE_CONTINUE;
 }

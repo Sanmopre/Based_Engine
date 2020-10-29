@@ -19,6 +19,8 @@ void EraseGetLogs();
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 
+#define MESH std::vector<Mesh>
+
 
 typedef unsigned int uint;
 

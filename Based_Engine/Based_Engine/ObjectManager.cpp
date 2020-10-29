@@ -64,9 +64,9 @@ bool ObjectManager::CleanUp()
 	return true;
 }
 
-GameObject* ObjectManager::AddObject(std::string name, GameObject* parent)
+GameObject* ObjectManager::AddObject(std::string name, GameObject* parent, bool active)
 {
-	GameObject* output = new GameObject(name, parent);
+	GameObject* output = new GameObject(name, parent, App, active);
 	if (!parent)
 		gameobjects.push_back(output);
 	else

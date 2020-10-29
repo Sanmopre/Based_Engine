@@ -15,7 +15,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	GameObject* AddObject(std::string name, GameObject* parent = nullptr);
+	GameObject* AddObject(std::string name, GameObject* parent = nullptr, bool active = true);
 
 	std::vector<GameObject*> gameobjects;
 

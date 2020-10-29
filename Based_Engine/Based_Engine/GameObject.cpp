@@ -1,9 +1,15 @@
 #include "GameObject.h"
+#include "Application.h"
 
-GameObject::GameObject(std::string name, GameObject* parent)
+#include "Components.h"
+
+GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
 {
 	this->name = name;
 	this->parent = parent;
+
+	App = app;
+	this->active = active;
 }
 
 GameObject::~GameObject()
@@ -43,4 +49,12 @@ bool GameObject::CleanUp()
 	}
 
 	return true;
+}
+
+void GameObject::AddMeshComponent(const char* path, bool active)
+{
+	MeshComponent* mesh = new MeshComponent(path, App, active);
+
+	Component* comp = mesh;
+	components.push_back(comp);
 }

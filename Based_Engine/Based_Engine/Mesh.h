@@ -1,10 +1,9 @@
-
+#pragma once
 #include "Globals.h"
 #include "Color.h"
+
 #include "Math/float3.h"
 #include "Math/float2.h"
-
-#include <vector>
 
 struct Vertex
 {

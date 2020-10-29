@@ -1,5 +1,8 @@
 #pragma once
+
 #include "Globals.h"
+
+class Application;
 
 struct Transform
 {
@@ -13,15 +16,13 @@ struct Transform
 	int x, y, z;
 };
 
-class Component
-{
-};
+class Component;
 
 class GameObject
 {
 public:
 
-	GameObject(std::string name, GameObject* parent);
+	GameObject(std::string name, GameObject* parent, Application* app, bool active = true);
 	virtual ~GameObject();
 
 	bool Update(float dt);
@@ -33,10 +34,13 @@ public:
 	GameObject* parent;
 	std::vector<GameObject*> children;
 
-	void AddComponent() {}
+	void AddMeshComponent(const char* path, bool active = true);
 	const char* GetName() const { return name.c_str(); }
+
+	bool active;
 
 private:
 
 	std::string name;
+	Application* App;
 };

@@ -29,16 +29,25 @@ void GameObjects::Update(float dt)
 
 void GameObjects::IterateGameObjects(GameObject* gameobject)
 {
-	if (ImGui::TreeNode(gameobject->GetName()))
+	if (gameobject->children.size() != 0)
 	{
-		for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
+		if (ImGui::TreeNodeEx(gameobject->GetName(), ImGuiTreeNodeFlags_None))
 		{
-			GameObject* object = *obj;
+			for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
+			{
+				GameObject* object = *obj;
 
-			IterateGameObjects(object);
+				IterateGameObjects(object);
+			}
+			ImGui::TreePop();
 		}
+	}
+	else
+	{
+		ImGui::TreeNodeEx(gameobject->GetName(), ImGuiTreeNodeFlags_Leaf);
 		ImGui::TreePop();
 	}
 }
+
 
 
