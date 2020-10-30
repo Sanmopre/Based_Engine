@@ -51,9 +51,16 @@ bool GameObject::CleanUp()
 	return true;
 }
 
-void GameObject::AddMeshComponent(const char* path, bool active)
+void GameObject::AddMeshComponent(const char* path, char* name, bool active)
 {
-	MeshComponent* mesh = new MeshComponent(path, this, App, active);
+	if (!name)
+	{
+		char str[10];
+		sprintf_s(str, "%d", components.size());
+		name = str;
+	}
+
+	MeshComponent* mesh = new MeshComponent(name, path, this, App, active);
 
 	Component* comp = mesh;
 	components.push_back(comp);

@@ -8,7 +8,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-MeshComponent::MeshComponent(const char* path, GameObject* parent, Application* app, bool active) : Component(parent, app, active)
+MeshComponent::MeshComponent(char* name, const char* path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	mesh = Simp::LoadFile(path);
 
@@ -52,9 +52,11 @@ void MeshComponent::Deactivate()
 
 void MeshComponent::DisplayComponentMenu()
 {
-	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
-	{
+	char str[24];
+	sprintf_s(str, "Mesh (%s)", name.c_str());
 
+	if (ImGui::CollapsingHeader(str, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Checkbox("active", &toActivate);
 	}
-	ImGui::Checkbox("active", &toActivate);
 }

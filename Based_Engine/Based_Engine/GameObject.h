@@ -34,7 +34,7 @@ public:
 	GameObject* parent;
 	std::vector<GameObject*> children;
 
-	void AddMeshComponent(const char* path, bool active = true);
+	void AddMeshComponent(const char* path, char* name = nullptr, bool active = true);
 	const char* GetName() const { return name.c_str(); }
 
 	bool active;

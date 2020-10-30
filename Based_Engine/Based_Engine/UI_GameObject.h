@@ -18,5 +18,7 @@ public:
 
 private:
 
-	GameObject* object;
+	GameObject* object = nullptr;
+	GameObject* last_object = nullptr;
+	std::string path;
 };

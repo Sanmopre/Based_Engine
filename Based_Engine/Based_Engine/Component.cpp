@@ -1,8 +1,9 @@
 #include "Components.h"
 #include "Application.h"
 
-Component::Component(GameObject* parent, Application* app, bool active)
+Component::Component(char* name, GameObject* parent, Application* app, bool active)
 {
+	this->name = name;
 	this->parent = parent;
 	App = app;
 	this->active = active;

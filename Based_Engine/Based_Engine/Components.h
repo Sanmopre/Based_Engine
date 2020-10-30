@@ -10,7 +10,7 @@ class Component
 {
 public:
 
-	Component(GameObject* parent, Application* app, bool active = true);
+	Component(char* name, GameObject* parent, Application* app, bool active = true);
 	virtual ~Component();
 
 	virtual bool Update(float dt);
@@ -27,6 +27,7 @@ protected:
 
 	Application* App;
 	bool active;
+	std::string name;
 
 	GameObject* parent;
 };
@@ -35,7 +36,7 @@ class MeshComponent : public Component
 {
 public:
 
-	MeshComponent(const char* path, GameObject* parent, Application* app, bool active = true);
+	MeshComponent(char* name, const char* path, GameObject* parent, Application* app, bool active = true);
 	virtual ~MeshComponent();
 
 	bool Update(float dt);
