@@ -1,5 +1,7 @@
 #include "ObjectManager.h"
+#include "Application.h"
 #include "GameObject.h"
+#include "Input.h"
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
@@ -31,8 +33,8 @@ bool ObjectManager::Start()
 		std::string name = n;
 		AddObject(name, park);
 	}
+	house->AddMeshComponent("Assets/House/BakerHouse.FBX", false);
 
-	house->AddMeshComponent("Assets/House/BakerHouse.FBX");
 	return true;
 }
 

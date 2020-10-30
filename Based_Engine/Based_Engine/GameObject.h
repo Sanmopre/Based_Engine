@@ -13,7 +13,7 @@ struct Transform
 		z = 0;
 	}
 
-	int x, y, z;
+	float x, y, z;
 };
 
 class Component;

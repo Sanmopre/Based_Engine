@@ -18,6 +18,7 @@ public:
 	GameObject* AddObject(std::string name, GameObject* parent = nullptr, bool active = true);
 
 	std::vector<GameObject*> gameobjects;
+	GameObject* selected = nullptr;
 
 private:
 

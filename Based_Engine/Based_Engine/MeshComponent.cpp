@@ -5,8 +5,10 @@
 #include "Simp.h"
 #include "Mesh.h"
 
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
 
-MeshComponent::MeshComponent(const char* path, Application* app, bool active) : Component(app, active)
+MeshComponent::MeshComponent(const char* path, GameObject* parent, Application* app, bool active) : Component(parent, app, active)
 {
 	mesh = Simp::LoadFile(path);
 
@@ -20,6 +22,13 @@ MeshComponent::~MeshComponent()
 
 bool MeshComponent::Update(float dt)
 {
+	if (active != toActivate)
+	{
+		if (toActivate)
+			Activate();
+		else
+			Deactivate();
+	}
 	return true;
 }
 
@@ -39,4 +48,13 @@ void MeshComponent::Deactivate()
 		active = false;
 		App->renderer3D->DeleteMesh(&mesh);
 	}
+}
+
+void MeshComponent::DisplayComponentMenu()
+{
+	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+	ImGui::Checkbox("active", &toActivate);
 }

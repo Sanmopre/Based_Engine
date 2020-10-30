@@ -4,12 +4,13 @@
 
 class Application;
 class Mesh;
+class GameObject;
 
 class Component
 {
 public:
 
-	Component(Application* app, bool active = true);
+	Component(GameObject* parent, Application* app, bool active = true);
 	virtual ~Component();
 
 	virtual bool Update(float dt);
@@ -18,23 +19,31 @@ public:
 	virtual void Deactivate();
 	bool IsActive();
 
+	virtual void DisplayComponentMenu() = 0;
+
 protected:
 
-	bool active;
+	bool toActivate;
+
 	Application* App;
+	bool active;
+
+	GameObject* parent;
 };
 
 class MeshComponent : public Component
 {
 public:
 
-	MeshComponent(const char* path, Application* app, bool active = true);
+	MeshComponent(const char* path, GameObject* parent, Application* app, bool active = true);
 	virtual ~MeshComponent();
 
 	bool Update(float dt);
 
 	void Activate();
 	void Deactivate();
+
+	void DisplayComponentMenu();
 
 private:
 

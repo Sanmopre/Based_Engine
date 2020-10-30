@@ -1,10 +1,12 @@
 #include "Components.h"
 #include "Application.h"
 
-Component::Component(Application* app, bool active)
+Component::Component(GameObject* parent, Application* app, bool active)
 {
+	this->parent = parent;
 	App = app;
 	this->active = active;
+	toActivate = active;
 }
 
 Component::~Component()

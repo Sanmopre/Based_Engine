@@ -7,6 +7,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+#include "Input.h"
+
 GameObjects::GameObjects(bool isActive, Application* application) : UI("GameObjects", isActive, App)
 {
 	App = application;
@@ -21,6 +23,7 @@ void GameObjects::Update(float dt)
 {
 	ImGui::Begin("GameObjects");
 
+	i = 0;
 	for (std::vector<GameObject*>::iterator obj = App->objects->gameobjects.begin(); obj != App->objects->gameobjects.end(); obj++)
 		IterateGameObjects(*obj);
 
@@ -29,23 +32,35 @@ void GameObjects::Update(float dt)
 
 void GameObjects::IterateGameObjects(GameObject* gameobject)
 {
-	if (gameobject->children.size() != 0)
-	{
-		if (ImGui::TreeNodeEx(gameobject->GetName(), ImGuiTreeNodeFlags_None))
-		{
-			for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
-			{
-				GameObject* object = *obj;
+	char bName[10];
+	sprintf_s(bName, "select%d", i);
+	i++;
 
-				IterateGameObjects(object);
-			}
-			ImGui::TreePop();
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None;
+	if (gameobject == App->objects->selected)
+		flags |= ImGuiTreeNodeFlags_Selected;
+	if (gameobject->children.size() == 0)
+		flags |= ImGuiTreeNodeFlags_Leaf;
+
+	if (ImGui::TreeNodeEx(gameobject->GetName(), flags))
+	{
+		ImGui::SameLine();
+		if (ImGui::Button(bName, { 100, 13 }))
+			App->objects->selected = gameobject;
+
+		for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
+		{
+			GameObject* object = *obj;
+
+			IterateGameObjects(object);
 		}
+		ImGui::TreePop();
 	}
 	else
 	{
-		ImGui::TreeNodeEx(gameobject->GetName(), ImGuiTreeNodeFlags_Leaf);
-		ImGui::TreePop();
+		ImGui::SameLine();
+		if (ImGui::Button(bName, { 100, 13 }))
+			App->objects->selected = gameobject;
 	}
 }
 

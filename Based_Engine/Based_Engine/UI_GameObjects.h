@@ -14,4 +14,6 @@ public:
 
 
 	void IterateGameObjects(GameObject*);
+
+	int i;
 };

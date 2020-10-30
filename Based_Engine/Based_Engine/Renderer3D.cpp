@@ -274,7 +274,10 @@ void Renderer3D::DeleteMesh(MESH* mesh)
 {
 	for (std::vector<MESH*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++)
 		if (*itr == mesh)
+		{
 			meshes.erase(itr);
+			break;
+		}
 }
 
 update_status Renderer3D::Draw()

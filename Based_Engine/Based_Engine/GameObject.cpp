@@ -21,7 +21,7 @@ bool GameObject::Update(float dt)
 {
 	for (std::vector<Component*>::iterator comp = components.begin(); comp != components.end(); comp++)
 	{
-		
+		(*comp)->Update(dt);
 	}
 
 	for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
@@ -53,7 +53,7 @@ bool GameObject::CleanUp()
 
 void GameObject::AddMeshComponent(const char* path, bool active)
 {
-	MeshComponent* mesh = new MeshComponent(path, App, active);
+	MeshComponent* mesh = new MeshComponent(path, this, App, active);
 
 	Component* comp = mesh;
 	components.push_back(comp);
