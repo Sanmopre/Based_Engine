@@ -10,13 +10,18 @@
 #include "ilu.h"
 #include "ilut.h"
 
-namespace Texture {
+#pragma once
 
-	bool Init() {
+struct Texture
+{
+	uint id;
 
-		ilInit();
-		iluInit();
-		ilutInit();
-		return true;
-	}
+	uint height;
+	uint width;
+};
+
+namespace TextureLod
+{
+	void Init();
+	Texture* Load(const char* path);
 }

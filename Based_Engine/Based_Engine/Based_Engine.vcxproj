@@ -134,6 +134,7 @@
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Simp.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

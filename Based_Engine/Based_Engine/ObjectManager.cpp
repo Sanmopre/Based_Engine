@@ -32,6 +32,7 @@ bool ObjectManager::Start()
 		AddObject(name, park);
 	}
 
+	house->AddMeshComponent("Assets/House/BakerHouse.FBX");
 	return true;
 }
 
