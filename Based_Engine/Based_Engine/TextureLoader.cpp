@@ -1,28 +1,21 @@
-/*
-#include <GL/glew.h>
 #include "Globals.h"
-#include "Mesh.h"
-#include "Application.h"
-#include "Renderer3D.h"
-#include "Module.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
-#include "il.h"
-#include "ilu.h"
 #include "ilut.h"
+#include "ilu.h"
+#include "il.h"
 #include "TextureLoader.h"
 
-void TextureLod::Init()
+
+void TextureLoader::Init()
 {
-	ilInit();
-	iluInit();
 	ilutInit();
+	iluInit();
+	ilInit();
 	ilutRenderer(ILUT_OPENGL);
 }
 
-Texture* TextureLod::Load(const char* path)
+Texture TextureLoader::Load(const char* path)
 {
-	Texture* newTexture = nullptr;
+	Texture newTexture;
 	
 	uint i;
 
@@ -64,4 +57,4 @@ Texture* TextureLod::Load(const char* path)
 		LOG("Error loading Image %s", path);
 	}
 	return newTexture;
-}*/
+}
