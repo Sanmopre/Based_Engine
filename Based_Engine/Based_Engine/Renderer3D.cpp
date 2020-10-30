@@ -17,6 +17,7 @@
 #include "scene.h"
 #include "Primitive.h"
 #include "postprocess.h"
+#include "TextureLoader.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -46,6 +47,8 @@ bool Renderer3D::Init()
 	
 	//Initialize assimp debbuger
 	Simp::InitializeDebugger();
+
+	TextureLoader::Init();
 
 	if(ret == true)
 	{
@@ -113,6 +116,8 @@ bool Renderer3D::Init()
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 	}
+
+
 
 	return ret;
 }

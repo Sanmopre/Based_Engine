@@ -1,15 +1,3 @@
-#include <GL/glew.h>
-#include "Globals.h"
-#include "Mesh.h"
-#include "Application.h"
-#include "Renderer3D.h"
-#include "Module.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
-#include "il.h"
-#include "ilu.h"
-#include "ilut.h"
-
 #pragma once
 
 struct Texture
@@ -20,8 +8,9 @@ struct Texture
 	uint width;
 };
 
-namespace TextureLod
+namespace TextureLoader
 {
 	void Init();
-	Texture* Load(const char* path);
+
+	Texture Load(const char* path);
 }
