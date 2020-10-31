@@ -10,6 +10,8 @@ GameObject::GameObject(std::string name, GameObject* parent, Application* app, b
 
 	App = app;
 	this->active = active;
+
+	comp_id = 0;
 }
 
 GameObject::~GameObject()
@@ -19,9 +21,28 @@ GameObject::~GameObject()
 
 bool GameObject::Update(float dt)
 {
-	for (std::vector<Component*>::iterator comp = components.begin(); comp != components.end(); comp++)
+	int last = 0;
+
+	bool end = false;
+	while (!end)
 	{
-		(*comp)->Update(dt);
+		std::vector<Component*>::iterator comp = components.begin() + last;
+		for (comp; comp != components.end(); comp++)
+		{
+			Component* component = *comp;
+
+			if (!component->to_delete)
+				component->Update(dt);
+			else
+			{
+				delete component;
+				components.erase(comp);
+
+				break;
+			}
+			last++;
+		}
+		end = true;
 	}
 
 	for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
@@ -56,9 +77,10 @@ void GameObject::AddMeshComponent(const char* path, char* name, bool active)
 	if (!name)
 	{
 		char str[10];
-		sprintf_s(str, "%d", components.size());
+		sprintf_s(str, "%d", comp_id);
 		name = str;
 	}
+	comp_id++;
 
 	MeshComponent* mesh = new MeshComponent(name, path, this, App, active);
 

@@ -31,16 +31,17 @@ public:
 	Transform transform;
 	std::vector<Component*> components;
 
-	GameObject* parent;
+	GameObject* parent = nullptr;
 	std::vector<GameObject*> children;
 
 	void AddMeshComponent(const char* path, char* name = nullptr, bool active = true);
 	const char* GetName() const { return name.c_str(); }
 
 	bool active;
+	int comp_id;
 
 private:
 
 	std::string name;
-	Application* App;
+	Application* App = nullptr;
 };

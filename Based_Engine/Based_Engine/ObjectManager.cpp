@@ -5,6 +5,7 @@
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
+	go_id = 0;
 }
 
 ObjectManager::~ObjectManager()
@@ -18,6 +19,7 @@ bool ObjectManager::Start()
 	AddObject("dog", park);
 	GameObject* room = AddObject("bedroom", house);
 	AddObject("bed", room);
+	GameObject* gun = AddObject("gun", room);
 	AddObject("window", room);
 	room = AddObject("kitchen", house);
 	GameObject* fridge = AddObject("fridge", room);
@@ -30,10 +32,10 @@ bool ObjectManager::Start()
 		bool out = false;
 		char n[10];
 		sprintf_s(n, "tree%d", i);
-		std::string name = n;
-		AddObject(name, park);
+		AddObject(n, park);
 	}
-	house->AddMeshComponent("Assets/House/BakerHouse.FBX", false);
+	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx");
+	gun->AddMeshComponent("Assets/Meshes/Handgun.fbx", nullptr, false);
 
 	return true;
 }
@@ -67,13 +69,27 @@ bool ObjectManager::CleanUp()
 	return true;
 }
 
-GameObject* ObjectManager::AddObject(std::string name, GameObject* parent, bool active)
+GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active)
 {
+	if (name == nullptr)
+	{
+		char str[64];
+		sprintf_s(str, "GameObject%d", go_id);
+		go_id++;
+		name = str;
+	}
 	GameObject* output = new GameObject(name, parent, App, active);
+
 	if (!parent)
+	{
 		gameobjects.push_back(output);
+	}
 	else
+	{
 		parent->children.push_back(output);
+	}
+
+
 
 	return output;
 }

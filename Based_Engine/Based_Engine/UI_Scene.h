@@ -15,7 +15,7 @@ public:
 	void OnResize(ImVec2 newWindowSize);
 
 private:
+
 	ImVec2 windowSize;
 	ImVec2 imageSize;
-
 };

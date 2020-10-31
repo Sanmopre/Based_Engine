@@ -6,6 +6,7 @@ class Application;
 class UI
 {
 public:
+
 	UI(char* ui_name, bool is_enabled,Application* application);
 	virtual ~UI();
 
@@ -16,12 +17,13 @@ public:
 	char* GetName();
 	virtual void CleanUp();
 
-public:	
-
 	bool docked;
 	bool enabled;
+
 	Application* App;
+
 private:
+
 	char* name;
 
 };

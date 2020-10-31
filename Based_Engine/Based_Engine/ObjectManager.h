@@ -15,7 +15,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	GameObject* AddObject(std::string name, GameObject* parent = nullptr, bool active = true);
+	GameObject* AddObject(char* name = nullptr, GameObject* parent = nullptr, bool active = true);
 
 	std::vector<GameObject*> gameobjects;
 	GameObject* selected = nullptr;
@@ -24,4 +24,6 @@ private:
 
 	std::vector<GameObject*> buffer;
 	std::vector <std::vector<GameObject*>::iterator> to_delete;
+
+	int go_id;
 };

@@ -20,20 +20,19 @@ Scene::~Scene()
 
 void Scene::Update(float dt)
 {
-	ImGui::Begin("Scene");
+	if (ImGui::Begin("Scene"))
 	{
 		ImGui::BeginChild("SceneImage");
 
 		ImVec2 winSize = ImGui::GetWindowSize();
 		if (winSize.x != windowSize.x || winSize.y != windowSize.y)
 			OnResize(winSize);
-		ImVec2 uvMin = ImVec2(0.0f, 1.0f);                 
-		ImVec2 uvMax = ImVec2(1.0f, 0.0f);                 
+		ImVec2 uvMin = ImVec2(0.0f, 1.0f);
+		ImVec2 uvMax = ImVec2(1.0f, 0.0f);
 		ImGui::Image((ImTextureID)App->renderer3D->texColorBuffer, winSize, uvMin, uvMax);
 		ImGui::EndChild();
 	}
 	ImGui::End();
-
 }
 
 void Scene::Cleanup()

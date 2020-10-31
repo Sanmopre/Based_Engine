@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "Input.h"
 #include "Window.h"
+#include "ObjectManager.h"
+#include "GameObject.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
@@ -99,6 +101,50 @@ update_status Input::PreUpdate()
 			quit = true;
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(App->window->window))
 			quit = true;
+		if (event.type == SDL_DROPFILE)
+		{
+			std::string file = event.drop.file;
+			LOG("Loading file: %s", file.c_str());
+
+			std::string type;
+			for (uint i = file.size() - 1; i != -1; i--)
+			{
+				if (file[i] == '.')
+				{
+					std::string reverse;
+					for (uint c = type.size() - 1; c != -1; c--)
+						reverse.push_back(type[c]);
+					type = reverse;
+					
+					break;
+				}
+
+				type.push_back(file[i]);
+			}
+			LOG("File type: %s", type.c_str());
+
+			if (type == "fbx" || type == "obj")
+			{
+				if (!App->objects->selected)
+				{
+					GameObject* object = App->objects->AddObject();
+					object->AddMeshComponent(file.c_str());
+					App->objects->selected = object;
+				}
+				else
+				{
+					App->objects->selected->AddMeshComponent(file.c_str());
+				}
+			}
+			else if (type == "png" || type == "jpg")
+			{
+
+			}
+			else
+			{
+				LOG("Unable to load file, unknown file type");
+			}
+		}
 	}
 
 	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)

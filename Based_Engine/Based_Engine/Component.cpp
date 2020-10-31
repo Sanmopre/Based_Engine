@@ -4,10 +4,12 @@
 Component::Component(char* name, GameObject* parent, Application* app, bool active)
 {
 	this->name = name;
+	name_buffer = name;
 	this->parent = parent;
 	App = app;
 	this->active = active;
-	toActivate = active;
+	to_activate = active;
+	to_delete = false;
 }
 
 Component::~Component()

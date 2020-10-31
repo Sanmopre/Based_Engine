@@ -21,13 +21,20 @@ public:
 
 	virtual void DisplayComponentMenu() = 0;
 
+	bool to_delete;
+
+
+	std::string name;
+
+
 protected:
 
-	bool toActivate;
+	bool to_activate;
 
 	Application* App;
 	bool active;
-	std::string name;
+
+	std::string name_buffer;
 
 	GameObject* parent;
 };
@@ -48,5 +55,7 @@ public:
 
 private:
 
+	std::string path;
+	std::string path_buffer;
 	MESH mesh;
 };

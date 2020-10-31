@@ -21,12 +21,14 @@ GameObjects::~GameObjects()
 
 void GameObjects::Update(float dt)
 {
-	ImGui::Begin("GameObjects");
-
-	i = 0;
-	for (std::vector<GameObject*>::iterator obj = App->objects->gameobjects.begin(); obj != App->objects->gameobjects.end(); obj++)
-		IterateGameObjects(*obj);
-
+	if (ImGui::Begin("GameObjects"))
+	{
+		i = 0;
+		for (std::vector<GameObject*>::iterator obj = App->objects->gameobjects.begin(); obj != App->objects->gameobjects.end(); obj++)
+			IterateGameObjects(*obj);
+		if (ImGui::Button("deselect"))
+			App->objects->selected = nullptr;
+	}
 	ImGui::End();
 }
 
