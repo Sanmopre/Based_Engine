@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include "misc/cpp/imgui_stdlib.h" 
 
 #include "Input.h"
 
@@ -24,7 +25,19 @@ void GameObjects::Update(float dt)
 	if (ImGui::Begin("GameObjects"))
 	{
 		i = 0;
-		for (std::vector<GameObject*>::iterator obj = App->objects->gameobjects.begin(); obj != App->objects->gameobjects.end(); obj++)
+
+		if (ImGui::BeginMenu("Create"))
+		{
+			if (ImGui::Button("Create GameObject"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected);
+				App->objects->selected = go;
+			}
+
+			ImGui::EndMenu();
+		}
+
+		for (std::vector<GameObject*>::iterator obj = App->objects->parent->children.begin(); obj != App->objects->parent->children.end(); obj++)
 			IterateGameObjects(*obj);
 		if (ImGui::Button("deselect"))
 			App->objects->selected = nullptr;

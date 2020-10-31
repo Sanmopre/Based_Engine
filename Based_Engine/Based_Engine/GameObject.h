@@ -38,9 +38,11 @@ public:
 	const char* GetName() const { return name.c_str(); }
 
 	bool active;
-	int comp_id;
+	bool to_delete;
 
 private:
+
+	int comp_id;
 
 	std::string name;
 	Application* App = nullptr;

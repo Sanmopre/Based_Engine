@@ -5,11 +5,14 @@
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
+	parent = new GameObject("BASEDObject", nullptr, App, true);
+
 	go_id = 0;
 }
 
 ObjectManager::~ObjectManager()
 {
+	delete parent;
 }
 
 bool ObjectManager::Start()
@@ -42,12 +45,7 @@ bool ObjectManager::Start()
 
 update_status ObjectManager::Update(float dt)
 {
-	for (std::vector<GameObject*>::iterator obj = gameobjects.begin(); obj != gameobjects.end(); obj++)
-	{
-		GameObject* object = *obj;
-
-		object->Update(dt);
-	}
+	parent->Update(dt);
 
 	return UPDATE_CONTINUE;
 }
@@ -59,37 +57,24 @@ update_status ObjectManager::PostUpdate()
 
 bool ObjectManager::CleanUp()
 {
-	while (gameobjects.size() != 0)
-	{
-		(*gameobjects.begin())->CleanUp();
-		delete* gameobjects.begin();
-		gameobjects.erase(gameobjects.begin());
-	}
-
 	return true;
 }
 
-GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active)
+GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active, const char* type)
 {
 	if (name == nullptr)
 	{
 		char str[64];
-		sprintf_s(str, "GameObject%d", go_id);
+		sprintf_s(str, "%s%d", type, go_id);
 		go_id++;
 		name = str;
 	}
-	GameObject* output = new GameObject(name, parent, App, active);
 
 	if (!parent)
-	{
-		gameobjects.push_back(output);
-	}
-	else
-	{
-		parent->children.push_back(output);
-	}
+		parent = this->parent;
+	GameObject* output = new GameObject(name, parent, App, active);
 
-
-
+	parent->children.push_back(output);
+	
 	return output;
 }

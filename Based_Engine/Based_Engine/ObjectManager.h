@@ -15,9 +15,9 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	GameObject* AddObject(char* name = nullptr, GameObject* parent = nullptr, bool active = true);
+	GameObject* AddObject(char* name = nullptr, GameObject* parent = nullptr, bool active = true, const char* type = "GameObject");
 
-	std::vector<GameObject*> gameobjects;
+	GameObject* parent;
 	GameObject* selected = nullptr;
 
 private:

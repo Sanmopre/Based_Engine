@@ -31,6 +31,12 @@ void GameObject_Inspector::Update(float dt)
 			if (ImGui::CollapsingHeader("GameObject", ImGuiTreeNodeFlags_DefaultOpen))
 			{
 				ImGui::Text(object->GetName());
+				ImGui::SameLine();
+				if (ImGui::Button("delete"))
+				{
+					object->to_delete = true;
+					App->objects->selected = nullptr;
+				}
 			}
 			ImGui::Separator();
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))

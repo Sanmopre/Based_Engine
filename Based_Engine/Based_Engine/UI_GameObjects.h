@@ -16,4 +16,8 @@ public:
 	void IterateGameObjects(GameObject*);
 
 	int i;
+
+private:
+
+	std::string create_name;
 };

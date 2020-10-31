@@ -11,18 +11,19 @@ GameObject::GameObject(std::string name, GameObject* parent, Application* app, b
 	App = app;
 	this->active = active;
 
+	to_delete = false;
+
 	comp_id = 0;
 }
 
 GameObject::~GameObject()
 {
-
+	CleanUp();
 }
 
 bool GameObject::Update(float dt)
 {
 	int last = 0;
-
 	bool end = false;
 	while (!end)
 	{
@@ -45,11 +46,27 @@ bool GameObject::Update(float dt)
 		end = true;
 	}
 
-	for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
+	last = 0;
+	end = false;
+	while (!end)
 	{
-		GameObject* child = *ch;
+		std::vector<GameObject*>::iterator ch = children.begin();
+		for (ch; ch != children.end(); ch++)
+		{
+			GameObject* child = *ch;
 
-		child->Update(dt);
+			if(!child->to_delete)
+				child->Update(dt);
+			else
+			{
+				delete child;
+				children.erase(ch);
+
+				break;
+			}
+			last++;
+		}
+		end = true;
 	}
 
 	return true;
