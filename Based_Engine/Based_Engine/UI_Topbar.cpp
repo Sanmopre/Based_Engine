@@ -41,13 +41,13 @@ void Topbar::Update(float dt)
 		if (ImGui::MenuItem("Show ImGui demo"))
 			showcase = !showcase;
 		if (ImGui::MenuItem("Documentation"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", "https://github.com/Sanmopre/Based_Engine", NULL, NULL, SW_SHOWNORMAL);
 
 		if (ImGui::MenuItem("Download latest"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", "https://github.com/Sanmopre/Based_Engine/releases", NULL, NULL, SW_SHOWNORMAL);
 
 		if (ImGui::MenuItem("Report a bug"))
-			ShellExecute(NULL, "open", "www.google.com", NULL, NULL, SW_SHOWNORMAL);
+			ShellExecute(NULL, "open", "https://github.com/Sanmopre/Based_Engine", NULL, NULL, SW_SHOWNORMAL);
 
 		ImGui::ShowStyleSelector("Style selector");
 
@@ -63,6 +63,8 @@ void Topbar::Update(float dt)
 			ImGui::Text(" - Glew");
 			ImGui::Text(" - JSON parser");
 			ImGui::Text(" - MathGeoLib");
+			ImGui::Text(" - DevIL");
+			ImGui::Text(" - Assimp");
 		}
 		ImGui::EndMenu();
 	}
