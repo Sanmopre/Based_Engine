@@ -46,6 +46,10 @@ void Mesh::GenerateBuffers()
 
 		glBindVertexArray(0);
 	}
+	else
+	{
+		LOG("ERROR Loading the Mesh, can't generate buffers");
+	}
 }
 
 
@@ -54,7 +58,7 @@ void Mesh::Render(bool globalWireMode) const
 	glPushMatrix();
 	//glColor3f(color.r, color.g, color.b);
 	if(drawnormals)
-	DrawNormals();
+		DrawNormals();
 	InnerRender();
 	glPopMatrix();
 }
@@ -126,4 +130,28 @@ void Mesh::DrawNormals() const
 	glEnd();
 
 	glLineWidth(1.0f);
+}
+
+void Mesh::UpdatePosition(float x, float y, float z)
+{
+	for (int v = 0; v < vertices.size(); v++)
+	{
+		vertices[v].Position.x += x;
+		vertices[v].Position.y += y;
+		vertices[v].Position.z += z;
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+}
+
+void Mesh::UpdateScale(float x, float y, float z)
+{
+	for (int v = 0; v < vertices.size(); v++)
+	{
+		vertices[v].Position.x *= x;
+		vertices[v].Position.y *= y;
+		vertices[v].Position.z *= z;
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 }

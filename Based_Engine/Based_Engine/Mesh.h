@@ -25,6 +25,8 @@ public:
 	void InnerRender() const;
 
 	void DrawNormals() const;
+	void UpdatePosition(float x, float y, float z);
+	void UpdateScale(float x, float y, float z);
 
 public:
 	uint idVertex;

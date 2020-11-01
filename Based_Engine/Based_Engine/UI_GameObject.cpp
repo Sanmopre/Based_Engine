@@ -41,10 +41,9 @@ void GameObject_Inspector::Update(float dt)
 			ImGui::Separator();
 			if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Text("position");
-				ImGui::InputFloat("x", &object->transform.x, 0.10f, 1.0f);
-				ImGui::InputFloat("y", &object->transform.y, 0.10f, 1.0f);
-				ImGui::InputFloat("z", &object->transform.z, 0.10f, 1.0f);
+				ImGui::InputFloat3("position", object->transform.position.ptr());
+				ImGui::InputFloat3("rotation", object->transform.rotation.ptr());
+				ImGui::InputFloat3("scale", object->transform.scale.ptr());
 			}
 			ImGui::Separator();
 			for (uint i = 0; i < object->components.size(); i++)

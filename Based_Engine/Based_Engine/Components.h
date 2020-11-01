@@ -5,6 +5,7 @@
 class Application;
 class Mesh;
 class GameObject;
+struct Transform;
 
 class Component
 {
@@ -57,5 +58,9 @@ private:
 
 	std::string path;
 	std::string path_buffer;
+
 	MESH mesh;
+	MESH mesh_buffer;
+
+	Transform* last_transform;
 };

@@ -13,21 +13,35 @@
 MeshComponent::MeshComponent(char* name, const char* path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	mesh = Simp::LoadFile(path);
+	mesh_buffer = mesh;
 
 	this->path = path;
 	path_buffer = path;
 
+	last_transform = new Transform();
+
 	if (active)
-		App->renderer3D->AddMesh(&mesh);
+		App->renderer3D->AddMesh(&mesh_buffer);
 }
 
 MeshComponent::~MeshComponent()
 {
-	App->renderer3D->DeleteMesh(&mesh);
+	delete last_transform;
+	App->renderer3D->DeleteMesh(&mesh_buffer);
 }
 
 bool MeshComponent::Update(float dt)
 {
+	if (*last_transform != parent->transform)
+	{
+		mesh_buffer = mesh;
+		for (uint m = 0; m < mesh_buffer.size(); m++)
+		{
+			mesh_buffer[m].UpdatePosition(parent->transform.position.x, parent->transform.position.y, parent->transform.position.z);
+			mesh_buffer[m].UpdateScale(parent->transform.scale.x, parent->transform.scale.y, parent->transform.scale.z);
+		}
+	}
+
 	if (active != to_activate)
 	{
 		if (to_activate)
@@ -35,6 +49,9 @@ bool MeshComponent::Update(float dt)
 		else
 			Deactivate();
 	}
+
+	*last_transform = parent->transform;
+
 	return true;
 }
 
@@ -43,7 +60,7 @@ void MeshComponent::Activate()
 	if (!active)
 	{
 		active = true;
-		App->renderer3D->AddMesh(&mesh);
+		App->renderer3D->AddMesh(&mesh_buffer);
 	}
 }
 
@@ -52,14 +69,14 @@ void MeshComponent::Deactivate()
 	if (active)
 	{
 		active = false;
-		App->renderer3D->DeleteMesh(&mesh);
+		App->renderer3D->DeleteMesh(&mesh_buffer);
 	}
 }
 
 void MeshComponent::DisplayComponentMenu()
 {
 	char str[24];
-	sprintf_s(str, "Mesh (%s)", name.c_str());
+	sprintf_s(str, "Mesh Component (%s)", name.c_str());
 
 	if (ImGui::CollapsingHeader(str, ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -89,7 +106,7 @@ void MeshComponent::DisplayComponentMenu()
 				name_buffer = name;
 		}
 
-		sprintf_s(str, "path (%s)", name.c_str());
+		sprintf_s(str, "mesh (%s)", name.c_str());
 		if (ImGui::InputText(str, &path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			MESH m = Simp::LoadFile(path_buffer.c_str());
