@@ -10,6 +10,8 @@ void Simp::InitializeDebugger()
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
+
+	LOG("Initialize Assimp Debugger");
 }
 
 void Simp::CleanDebugger() 

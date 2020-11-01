@@ -28,6 +28,7 @@ bool GUI::Start()
 	ImGui::CreateContext();
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->window->gl_context);
 	ImGui_ImplOpenGL3_Init("#version 130");
+	LOG("Initialize ImGui");
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
       

@@ -11,6 +11,7 @@ void TextureLoader::Init()
 	iluInit();
 	ilInit();
 	ilutRenderer(ILUT_OPENGL);
+	LOG("Initialize TextureLoader DevIL")
 }
 
 Texture TextureLoader::Load(const char* path)
