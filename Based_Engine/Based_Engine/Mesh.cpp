@@ -88,51 +88,13 @@ void Mesh::InnerRender() const
 
 void Mesh::DrawNormals() const
 {
-	/*
-	glLineWidth(2.0f);
-
 	glBegin(GL_LINES);
-
-
-	for (uint i = 0, j = 0; i < vertices.size(); i++)
+	for (size_t i = 0; i <buffersLength[vertex] * 3; i += 3)
 	{
-		//VERTEX NORMALS
-		glColor4f(1.0f, 0.0f, 1.0f, 1.0f);
-
-		float3 vector = vertices[i].Position;
-		float3 normals = vector + vertices[i].Normal * 2;
-
-		glVertex3f(vector.x, vector.y, vector.z); glVertex3f(normals.x, normals.y, normals.z);
-
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-		j++;
-
-		//FACE NORMALS
-		if (j == 3)
-		{
-			float3 P0 = vertices[i - 2].Position;
-			float3 P1 = vertices[i - 1].Position;
-			float3 P2 = vertices[i].Position;
-
-			float3 V0 = P0 - P1;
-			float3 V1 = P2 - P1;
-
-
-			float3 N = V1.Cross(V0);
-			N.Normalize();
-
-
-			float3 P = (P0 + P1 + P2) / 3.0;
-			float3 normal = P + N * 2;
-			glVertex3f(P.x, P.y, P.z); glVertex3f(normal.x, normal.y, normal.z);
-
-			j = 0;
-		}
+		glVertex3f(vertices[i], vertices[i + 1], vertices[i + 2]); 
+		glVertex3f(vertices[i] + normals[i], vertices[i + 1] + normals[i + 1], vertices[i + 2] + normals[i + 2]);
 	}
-
 	glEnd();
-
-	glLineWidth(1.0f);*/
 }
 
 void Mesh::UpdatePosition(float3 position, float3 last_position)
