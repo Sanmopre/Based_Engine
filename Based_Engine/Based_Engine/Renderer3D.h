@@ -55,7 +55,6 @@ public:
 	uint depthBuffer;
 
 	bool wireframe_mode = false;
-	bool show_normals = false;
 
 	uint texture_id;
 private:

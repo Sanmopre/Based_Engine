@@ -147,23 +147,21 @@ update_status Renderer3D::PreUpdate()
 
 update_status Renderer3D::Update(float dt)
 {
-	ActivateMeshNormals(show_normals);
-
 	BeginDrawMode();
-	if (wireframe_mode) {
+	if (wireframe_mode) 
+	{
 		BeginDebugMode();	
 		WireframeDraw();		
 		plane->Render();
 		
 		EndDebugMode();
 	}
-	else {
+	else
+	{
 		plane->Render();
 		Draw();
-
 	}
 	EndDrawMode();
-
 
 	return UPDATE_CONTINUE;
 }

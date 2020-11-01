@@ -99,27 +99,16 @@ void Mesh::DrawNormals() const
 
 void Mesh::UpdatePosition(float3 position, float3 last_position)
 {
-	int dimension = 0;
-	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v++)
+	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v += 3)
 	{
-		if (dimension == 0)
-		{
-			vertices[v] -= last_position.x;
-			vertices[v] += position.x;
-			dimension = 1;
-		}
-		else if (dimension == 1)
-		{
-			vertices[v] -= last_position.y;
-			vertices[v] += position.y;
-			dimension = 2;
-		}
-		else if (dimension == 2)
-		{
-			vertices[v] -= last_position.z;
-			vertices[v] += position.z;
-			dimension = 0;
-		}
+		vertices[v] -= last_position.x;
+		vertices[v] += position.x;
+
+		vertices[v + 1] -= last_position.y;
+		vertices[v + 1] += position.y;
+
+		vertices[v + 2] -= last_position.z;
+		vertices[v + 2] += position.z;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
@@ -127,28 +116,16 @@ void Mesh::UpdatePosition(float3 position, float3 last_position)
 
 void Mesh::UpdateScale(float3 scale, float3 last_scale)
 {
-	int dimension = 0;
-
-	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v++)
+	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v += 3)
 	{
-		if (dimension == 0)
-		{
-			vertices[v] /= last_scale.x;
-			vertices[v] *= scale.x;
-			dimension = 1;
-		}
-		else if (dimension == 1)
-		{
-			vertices[v] /= last_scale.y;
-			vertices[v] *= scale.y;
-			dimension = 2;
-		}
-		else if (dimension == 2)
-		{
-			vertices[v] /= last_scale.z;
-			vertices[v] *= scale.z;
-			dimension = 0;
-		}
+		vertices[v] /= last_scale.x;
+		vertices[v] *= scale.x;
+
+		vertices[v + 1] /= last_scale.y;
+		vertices[v + 1] *= scale.y;
+
+		vertices[v + 2] /= last_scale.z;
+		vertices[v + 2] *= scale.z;
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);

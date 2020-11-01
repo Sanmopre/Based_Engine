@@ -18,6 +18,8 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 	this->path = path;
 	path_buffer = path;
 
+	to_draw_normals = false;
+
 	AddTexture(texture_path);
 
 	if (active)
@@ -82,8 +84,14 @@ void MeshComponent::DisplayComponentMenu()
 	{
 		sprintf_s(str, "active (%s)", name.c_str());
 		ImGui::Checkbox(str, &to_activate);
-
 		ImGui::SameLine();
+
+		sprintf_s(str, "normals (%s)", name.c_str());
+		if(ImGui::Checkbox(str, &to_draw_normals))
+			for (uint m = 0; m < mesh.size(); m++)
+				mesh[m].drawnormals = to_draw_normals;
+		ImGui::SameLine();
+
 		sprintf_s(str, "delete (%s)", name.c_str());
 		if(ImGui::Button(str))
 			to_delete = true;

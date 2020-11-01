@@ -59,6 +59,8 @@ public:
 
 private:
 
+	bool to_draw_normals;
+
 	void PushTexture(uint texture);
 
 	std::string path;

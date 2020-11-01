@@ -13,5 +13,4 @@ namespace TextureLoader
 	void Init();
 
 	Texture Load(const char* path);
-	void Free(uint texture);
 }

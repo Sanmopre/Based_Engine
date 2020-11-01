@@ -4,7 +4,6 @@
 #include "il.h"
 #include "TextureLoader.h"
 
-
 void TextureLoader::Init()
 {
 	ilutInit();
@@ -58,8 +57,4 @@ Texture TextureLoader::Load(const char* path)
 	}
 
 	return newTexture;
-}
-
-void TextureLoader::Free(uint texture)
-{
 }
