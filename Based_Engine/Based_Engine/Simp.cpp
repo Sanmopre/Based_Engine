@@ -25,57 +25,58 @@ std::vector<Mesh> Simp::LoadFile(const char* file_path)
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			std::vector<Vertex> vertices;
-			std::vector<uint> indices;
+			Mesh NewMesh;
 
-			aiMesh* mesh = scene->mMeshes[i];
+			NewMesh.buffersId[Mesh::index] = 0;
+			NewMesh.buffersId[Mesh::normal] = 0;
+			NewMesh.buffersId[Mesh::vertex] = 0;
 
-			for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+			aiMesh* loaded_mesh = scene->mMeshes[i];
+
+			NewMesh.buffersLength[Mesh::vertex] = loaded_mesh->mNumVertices;
+			NewMesh.vertices = new float[NewMesh.buffersLength[Mesh::vertex] * 3];
+			memcpy(NewMesh.vertices, loaded_mesh->mVertices, sizeof(float) * NewMesh.buffersLength[Mesh::vertex] * 3);
+
+			if (loaded_mesh->HasFaces())
 			{
-				Vertex vertex;
-
-				float3 vector;
-				vector.x = mesh->mVertices[i].x;
-				vector.y = mesh->mVertices[i].y;
-				vector.z = mesh->mVertices[i].z;
-				vertex.Position = vector;
-
-				if (mesh->HasNormals())
+				NewMesh.buffersLength[Mesh::index] = loaded_mesh->mNumFaces * 3;
+				NewMesh.indices = new uint[NewMesh.buffersLength[Mesh::index]]; 
+				for (uint j = 0; j < loaded_mesh->mNumFaces; ++j)
 				{
-					vector.x = mesh->mNormals[i].x;
-					vector.y = mesh->mNormals[i].y;
-					vector.z = -1 * mesh->mNormals[i].z;
-					vertex.Normal = vector;
+					if (loaded_mesh->mFaces[j].mNumIndices == 3)
+					{
+						memcpy(&NewMesh.indices[j * 3], loaded_mesh->mFaces[j].mIndices, 3 * sizeof(uint));
+					}
 				}
+			}
+			if (loaded_mesh->HasNormals())
+			{
+				NewMesh.buffersLength[Mesh::normal] = loaded_mesh->mNumVertices;
+				NewMesh.normals = new float[NewMesh.buffersLength[Mesh::normal] * 3];
+				memcpy(NewMesh.normals, loaded_mesh->mNormals, sizeof(float) * NewMesh.buffersLength[Mesh::normal] * 3);
 
-				if (mesh->mTextureCoords[0])
+			}
+			if (scene->mMeshes[i]->HasTextureCoords(0))
+			{
+				NewMesh.buffersLength[Mesh::texture] = scene->mMeshes[i]->mNumVertices;
+				NewMesh.texture_coord = new float[scene->mMeshes[i]->mNumVertices * 2];
+
+				for (int j = 0; j < NewMesh.buffersLength[Mesh::texture]; j++)
 				{
-					float2 vec;
-					vec.x = mesh->mTextureCoords[0][i].x;
-					vec.y = mesh->mTextureCoords[0][i].y;
-					vertex.TexCoords = vec;
+					NewMesh.texture_coord[j * 2] = scene->mMeshes[i]->mTextureCoords[0][j].x;
+					NewMesh.texture_coord[j * 2 + 1] = scene->mMeshes[i]->mTextureCoords[0][j].y;
 				}
-				else
-					vertex.TexCoords = float2(0.0f, 0.0f);
-
-				vertices.push_back(vertex);
 			}
 
-			for (uint i = 0; i < mesh->mNumFaces; i++)
-			{
-				aiFace face = mesh->mFaces[i];
-				assert(face.mNumIndices == 3);
-
-				for (uint j = 0; j < face.mNumIndices; j++)
-					indices.push_back(face.mIndices[j]);
-			}
-
-			loadedMeshes.push_back(Mesh(vertices, indices));
+			loadedMeshes.push_back(NewMesh);
 		}
 		aiReleaseImport(scene);
+	}
+	else
+	{
+		LOG("Error loading scene %s", file_path);
 	}
 
 	return loadedMeshes;
