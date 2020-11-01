@@ -54,9 +54,10 @@ public:
 	uint texColorBuffer;
 	uint depthBuffer;
 
-	bool wireframe_mode = true;
+	bool wireframe_mode = false;
 	bool show_normals = false;
 
+	uint texture_id;
 private:
 
 	B_Plane* plane;

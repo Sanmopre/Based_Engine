@@ -52,7 +52,7 @@ void Mesh::GenerateBuffers()
 void Mesh::Render(bool globalWireMode) const
 {
 	glPushMatrix();
-	glColor3f(color.r, color.g, color.b);
+	//glColor3f(color.r, color.g, color.b);
 	if(drawnormals)
 	DrawNormals();
 	InnerRender();
@@ -67,8 +67,13 @@ void Mesh::InnerRender() const
 	glEnableVertexAttribArray(2);
 
 	glBindVertexArray(VAO);
+
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

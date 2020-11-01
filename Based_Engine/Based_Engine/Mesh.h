@@ -5,6 +5,7 @@
 #include "Math/float3.h"
 #include "Math/float2.h"
 
+
 struct Vertex
 {
 	float3 Position;
@@ -34,6 +35,8 @@ public:
 
 	uint VAO;
 	bool drawnormals = false;
+
+	uint tex_id;
 private:
 	Color color;
 	bool wire, noFace;
