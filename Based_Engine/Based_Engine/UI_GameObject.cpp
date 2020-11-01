@@ -12,7 +12,8 @@
 GameObject_Inspector::GameObject_Inspector(bool isActive, Application* application) : UI("GameObjects", isActive, App)
 {
 	App = application;
-	path = "";
+	mesh_path = "";
+	name_buffer = "";
 }
 
 GameObject_Inspector::~GameObject_Inspector()
@@ -22,15 +23,41 @@ GameObject_Inspector::~GameObject_Inspector()
 void GameObject_Inspector::Update(float dt)
 {
 	object = App->objects->selected;
-	if(last_object != object)
-		path = "";
+	if (last_object != object)
+	{
+		mesh_path = "";
+		if (object)
+			name_buffer = object->name;
+		else
+			name_buffer = "";
+	}
 
 	if (ImGui::Begin("Object Inspector")) 
 		if (object)
 		{
 			if (ImGui::CollapsingHeader("GameObject", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				ImGui::Text(object->GetName());
+				ImGui::Text("name:");
+				ImGui::SameLine();
+				char str[64];
+				sprintf_s(str, " ", object->GetName());
+				if (ImGui::InputText(str, &name_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+				{
+					bool same = false;
+					uint i = 0;
+					for (i; i < object->parent->children.size(); i++)
+					{
+						if (object->parent->children[i]->name == name_buffer)
+						{
+							same = true;
+							break;
+						}
+					}
+					if (!same)
+						object->name = name_buffer;
+					else
+						name_buffer = object->name;
+				}
 				ImGui::SameLine();
 				if (ImGui::Button("delete"))
 				{
@@ -52,15 +79,17 @@ void GameObject_Inspector::Update(float dt)
 				ImGui::Separator();
 			}
 
-			if (ImGui::InputText("Add Mesh Component", &path, ImGuiInputTextFlags_EnterReturnsTrue))
+			if (ImGui::InputText("Add Mesh Component", &mesh_path, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
-				object->AddMeshComponent(path.c_str());
-				path = "";
+				object->AddMeshComponent(mesh_path.c_str());
+				mesh_path = "";
 			}
 		}
 		else
-			path = "";
-
+		{
+			mesh_path = "";
+			name_buffer = "";
+		}
 
 	ImGui::End();
 

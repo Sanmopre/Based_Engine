@@ -47,6 +47,8 @@ public:
 	bool CleanUp();
 
 	Transform transform;
+	Transform last_transform;
+
 	std::vector<Component*> components;
 
 	GameObject* parent = nullptr;
@@ -58,10 +60,13 @@ public:
 	bool active;
 	bool to_delete;
 
+	std::string name;
+
 private:
+
+	void CarryTransformChange(GameObject*);
 
 	int comp_id;
 
-	std::string name;
 	Application* App = nullptr;
 };

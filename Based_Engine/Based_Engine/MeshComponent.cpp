@@ -18,27 +18,24 @@ MeshComponent::MeshComponent(char* name, const char* path, GameObject* parent, A
 	this->path = path;
 	path_buffer = path;
 
-	last_transform = new Transform();
-
 	if (active)
 		App->renderer3D->AddMesh(&mesh_buffer);
 }
 
 MeshComponent::~MeshComponent()
 {
-	delete last_transform;
 	App->renderer3D->DeleteMesh(&mesh_buffer);
 }
 
 bool MeshComponent::Update(float dt)
 {
-	if (*last_transform != parent->transform)
+	if (parent->last_transform != parent->transform)
 	{
 		mesh_buffer = mesh;
 		for (uint m = 0; m < mesh_buffer.size(); m++)
 		{
-			mesh_buffer[m].UpdatePosition(parent->transform.position.x, parent->transform.position.y, parent->transform.position.z);
 			mesh_buffer[m].UpdateScale(parent->transform.scale.x, parent->transform.scale.y, parent->transform.scale.z);
+			mesh_buffer[m].UpdatePosition(parent->transform.position.x, parent->transform.position.y, parent->transform.position.z);
 		}
 	}
 
@@ -49,8 +46,6 @@ bool MeshComponent::Update(float dt)
 		else
 			Deactivate();
 	}
-
-	*last_transform = parent->transform;
 
 	return true;
 }

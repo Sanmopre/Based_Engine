@@ -23,7 +23,7 @@ Console::~Console()
 
 void Console::Update(float dt)
 {
-	if (ImGui::Begin("Console"))
+	if (ImGui::Begin("Console", nullptr))
 	{
 		std::vector<std::string> logs = GetLogs();
 		for (std::vector<std::string>::iterator l = logs.begin(); l != logs.end(); l++)

@@ -61,6 +61,4 @@ private:
 
 	MESH mesh;
 	MESH mesh_buffer;
-
-	Transform* last_transform;
 };

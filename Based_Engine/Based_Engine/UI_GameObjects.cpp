@@ -24,19 +24,42 @@ void GameObjects::Update(float dt)
 {
 	if (ImGui::Begin("GameObjects"))
 	{
-		i = 0;
+		if (ImGui::IsItemHovered())
+			if (App->input->GetKey(1) == KEY_DOWN)
+				App->objects->selected = nullptr;
 
 		if (ImGui::BeginMenu("Create"))
 		{
 			if (ImGui::Button("Create GameObject"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected);
-				App->objects->selected = go;
+			}
+			if (ImGui::Button("Create Cube"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cube");
+				go->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+			}
+			if (ImGui::Button("Create Sphere"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Sphere");
+				go->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+			}
+			if (ImGui::Button("Create Pyramid"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Pyramid");
+				go->AddMeshComponent("Assets/Meshes/Primitives/pyramid.fbx");
+			}
+			if (ImGui::Button("Create Cylinder"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cylinder");
+				go->AddMeshComponent("Assets/Meshes/Primitives/cylinder.fbx");
 			}
 
 			ImGui::EndMenu();
 		}
+		ImGui::Separator();
 
+		i = 0;
 		for (std::vector<GameObject*>::iterator obj = App->objects->parent->children.begin(); obj != App->objects->parent->children.end(); obj++)
 			IterateGameObjects(*obj);
 		if (ImGui::Button("deselect"))
@@ -51,7 +74,7 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 	sprintf_s(bName, "select%d", i);
 	i++;
 
-	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_None;
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
 	if (gameobject == App->objects->selected)
 		flags |= ImGuiTreeNodeFlags_Selected;
 	if (gameobject->children.size() == 0)
@@ -59,8 +82,7 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 
 	if (ImGui::TreeNodeEx(gameobject->GetName(), flags))
 	{
-		ImGui::SameLine();
-		if (ImGui::Button(bName, { 100, 13 }))
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			App->objects->selected = gameobject;
 
 		for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
@@ -73,8 +95,7 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 	}
 	else
 	{
-		ImGui::SameLine();
-		if (ImGui::Button(bName, { 100, 13 }))
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			App->objects->selected = gameobject;
 	}
 }

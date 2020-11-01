@@ -32,6 +32,12 @@ void MainMenu::Start()
 	fps_cap = 60;
 	app_name = "BASED Engine";
 	organization = "UPC CITM";
+
+	depth = true;
+	cull_face = false;
+	lighting = true;
+	color_material = false;
+	texture2d = true;
 }
 
 void MainMenu::Update(float dt)

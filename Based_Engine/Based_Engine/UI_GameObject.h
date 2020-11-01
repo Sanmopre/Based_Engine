@@ -20,5 +20,7 @@ private:
 
 	GameObject* object = nullptr;
 	GameObject* last_object = nullptr;
-	std::string path;
+	std::string mesh_path;
+	std::string name_buffer;
+
 };
