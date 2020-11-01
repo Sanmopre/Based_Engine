@@ -2,59 +2,51 @@
 #include <GL/glew.h>
 
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<uint> indices)
+Mesh::Mesh()
 {
-	this->vertices = vertices;
-	this->indices = indices;
-
 	GenerateBuffers();
 	color = Color(200,200,0 );
 }
 
 Mesh::~Mesh()
 {
-	vertices.clear();
-	indices.clear();
+
 }
 
 void Mesh::GenerateBuffers()
 {
-	if (!indices.empty() && !vertices.empty())
+	glGenBuffers(1, (GLuint*)& buffersId[vertex]);
+	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) *buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, (GLuint*)& buffersId[index]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersId[index]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) *buffersLength[index], indices, GL_STATIC_DRAW);
+
+	if (normals != nullptr)
 	{
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
-		glGenBuffers(1, (GLuint*)&(idVertex));
-		glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-
-		glGenBuffers(1, (GLuint*)&(idIndex));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idIndex);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint), &indices[0], GL_STATIC_DRAW);
-
-		//vertex
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-		
-		//normals
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-		
-		//texture coords
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-
-		glBindVertexArray(0);
+		glGenBuffers(1, (GLuint*)& buffersId[normal]);
+		glBindBuffer(GL_ARRAY_BUFFER, buffersId[normal]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * buffersLength[normal],normals, GL_STATIC_DRAW);
 	}
-	else
+
+	if (texture_coord != nullptr)
 	{
-		LOG("ERROR Loading the Mesh, can't generate buffers");
+		glGenBuffers(1, (GLuint*)&buffersId[texture]);
+		glBindBuffer(GL_ARRAY_BUFFER, buffersId[texture]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[texture] * 2, texture_coord, GL_STATIC_DRAW);
 	}
 }
 
 
-void Mesh::Render(bool globalWireMode) const
+void Mesh::Render(bool globalWireMode) 
 {
+	if (!generated_frame_buffers) 
+	{	
+	GenerateBuffers();
+	generated_frame_buffers = true;
+	}
+
 	glPushMatrix();
 	//glColor3f(color.r, color.g, color.b);
 	if(drawnormals)
@@ -66,26 +58,37 @@ void Mesh::Render(bool globalWireMode) const
 
 void Mesh::InnerRender() const
 {
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
 
-	glBindVertexArray(VAO);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindTexture(GL_TEXTURE_2D, tex_id);
 
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, buffersId[texture]);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER,buffersId[vertex]);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffersId[normal]);
+	glNormalPointer(GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersId[index]);
+
+	glDrawElements(GL_TRIANGLES, buffersLength[index], GL_UNSIGNED_INT, NULL);
+
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
 }
+
 
 void Mesh::DrawNormals() const
 {
+	/*
 	glLineWidth(2.0f);
 
 	glBegin(GL_LINES);
@@ -129,11 +132,12 @@ void Mesh::DrawNormals() const
 
 	glEnd();
 
-	glLineWidth(1.0f);
+	glLineWidth(1.0f);*/
 }
 
 void Mesh::UpdatePosition(float x, float y, float z)
 {
+	/*
 	for (int v = 0; v < vertices.size(); v++)
 	{
 		vertices[v].Position.x += x;
@@ -142,10 +146,12 @@ void Mesh::UpdatePosition(float x, float y, float z)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+*/
 }
 
 void Mesh::UpdateScale(float x, float y, float z)
 {
+	/*
 	for (int v = 0; v < vertices.size(); v++)
 	{
 		vertices[v].Position.x *= x;
@@ -154,4 +160,5 @@ void Mesh::UpdateScale(float x, float y, float z)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+*/
 }

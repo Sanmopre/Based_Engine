@@ -13,15 +13,16 @@ struct Vertex
 	float2 TexCoords;
 };
 
+
 class Mesh
 {
 public:
-	Mesh(std::vector<Vertex> vertices, std::vector<uint> indices);
+	Mesh();
 	~Mesh();
 
 	void GenerateBuffers();
 
-	void Render(bool globalWireMode = false) const;
+	void Render(bool globalWireMode = false);
 	void InnerRender() const;
 
 	void DrawNormals() const;
@@ -29,18 +30,31 @@ public:
 	void UpdateScale(float x, float y, float z);
 
 public:
-	uint idVertex;
-	std::vector<Vertex> vertices;
 
-	uint idIndex; 
-	std::vector<uint> indices;
+	enum Buffers
+	{
+		index,
+		normal,
+		vertex,
+		texture,
+		maxBuffers
+	};
 
-	uint VAO;
-	bool drawnormals = false;
+	uint buffersId[maxBuffers];
+	uint buffersLength[maxBuffers];
+
+	uint* indices = nullptr;
+	float* normals = nullptr;
+	float* vertices = nullptr;
+	float* texture_coord = nullptr;
 
 	uint tex_id;
+	bool drawnormals = false;
+
 private:
+
 	Color color;
 	bool wire, noFace;
+	bool generated_frame_buffers = false;
 
 };

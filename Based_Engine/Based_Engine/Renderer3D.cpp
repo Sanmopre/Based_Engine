@@ -4,7 +4,6 @@
 #include "Renderer3D.h"
 #include "Window.h"
 #include "Camera3D.h"
-
 #include "SDL_opengl.h"
 
 #include "imgui.h"
@@ -133,7 +132,7 @@ bool Renderer3D::Start()
 // PreUpdate: clear buffer
 update_status Renderer3D::PreUpdate()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_FRAMEBUFFER | GL_RENDERBUFFER);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_FRAMEBUFFER | GL_RENDERBUFFER);
 	glLoadIdentity();
 
 	glMatrixMode(GL_MODELVIEW);
