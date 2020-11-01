@@ -116,8 +116,6 @@ bool Renderer3D::Init()
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	Texture tex = TextureLoader::Load("Assets/Textures/Baker_house.png");
-	texture_id = tex.id;
 	return ret;
 }
 
@@ -288,10 +286,8 @@ update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
 		for (uint n = 0; n < meshes[i]->size(); n++)
-		{
-			(*meshes[i])[n].tex_id = texture_id;
 			(*meshes[i])[n].Render(true);
-		}
+
 	return UPDATE_CONTINUE;
 }
 

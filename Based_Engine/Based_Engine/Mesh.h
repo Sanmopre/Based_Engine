@@ -26,8 +26,8 @@ public:
 	void InnerRender() const;
 
 	void DrawNormals() const;
-	void UpdatePosition(float x, float y, float z);
-	void UpdateScale(float x, float y, float z);
+	void UpdatePosition(float3 position, float3 last_position);
+	void UpdateScale(float3 scale, float3 last_scale);
 
 public:
 

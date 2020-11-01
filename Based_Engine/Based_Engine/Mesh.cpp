@@ -135,30 +135,59 @@ void Mesh::DrawNormals() const
 	glLineWidth(1.0f);*/
 }
 
-void Mesh::UpdatePosition(float x, float y, float z)
+void Mesh::UpdatePosition(float3 position, float3 last_position)
 {
-	/*
-	for (int v = 0; v < vertices.size(); v++)
+	int dimension = 0;
+	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v++)
 	{
-		vertices[v].Position.x += x;
-		vertices[v].Position.y += y;
-		vertices[v].Position.z += z;
+		if (dimension == 0)
+		{
+			vertices[v] -= last_position.x;
+			vertices[v] += position.x;
+			dimension = 1;
+		}
+		else if (dimension == 1)
+		{
+			vertices[v] -= last_position.y;
+			vertices[v] += position.y;
+			dimension = 2;
+		}
+		else if (dimension == 2)
+		{
+			vertices[v] -= last_position.z;
+			vertices[v] += position.z;
+			dimension = 0;
+		}
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-*/
+	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
 }
 
-void Mesh::UpdateScale(float x, float y, float z)
+void Mesh::UpdateScale(float3 scale, float3 last_scale)
 {
-	/*
-	for (int v = 0; v < vertices.size(); v++)
+	int dimension = 0;
+
+	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v++)
 	{
-		vertices[v].Position.x *= x;
-		vertices[v].Position.y *= y;
-		vertices[v].Position.z *= z;
+		if (dimension == 0)
+		{
+			vertices[v] /= last_scale.x;
+			vertices[v] *= scale.x;
+			dimension = 1;
+		}
+		else if (dimension == 1)
+		{
+			vertices[v] /= last_scale.y;
+			vertices[v] *= scale.y;
+			dimension = 2;
+		}
+		else if (dimension == 2)
+		{
+			vertices[v] /= last_scale.z;
+			vertices[v] *= scale.z;
+			dimension = 0;
+		}
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, idVertex);
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-*/
+	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
 }

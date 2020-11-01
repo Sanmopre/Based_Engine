@@ -100,7 +100,7 @@ bool GameObject::CleanUp()
 	return true;
 }
 
-void GameObject::AddMeshComponent(const char* path, char* name, bool active)
+void GameObject::AddMeshComponent(const char* path, const char* texture_path, char* name, bool active)
 {
 	if (!name)
 	{
@@ -110,7 +110,7 @@ void GameObject::AddMeshComponent(const char* path, char* name, bool active)
 	}
 	comp_id++;
 
-	MeshComponent* mesh = new MeshComponent(name, path, this, App, active);
+	MeshComponent* mesh = new MeshComponent(name, path, texture_path, this, App, active);
 
 	Component* comp = mesh;
 	components.push_back(comp);

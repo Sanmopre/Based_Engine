@@ -54,6 +54,11 @@ void GameObjects::Update(float dt)
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cylinder");
 				go->AddMeshComponent("Assets/Meshes/Primitives/cylinder.fbx");
 			}
+			if (ImGui::Button("Create Plane"))
+			{
+				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
+				go->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx");
+			}
 
 			ImGui::EndMenu();
 		}

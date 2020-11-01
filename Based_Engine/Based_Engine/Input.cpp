@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
+#include "Components.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
@@ -123,7 +124,7 @@ update_status Input::PreUpdate()
 			}
 			LOG("File type: %s", type.c_str());
 
-			if (type == "fbx" || type == "obj")
+			if (type == "fbx" || type == "FBX" || type == "obj" || type == "OBJ")
 			{
 				if (!App->objects->selected)
 				{
@@ -136,9 +137,28 @@ update_status Input::PreUpdate()
 					App->objects->selected->AddMeshComponent(file.c_str());
 				}
 			}
-			else if (type == "png" || type == "jpg")
+			else if (type == "png" || type == "PNG" || type == "jpg" || type == "JPG" || type == "dds" || type == "DDS")
 			{
-
+				GameObject* object = App->objects->selected;
+				if (!object)
+				{
+					object = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
+					object->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx", file.c_str());
+				}
+				else
+				{
+					bool found = false;
+					for (uint c = 0; c < object->components.size(); c++)
+					{
+						if (object->components[c]->AddTexture(file.c_str()))
+						{
+							found = true;
+							break;
+						}
+					}
+					if(!found)
+						object->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx", file.c_str());
+				}
 			}
 			else
 			{

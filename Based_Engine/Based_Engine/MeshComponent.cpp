@@ -4,38 +4,43 @@
 #include "Renderer3D.h"
 #include "Simp.h"
 #include "Mesh.h"
+#include "TextureLoader.h"
 #include "GameObject.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
 
-MeshComponent::MeshComponent(char* name, const char* path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
+MeshComponent::MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	mesh = Simp::LoadFile(path);
-	mesh_buffer = mesh;
 
 	this->path = path;
 	path_buffer = path;
 
+	AddTexture(texture_path);
+
 	if (active)
-		App->renderer3D->AddMesh(&mesh_buffer);
+		App->renderer3D->AddMesh(&mesh);
 }
 
 MeshComponent::~MeshComponent()
 {
-	App->renderer3D->DeleteMesh(&mesh_buffer);
+	App->renderer3D->DeleteMesh(&mesh);
 }
 
 bool MeshComponent::Update(float dt)
 {
 	if (parent->last_transform != parent->transform)
 	{
-		mesh_buffer = mesh;
-		for (uint m = 0; m < mesh_buffer.size(); m++)
+		for (uint m = 0; m < mesh.size(); m++)
 		{
-			mesh_buffer[m].UpdateScale(parent->transform.scale.x, parent->transform.scale.y, parent->transform.scale.z);
-			mesh_buffer[m].UpdatePosition(parent->transform.position.x, parent->transform.position.y, parent->transform.position.z);
+			if (parent->transform.scale.x * parent->transform.scale.y * parent->transform.scale.z == 0)
+			{
+				parent->transform.scale = parent->last_transform.scale;
+			}
+			mesh[m].UpdateScale(parent->transform.scale, parent->last_transform.scale);
+			mesh[m].UpdatePosition(parent->transform.position, parent->last_transform.position);
 		}
 	}
 
@@ -55,7 +60,7 @@ void MeshComponent::Activate()
 	if (!active)
 	{
 		active = true;
-		App->renderer3D->AddMesh(&mesh_buffer);
+		App->renderer3D->AddMesh(&mesh);
 	}
 }
 
@@ -64,7 +69,7 @@ void MeshComponent::Deactivate()
 	if (active)
 	{
 		active = false;
-		App->renderer3D->DeleteMesh(&mesh_buffer);
+		App->renderer3D->DeleteMesh(&mesh);
 	}
 }
 
@@ -114,5 +119,33 @@ void MeshComponent::DisplayComponentMenu()
 			else
 				path_buffer = path;
 		}
+		sprintf_s(str, "texture (%s)", name.c_str());
+		if (ImGui::InputText(str, &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+			if (text_path != text_path_buffer)
+			{
+				AddTexture(text_path_buffer.c_str());
+
+				text_path = text_path_buffer;
+			}
 	}
+}
+
+bool MeshComponent::AddTexture(const char* path)
+{
+	if (path)
+	{
+		this->text_path = path;
+		text_path_buffer = path;
+
+		texture = TextureLoader::Load(path).id;
+		PushTexture(texture);
+	}
+
+	return true;
+}
+
+void MeshComponent::PushTexture(uint texture)
+{
+	for (uint m = 0; m < mesh.size(); m++)
+		mesh[m].tex_id = texture;
 }

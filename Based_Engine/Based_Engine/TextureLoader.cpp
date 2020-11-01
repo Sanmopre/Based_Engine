@@ -50,11 +50,16 @@ Texture TextureLoader::Load(const char* path)
 			newTexture.height = ilGetInteger(IL_IMAGE_HEIGHT);
 			newTexture.width = ilGetInteger(IL_IMAGE_WIDTH);
 		}
-
+		ilDeleteImages(1, &i);
 	}
 	else
 	{
 		LOG("Error loading Image %s", path);
 	}
+
 	return newTexture;
+}
+
+void TextureLoader::Free(uint texture)
+{
 }

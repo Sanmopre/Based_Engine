@@ -18,7 +18,7 @@ ObjectManager::~ObjectManager()
 bool ObjectManager::Start()
 {
 	GameObject* house = AddObject("house");
-	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx");
+	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx", "Assets/Textures/Baker_House.png");
 
 	return true;
 }

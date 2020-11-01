@@ -22,6 +22,8 @@ public:
 
 	virtual void DisplayComponentMenu() = 0;
 
+	virtual bool AddTexture(const char* path) { return false; }
+
 	bool to_delete;
 
 
@@ -44,7 +46,7 @@ class MeshComponent : public Component
 {
 public:
 
-	MeshComponent(char* name, const char* path, GameObject* parent, Application* app, bool active = true);
+	MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
 	virtual ~MeshComponent();
 
 	bool Update(float dt);
@@ -53,12 +55,18 @@ public:
 	void Deactivate();
 
 	void DisplayComponentMenu();
+	bool AddTexture(const char* path);
 
 private:
+
+	void PushTexture(uint texture);
 
 	std::string path;
 	std::string path_buffer;
 
+	std::string text_path;
+	std::string text_path_buffer;
+
 	MESH mesh;
-	MESH mesh_buffer;
+	uint texture;
 };
