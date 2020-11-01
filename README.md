@@ -11,7 +11,7 @@ ESC->Quit application
 
 ## UI:
 
-GameObjects Tree window
+### GameObjects Tree window
 	- Create Group: hover or click to open the GameObject creating menu 
 	(all GameObjects created from here are child to the selected GameObject at the moment of creation)
 		- Create GameObject Button: Create a new empty GameObject
@@ -20,10 +20,10 @@ GameObjects Tree window
 		- Create Pyramid Button: Create a new GameObject with a pyramid mesh
 		- Create Cylindre Button: Create a new GameObject with a cylindre mesh
 		- Create Plane Button: Create a new GameObject with a plane mesh
-- GameObject Tree Nodes: left click to select, if they have children double click or click the arrow to open or close
-- Deselect Button: deselects selected GameObject
+	- GameObject Tree Nodes: left click to select, if they have children double click or click the arrow to open or close
+	- Deselect Button: deselects selected GameObject
 
-Selected GameObject Window
+### Selected GameObject Window
 	- GameObject Name Text Input: write and press Enter to change the GameObject name (if the name is already in use by one of its siblings this will fail)
 	- Delete GameObject Button: deletes the GameObject
 	- Position Float3 Input: write to modify the GameObjects position
