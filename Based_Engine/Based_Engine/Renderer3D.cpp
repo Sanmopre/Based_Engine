@@ -190,18 +190,15 @@ bool Renderer3D::CleanUp()
 
 void Renderer3D::OnResize(int width, int height)
 {
-	if (width == 0 || height == 0)
-		return;
+	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	ProjectionMatrix = perspective(60.0f, width / height, 0.125f, 512.0f);
+	ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
 	glLoadMatrixf(&ProjectionMatrix);
 
-	glViewport(0, 0, width, height);
-
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(App->camera->GetViewMatrix());
+	glLoadIdentity();
 
 	GenerateFrameBuffers(width, height);
 }
