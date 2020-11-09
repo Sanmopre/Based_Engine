@@ -7,6 +7,7 @@
 #include "Camera3D.h"
 #include "GUI.h"
 #include "ObjectManager.h"
+#include "FileSystem.h"
 
 Application::Application()
 {
@@ -16,12 +17,14 @@ Application::Application()
 	camera = new Camera3D(this);
 	ui = new GUI(this);
 	objects = new ObjectManager(this);
+	files = new FileSystem(this);
 
 	// Main Modules
 	AddModule(input);
 	AddModule(window);	
 	AddModule(camera);
 	AddModule(objects);
+	AddModule(files);
 	//Render
 	AddModule(renderer3D);
 	//UI last

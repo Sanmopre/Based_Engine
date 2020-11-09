@@ -49,14 +49,14 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;C:\Users\ramid\OneDrive\Documents\GitHub\Based_Engine\Based_Engine\Based_Engine\External\PhysFS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\DebugLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\DebugLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,7 +68,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;C:\Users\ramid\OneDrive\Documents\GitHub\Based_Engine\Based_Engine\Based_Engine\External\PhysFS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,8 +76,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;MathGeoLib.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -93,6 +93,7 @@
     <ClInclude Include="External\ImGui\imstb_textedit.h" />
     <ClInclude Include="External\ImGui\imstb_truetype.h" />
     <ClInclude Include="External\ImGui\misc\cpp\imgui_stdlib.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="External\ImGui\imgui.cpp" />
     <ClCompile Include="External\ImGui\imgui_demo.cpp" />

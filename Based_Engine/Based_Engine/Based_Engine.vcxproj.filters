@@ -103,6 +103,9 @@
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Engine\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="Simp.h">
       <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
