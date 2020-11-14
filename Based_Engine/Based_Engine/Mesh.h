@@ -28,6 +28,7 @@ public:
 	void DrawNormals() const;
 	void UpdatePosition(float3 position, float3 last_position);
 	void UpdateScale(float3 scale, float3 last_scale);
+	void DrawBoundingBox(bool active);
 
 public:
 
@@ -56,5 +57,6 @@ private:
 	Color color;
 	bool wire, noFace;
 	bool generated_frame_buffers = false;
+	bool show_bounding_box = true;
 
 };

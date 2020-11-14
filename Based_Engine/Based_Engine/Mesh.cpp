@@ -49,6 +49,7 @@ void Mesh::Render(bool globalWireMode)
 
 	glPushMatrix();
 	//glColor3f(color.r, color.g, color.b);
+	DrawBoundingBox(show_bounding_box);
 	if(drawnormals)
 		DrawNormals();
 	InnerRender();
@@ -129,4 +130,11 @@ void Mesh::UpdateScale(float3 scale, float3 last_scale)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
+}
+
+void Mesh::DrawBoundingBox(bool active)
+{
+	if (active) {
+	
+	}
 }
