@@ -29,6 +29,7 @@ public:
 	void UpdatePosition(float3 position, float3 last_position);
 	void UpdateScale(float3 scale, float3 last_scale);
 	void DrawBoundingBox(bool active);
+	void SetMaterialColor(float r, float g, float b, float a = 1.0f);
 
 public:
 

@@ -48,7 +48,7 @@ void Mesh::Render(bool globalWireMode)
 	}
 
 	glPushMatrix();
-	//glColor3f(color.r, color.g, color.b);
+	//SetMaterialColor(0, 0, 0);
 	DrawBoundingBox(show_bounding_box);
 	if(drawnormals)
 		DrawNormals();
@@ -138,3 +138,9 @@ void Mesh::DrawBoundingBox(bool active)
 	
 	}
 }
+
+void Mesh::SetMaterialColor(float r, float g, float b, float a)
+{
+	glColor3f(r, g, b);
+}
+

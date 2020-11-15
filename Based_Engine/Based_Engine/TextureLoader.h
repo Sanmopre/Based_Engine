@@ -13,4 +13,5 @@ namespace TextureLoader
 	void Init();
 
 	Texture Load(const char* path);
+	Texture CheckerTexture();
 }
