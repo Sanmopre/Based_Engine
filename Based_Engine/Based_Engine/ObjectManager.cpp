@@ -19,6 +19,14 @@ bool ObjectManager::Start()
 {
 	GameObject* house = AddObject("house");
 	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx", "Assets/Textures/Baker_House.png");
+	house->transform.position.x = -0.5;
+	house->transform.position.y = 0.5;
+
+	GameObject* street = AddObject("street");
+	street->AddMeshComponent("Assets/Meshes/Primitives/Cube.fbx", "Assets/Textures/Street.png");
+	street->transform.scale.x = 25;
+	street->transform.scale.z = 25;
+	street->transform.position.z = -12.5;
 
 	return true;
 }

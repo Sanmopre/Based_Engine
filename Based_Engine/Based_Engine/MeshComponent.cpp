@@ -6,6 +6,9 @@
 #include "Mesh.h"
 #include "TextureLoader.h"
 #include "GameObject.h"
+#include "Input.h"
+
+#include "GL/glew.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
@@ -20,6 +23,7 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 
 	to_draw_normals = false;
 
+	texture = NULL;
 	AddTexture(texture_path);
 
 	if (active)
@@ -131,10 +135,22 @@ void MeshComponent::DisplayComponentMenu()
 		if (ImGui::InputText(str, &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			if (text_path != text_path_buffer)
 			{
-				AddTexture(text_path_buffer.c_str());
+				bool valid = AddTexture(text_path_buffer.c_str());
 
-				text_path = text_path_buffer;
+				if (valid)
+					text_path = text_path_buffer;
+				else
+					text_path = text_path_buffer = "";
 			}
+
+		if (texture != NULL)
+		{
+			ImTextureID my_tex_id = (ImTextureID)(GLuint)texture;
+			float tex_w = 300;
+			float tex_h = 300;
+
+			ImGui::Image(my_tex_id, ImVec2(tex_w, tex_h));
+		}
 	}
 }
 
@@ -147,6 +163,9 @@ bool MeshComponent::AddTexture(const char* path)
 
 		texture = TextureLoader::Load(path).id;
 		PushTexture(texture);
+
+		if (texture == NULL)
+			return false;
 	}
 
 	return true;

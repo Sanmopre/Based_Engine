@@ -15,9 +15,9 @@ void TextureLoader::Init()
 
 Texture TextureLoader::Load(const char* path)
 {
-	Texture newTexture;
+	Texture newTexture = { NULL,NULL,NULL };
 	
-	uint i;
+	uint i = NULL;
 
 	ilGenImages(1, &i);
 	ilBindImage(i);
@@ -57,6 +57,7 @@ Texture TextureLoader::Load(const char* path)
 		LOG("Error loading Image %s", path);
 	}
 
+	LOG("Invalid Texture Path -> %s", path)
 	return newTexture;
 }
 
