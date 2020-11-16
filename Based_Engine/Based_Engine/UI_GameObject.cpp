@@ -40,7 +40,7 @@ void GameObject_Inspector::Update(float dt)
 				ImGui::Text("name:");
 				ImGui::SameLine();
 				char str[64];
-				sprintf_s(str, " ", object->GetName());
+				sprintf_s(str, " ", object->name.c_str());
 				if (ImGui::InputText(str, &name_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 				{
 					bool same = false;

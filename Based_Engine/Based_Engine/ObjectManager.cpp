@@ -17,16 +17,19 @@ ObjectManager::~ObjectManager()
 
 bool ObjectManager::Start()
 {
-	GameObject* house = AddObject("house");
-	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx", "Assets/Textures/Baker_House.png");
-	house->transform.position.x = -0.5;
-	house->transform.position.y = 0.5;
-
 	GameObject* street = AddObject("street");
 	street->AddMeshComponent("Assets/Meshes/Primitives/Cube.fbx", "Assets/Textures/Street.png");
 	street->transform.scale.x = 25;
 	street->transform.scale.z = 25;
 	street->transform.position.z = -12.5;
+	street->DontTransformChilds();
+
+	GameObject* house = AddObject("house", street);
+	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx", "Assets/Textures/Baker_House.png");
+	house->transform.position.x = -0.5;
+	house->transform.position.y = 0.5;
+
+	house = nullptr;
 
 	return true;
 }
@@ -65,4 +68,22 @@ GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active
 	parent->children.push_back(output);
 	
 	return output;
+}
+
+void ObjectManager::ChildGameObject(GameObject* child, GameObject* parent)
+{
+	if (child->parent == parent)
+		return;
+	for (uint i = 0; i < parent->children.size(); i++)
+		if (parent->children[i] == child)
+			return;
+
+	for(std::vector<GameObject*>::iterator g = child->parent->children.begin(); g != child->parent->children.begin(); g++)
+		if (*g == child)
+		{
+			child->parent->children.erase(g);
+			break;
+		}
+	child->parent = parent;
+	parent->children.push_back(child);
 }

@@ -56,7 +56,7 @@ public:
 
 	void AddMeshComponent(const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 
-	const char* GetName() const { return name.c_str(); }
+	void DontTransformChilds() { transform_child = false; }
 
 	bool active;
 	bool to_delete;
@@ -68,6 +68,7 @@ private:
 	void CarryTransformChange(GameObject*);
 
 	int comp_id;
+	bool transform_child;
 
 	Application* App = nullptr;
 };

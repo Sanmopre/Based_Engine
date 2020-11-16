@@ -85,7 +85,7 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 	if (gameobject->children.size() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 
-	if (ImGui::TreeNodeEx(gameobject->GetName(), flags))
+	if (ImGui::TreeNodeEx(gameobject->name.c_str(), flags))
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			App->objects->selected = gameobject;

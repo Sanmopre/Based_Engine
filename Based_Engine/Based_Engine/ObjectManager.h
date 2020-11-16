@@ -17,6 +17,8 @@ public:
 
 	GameObject* AddObject(char* name = nullptr, GameObject* parent = nullptr, bool active = true, const char* type = "GameObject");
 
+	void ChildGameObject(GameObject* child, GameObject* parent);
+
 	GameObject* parent;
 	GameObject* selected = nullptr;
 

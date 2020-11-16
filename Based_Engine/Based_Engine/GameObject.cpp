@@ -47,8 +47,10 @@ bool GameObject::Update(float dt)
 	}
 
 	bool trans = false;
-	if (last_transform != transform)
-		trans = true;
+	if (transform_child)
+		if (last_transform != transform)
+			trans = true;
+	transform_child = true;
 
 	last = 0;
 	end = false;
