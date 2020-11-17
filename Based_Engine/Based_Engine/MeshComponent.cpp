@@ -10,6 +10,7 @@
 
 #include "GL/glew.h"
 
+
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
@@ -169,6 +170,14 @@ bool MeshComponent::AddTexture(const char* path)
 	}
 
 	return true;
+}
+
+void MeshComponent::GenerateAABB()
+{
+	bbox.SetNegativeInfinity();
+	//bbox.Enclose(mesh, mesh);
+	obb.SetFrom(bbox);
+	//obb.Transform();
 }
 
 void MeshComponent::PushTexture(uint texture)
