@@ -5,14 +5,12 @@
 #include "Math/float3.h"
 #include "Math/float2.h"
 
-
 struct Vertex
 {
 	float3 Position;
 	float3 Normal;
 	float2 TexCoords;
 };
-
 
 class Mesh
 {
@@ -35,11 +33,11 @@ public:
 
 	enum Buffers
 	{
-		index,
-		normal,
-		vertex,
-		texture,
-		maxBuffers
+		index = 0,
+		normal = 1,
+		vertex = 2,
+		texture = 3,
+		maxBuffers = 4
 	};
 
 	uint buffersId[maxBuffers];

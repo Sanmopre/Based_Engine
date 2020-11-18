@@ -9,7 +9,6 @@ class Input;
 class Renderer3D;
 class Window;
 class ObjectManager;
-class FileSystem;
 
 class Application
 {
@@ -20,7 +19,6 @@ public:
 	Camera3D* camera = nullptr;
 	GUI* ui = nullptr;
 	ObjectManager* objects = nullptr;
-	FileSystem* files = nullptr;
 
 private:
 

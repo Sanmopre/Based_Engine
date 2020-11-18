@@ -1,19 +1,20 @@
 #include "FileSystem.h"
 
+#include "Binary.h"
+
 #include "physfs.h"
-#include "SDL.h"
 
 #define ASSETS_PATH "Assets"
 
-FileSystem::FileSystem(Application* app, bool enabled) : Module(app, enabled)
+File::File()
 {
 }
 
-FileSystem::~FileSystem()
+File::~File()
 {
 }
 
-bool FileSystem::Start()
+bool FileSystem::Init()
 {
 	if (!PHYSFS_init(NULL))
 	{
@@ -33,10 +34,47 @@ bool FileSystem::Start()
 		LOG("PhysFS succesfully added %s to the virtual file system", ASSETS_PATH);
 	}
 
+	if (!PHYSFS_setWriteDir(ASSETS_PATH))
+	{
+		LOG("Error setting %s to the write directory, %s", ASSETS_PATH, PHYSFS_getLastError());
+	}
+	else
+	{
+		LOG("PhysFS succesfully set %s as the write directory", ASSETS_PATH);
+
+		PHYSFS_mkdir("Library/Meshes");
+		PHYSFS_mkdir("Library/Materials");
+	}
+
+	char* integer = Binary::GetBinaryStream<int>(2234230);
+	char* floating = Binary::GetBinaryStream<float>(25.73);
+	char* character = Binary::GetBinaryStream<char>('P');
+	char* boolean = Binary::GetBinaryStream<bool>(true);
+
+	Binary::PrintBinaryStream<int>(integer);
+	Binary::PrintBinaryStream<float>(floating);
+	Binary::PrintBinaryStream<char>(character);
+	Binary::PrintBinaryStream<bool>(boolean);
+
+	int integer2 = Binary::GetDataFromStream<int>(integer);
+	float floating2 = Binary::GetDataFromStream<float>(floating);
+	char character2 = Binary::GetDataFromStream<char>(character);
+	bool boolean2 = Binary::GetDataFromStream<bool>(boolean);
+
+	LOG("Int from stream: %d", integer2);
+	LOG("Float from stream: %f", floating2);
+	LOG("Char from stream: %c", character2);
+	LOG("Bool from stream: %d", boolean2);
+
+	delete[] integer;
+	delete[] floating;
+	delete[] character;
+	delete[] boolean;
+
 	return true;
 }
 
-bool FileSystem::CleanUp()
+bool FileSystem::Deinit()
 {
 	if (!PHYSFS_deinit())
 	{
@@ -50,9 +88,104 @@ bool FileSystem::CleanUp()
 	return true;
 }
 
-SDL_RWops FileSystem::LoadFile(const char* path)
+File* FileSystem::Open(const char* path, OpenFormat format)
 {
-	SDL_RWops output;
+	File* file = new File();
+	file->path = path;
 
-	return output;
+	switch (format)
+	{
+	case READ:
+		file->handle = PHYSFS_openRead(path);
+		break;
+	case WRITE:
+		file->handle = PHYSFS_openWrite(path);
+		break;
+	case APPEND:
+		file->handle = PHYSFS_openAppend(path);
+		break;
+	}
+
+	if (file->handle == NULL)
+	{
+		LOG("Couldn't open file %s, %s", path, PHYSFS_getLastError());
+		return nullptr;
+	}
+
+	return file;
+}
+
+bool FileSystem::Close(File* file)
+{
+	int output = PHYSFS_close(file->handle);
+	if (!output)
+	{
+		LOG("Couldn't close file %s, %s", file->path, PHYSFS_getLastError());
+		return false;
+	}
+	delete file;
+
+	return true;
+}
+
+bool FileSystem::Write(File* file, const char* buffer, uint size, uint count)
+{
+	int output = PHYSFS_write(file->handle, buffer, size, count);
+
+	if (output == -1)
+	{
+		LOG("Couldn't write in the file %s [COMPLETE FAILURE], %s", file->path, PHYSFS_getLastError());
+		return false;
+	}
+	else if (output < count)
+	{
+		LOG("Couldn't write all data in the file %s (objects written: %d), %s", file->path, output, PHYSFS_getLastError());
+		return false;
+	}
+
+	return true;
+}
+
+bool FileSystem::Read(File* file, void* buffer, uint size, uint count)
+{
+	int output = PHYSFS_read(file->handle, buffer, size, count);
+
+	if (output == -1)
+	{
+		LOG("Couldn't read the file %s [COMPLETE FAILURE], %s", file->path, PHYSFS_getLastError());
+		return false;
+	}
+	else if (output < count)
+	{
+		LOG("Couldn't read all data in the file %s (objects read: %d), %s", file->path, output, PHYSFS_getLastError());
+		return false;
+	}
+
+	return true;
+}
+
+bool FileSystem::Delete(const char* path)
+{
+	if (!Exists(path))
+		return false;
+
+	int output = PHYSFS_delete(path);
+	if (!output)
+	{
+		LOG("Couldn't delete file %s, %s", path, PHYSFS_getLastError());
+		return false;
+	}
+
+	return true;
+}
+
+bool FileSystem::Exists(const char* path)
+{
+	if (!PHYSFS_exists(path))
+	{
+		LOG("File %s does't exist", path);
+		return false;
+	}
+
+	return true;
 }

@@ -57,7 +57,7 @@ Texture TextureLoader::Load(const char* path)
 		LOG("Error loading Image %s", path);
 	}
 
-	LOG("Invalid Texture Path -> %s", path)
+	//LOG("Invalid Texture Path -> %s", path)
 	return newTexture;
 }
 

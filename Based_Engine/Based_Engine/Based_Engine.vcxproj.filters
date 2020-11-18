@@ -104,7 +104,7 @@
       <Filter>Engine\Tools</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem.cpp">
-      <Filter>Engine\Modules</Filter>
+      <Filter>Engine\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +204,6 @@
     <ClInclude Include="TextureLoader.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>Engine\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
@@ -216,8 +213,11 @@
     <ClInclude Include="Simp.h">
       <Filter>Engine\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Binary.h">
+      <Filter>Engine\Tools</Filter>
+    </ClInclude>
     <ClInclude Include="FileSystem.h">
-      <Filter>Engine\Modules</Filter>
+      <Filter>Engine\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

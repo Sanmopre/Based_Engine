@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Binary.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
@@ -100,7 +101,6 @@
     <ClInclude Include="Simp.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="TextureLoader.h" />
-    <ClInclude Include="Tree.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />

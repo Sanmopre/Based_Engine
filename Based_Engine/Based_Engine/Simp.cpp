@@ -1,4 +1,7 @@
 #include "Simp.h"
+#include "Binary.h"
+
+#include "FileSystem.h"
 
 #include "cimport.h"
 #include "scene.h"
@@ -82,4 +85,117 @@ std::vector<Mesh> Simp::LoadFile(const char* file_path)
 	}
 
 	return loadedMeshes;
+}
+
+void Simp::LoadMesh(const char* file_path)
+{
+	std::string name = file_path;
+	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+	{
+		if (*c == '.')
+		{
+			name.erase(c, name.end());
+			break;
+		}
+	}
+	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+	{
+		if (*c == '/')
+		{
+			name.erase(name.begin(), c + 1);
+			break;
+		}
+	}
+	std::string path = "Library/Meshes/" + name + ".monki";
+
+	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
+
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		FileSystem::Delete(path.c_str());
+		File* file = FileSystem::Open(path.c_str(), APPEND);
+		if (file == nullptr)
+		{
+			aiReleaseImport(scene);
+			return;
+		}
+
+		char* data = "obj";
+		FileSystem::Write(file, data, 3u, 1u);
+		data = Binary::GetBinaryStream<unsigned int>(scene->mNumMeshes);
+		FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+
+		for (int i = 0; i < scene->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[i];
+
+			data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
+			FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+
+			int vertex_size = mesh->mNumVertices * 3;
+			float* vertices = new float[vertex_size];
+			memcpy(vertices, mesh->mVertices, sizeof(float) * vertex_size);
+
+			for (int v = 0; v < vertex_size; v++)
+			{
+				data = Binary::GetBinaryStream<float>(vertices[v]);
+				FileSystem::Write(file, data, sizeof(float), 1u);
+			}
+
+			if (mesh->HasFaces())
+			{
+				data = Binary::GetBinaryStream<unsigned int>(mesh->mNumFaces);
+				FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+
+				int index_size = mesh->mNumFaces * 3;
+				unsigned int* indices = new unsigned int[index_size];
+				for (int j = 0; j < mesh->mNumFaces; ++j)
+					if (mesh->mFaces[j].mNumIndices == 3)
+						memcpy(indices + j * 3, mesh->mFaces[j].mIndices, sizeof(unsigned int) * 3);
+
+				for (int j = 0; j < index_size; j++)
+				{
+					data = Binary::GetBinaryStream<float>(indices[j]);
+					FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+				}
+			}
+
+			if (mesh->HasNormals())
+			{
+				data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
+				FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+
+				int normals_size = mesh->mNumVertices * 3;
+				float* normals = new float[normals_size];
+				memcpy(normals, mesh->mNormals, sizeof(float) * normals_size);
+
+				for (int n = 0; n < normals_size; n++)
+				{
+					data = Binary::GetBinaryStream<float>(normals[n]);
+					FileSystem::Write(file, data, sizeof(float), 1u);
+				}
+			}
+			if (scene->mMeshes[i]->HasTextureCoords(0))
+			{
+				int textures_size = scene->mMeshes[i]->mNumVertices;
+				float* textures = new float[textures_size * 2];
+			
+				for (int t = 0; t < textures_size / 2; t++)
+				{
+					textures[t * 2] = scene->mMeshes[i]->mTextureCoords[0][t].x;
+					textures[t * 2 + 1] = scene->mMeshes[i]->mTextureCoords[0][t].y;
+				}
+				for (int t = 0; t < textures_size / 2; t++)
+				{
+					data = Binary::GetBinaryStream<float>(textures[t]);
+					FileSystem::Write(file, data, sizeof(float), 1u);
+				}
+			}
+		}
+
+		if (!FileSystem::Close(file))
+			LOG("Sadge");
+	}
+
+	aiReleaseImport(scene);
 }
