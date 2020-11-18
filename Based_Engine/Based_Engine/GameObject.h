@@ -36,6 +36,7 @@ struct Transform
 
 class Component;
 
+
 class GameObject
 {
 public:

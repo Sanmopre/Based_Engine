@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Globals.h"
+#include "MathGeoLib.h"
 
 class Application;
 class Mesh;
@@ -57,6 +58,13 @@ public:
 	void DisplayComponentMenu();
 	bool AddTexture(const char* path);
 
+	void GenerateAABB();
+
+public:
+
+	AABB bbox;
+	OBB obb;
+
 private:
 
 	bool to_draw_normals;
@@ -71,4 +79,6 @@ private:
 
 	MESH mesh;
 	uint texture;
+
+
 };
