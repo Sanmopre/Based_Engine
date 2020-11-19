@@ -124,6 +124,7 @@ void Simp::LoadMesh(const char* file_path)
 		FileSystem::Write(file, data, 3u, 1u);
 		data = Binary::GetBinaryStream<unsigned int>(scene->mNumMeshes);
 		FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+		delete[] data;
 
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
@@ -131,6 +132,7 @@ void Simp::LoadMesh(const char* file_path)
 
 			data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
 			FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+			delete[] data;
 
 			int vertex_size = mesh->mNumVertices * 3;
 			float* vertices = new float[vertex_size];
@@ -140,12 +142,14 @@ void Simp::LoadMesh(const char* file_path)
 			{
 				data = Binary::GetBinaryStream<float>(vertices[v]);
 				FileSystem::Write(file, data, sizeof(float), 1u);
+				delete[] data;
 			}
 
 			if (mesh->HasFaces())
 			{
 				data = Binary::GetBinaryStream<unsigned int>(mesh->mNumFaces);
 				FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+				delete[] data;
 
 				int index_size = mesh->mNumFaces * 3;
 				unsigned int* indices = new unsigned int[index_size];
@@ -157,6 +161,7 @@ void Simp::LoadMesh(const char* file_path)
 				{
 					data = Binary::GetBinaryStream<float>(indices[j]);
 					FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+					delete[] data;
 				}
 			}
 
@@ -164,6 +169,7 @@ void Simp::LoadMesh(const char* file_path)
 			{
 				data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
 				FileSystem::Write(file, data, sizeof(unsigned int), 1u);
+				delete[] data;
 
 				int normals_size = mesh->mNumVertices * 3;
 				float* normals = new float[normals_size];
@@ -173,6 +179,7 @@ void Simp::LoadMesh(const char* file_path)
 				{
 					data = Binary::GetBinaryStream<float>(normals[n]);
 					FileSystem::Write(file, data, sizeof(float), 1u);
+					delete[] data;
 				}
 			}
 			if (scene->mMeshes[i]->HasTextureCoords(0))
@@ -189,6 +196,7 @@ void Simp::LoadMesh(const char* file_path)
 				{
 					data = Binary::GetBinaryStream<float>(textures[t]);
 					FileSystem::Write(file, data, sizeof(float), 1u);
+					delete[] data;
 				}
 			}
 		}
