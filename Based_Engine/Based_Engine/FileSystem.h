@@ -31,8 +31,10 @@ namespace FileSystem
 	File* Open(const char* path, OpenFormat format);
 	bool Close(File* file);
 	bool Write(File* file, const char* buffer, uint size, uint count);
+	char* ReadAll(File* file);
 	bool Read(File* file, void* buffer, uint size, uint count);
 	bool Delete(const char* path);
 
 	bool Exists(const char* path);
+	int FileLength(File*);
 }

@@ -1,7 +1,5 @@
 #include "FileSystem.h"
 
-#include "Binary.h"
-
 #include "physfs.h"
 
 #define ASSETS_PATH "Assets"
@@ -45,31 +43,6 @@ bool FileSystem::Init()
 		PHYSFS_mkdir("Library/Meshes");
 		PHYSFS_mkdir("Library/Materials");
 	}
-
-	char* integer = Binary::GetBinaryStream<int>(2234230);
-	char* floating = Binary::GetBinaryStream<float>(25.73);
-	char* character = Binary::GetBinaryStream<char>('P');
-	char* boolean = Binary::GetBinaryStream<bool>(true);
-
-	Binary::PrintBinaryStream<int>(integer);
-	Binary::PrintBinaryStream<float>(floating);
-	Binary::PrintBinaryStream<char>(character);
-	Binary::PrintBinaryStream<bool>(boolean);
-
-	int integer2 = Binary::GetDataFromStream<int>(integer);
-	float floating2 = Binary::GetDataFromStream<float>(floating);
-	char character2 = Binary::GetDataFromStream<char>(character);
-	bool boolean2 = Binary::GetDataFromStream<bool>(boolean);
-
-	LOG("Int from stream: %d", integer2);
-	LOG("Float from stream: %f", floating2);
-	LOG("Char from stream: %c", character2);
-	LOG("Bool from stream: %d", boolean2);
-
-	delete[] integer;
-	delete[] floating;
-	delete[] character;
-	delete[] boolean;
 
 	return true;
 }
@@ -146,6 +119,29 @@ bool FileSystem::Write(File* file, const char* buffer, uint size, uint count)
 	return true;
 }
 
+char* FileSystem::ReadAll(File* file)
+{
+	uint size = PHYSFS_fileLength(file->handle);
+
+	char* output = new char[size];
+	int error = PHYSFS_read(file->handle, output, size, 1);
+
+	if (error == -1)
+	{
+		LOG("Couldn't read the file %s [COMPLETE FAILURE], %s", file->path, PHYSFS_getLastError());
+		delete[] output;
+		return nullptr;
+	}
+	else if (error < 1)
+	{
+		LOG("Couldn't read all data in the file %s (objects read: %d), %s", file->path, output, PHYSFS_getLastError());
+		delete[] output;
+		return false;
+	}
+
+	return output;
+}
+
 bool FileSystem::Read(File* file, void* buffer, uint size, uint count)
 {
 	int output = PHYSFS_read(file->handle, buffer, size, count);
@@ -188,4 +184,9 @@ bool FileSystem::Exists(const char* path)
 	}
 
 	return true;
+}
+
+int FileLength(File* file)
+{
+	return PHYSFS_fileLength(file->handle);
 }
