@@ -48,7 +48,7 @@ void Mesh::Render(bool globalWireMode)
 	}
 
 	glPushMatrix();
-	//SetMaterialColor(0, 0, 0);
+	SetMaterialColor(255, 255, 255);
 	DrawBoundingBox(show_bounding_box);
 	if(drawnormals)
 		DrawNormals();

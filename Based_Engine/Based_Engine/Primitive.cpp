@@ -3,10 +3,11 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "Primitive.h"
+#include "Color.h"
 #include "glut.h"
 
 // ------------------------------------------------------------
-Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
+Primitive::Primitive() : transform(IdentityMatrix), color(Color::Green()), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
 {}
 
 // ------------------------------------------------------------
@@ -53,7 +54,7 @@ void Primitive::Render() const
 		glLineWidth(1.0f);
 	}
 
-	glColor3f(color.r, color.g, color.b);
+
 
 	if(wire)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -235,7 +236,6 @@ void Line::InnerRender() const
 	glLineWidth(2.0f);
 
 	glBegin(GL_LINES);
-
 	glVertex3f(origin.x, origin.y, origin.z);
 	glVertex3f(destination.x, destination.y, destination.z);
 
@@ -260,7 +260,7 @@ void B_Plane::InnerRender() const
 	glLineWidth(1.0f);
 
 	glBegin(GL_LINES);
-
+	glColor3f(255, 255, 255);
 	float d = 200.0f;
 
 	for(float i = -d; i <= d; i += 1.0f)

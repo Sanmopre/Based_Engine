@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Globals.h"
+#include "Color.h"
 #include "MathGeoLib.h"
+#include "MathBuildConfig.h"
 
 class Application;
 class Mesh;
@@ -81,4 +83,60 @@ private:
 	uint texture;
 
 
+};
+
+class CameraComponent : public Component
+{
+public:
+
+	CameraComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
+	virtual ~CameraComponent();
+	void Look(const float3& position_to_look);
+
+	float* GetProjectionMatrix() const;
+
+	float* GetViewMatrix() const;
+
+	void SetVerticalFov(const float& vertical_fov);
+	float GetVerticalFov() const;
+	void SetHorizontalFov(const float& horitzontal_fov);
+	float GetHorizontalFov() const;
+
+	void SetFarPlane(const float& far_plane);
+	void SetNearPlane(const float& near_plane);
+	float GetFarPlane() const;
+	float GetNearPlane() const;
+
+	void SetCameraPosition(const float3& position);
+	float3 GetCameraPosition() const;
+
+	void DisplayComponentMenu();
+
+private:
+	void AspectRatio(int width_ratio, int height_ratio, bool fov_type = 0);
+
+	void DrawFrustum();
+
+	void SetComponent(Component* component);
+
+private:
+
+
+	float vertical_fov = 60.0f;
+	float horizontal_fov = 91.0f;
+
+	bool projection_changed = false;
+
+	float far_plane = 200.f;
+
+	float near_plane = 0.1f;
+
+	int is_fov_horizontal = 0;
+
+//	float4x4 ViewMatrix = float4x4::identity();
+//	float4x4 ViewMatrixInverse = float4x4::identity();
+
+public:	
+	Frustum frustum;
+	Color camera_color_background{ 0.0f, 0.0f, 0.0f, 1.0f };
 };

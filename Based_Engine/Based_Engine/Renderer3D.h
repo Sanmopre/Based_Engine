@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
-
+#include "MathGeoLib.h"
+#include "MathBuildConfig.h"
 #include "Light.h"
 
 #define MAX_LIGHTS 8
@@ -9,6 +10,7 @@ struct PhysBody3D;
 
 class Mesh;
 class B_Plane;
+class CameraComponent;
 
 class Renderer3D : public Module
 {
@@ -37,6 +39,12 @@ public:
 
 	void AddMesh(MESH*);
 	void DeleteMesh(MESH*);
+
+	void UpdateCameraMatrix(CameraComponent* camera);
+
+	bool SetCameraToDraw(const CameraComponent* camera);
+
+	bool IsInsideFrustum(const CameraComponent* camera, const AABB& aabb);
 
 	update_status Draw();
 	update_status WireframeDraw();
