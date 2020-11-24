@@ -263,18 +263,17 @@ void Renderer3D::EndDrawMode()
 void Renderer3D::ActivateMeshNormals(bool c)
 {
 	for (uint i = 0; i < meshes.size(); i++)
-		for (uint n = 0; n < meshes[i]->size(); n++)
-			(*meshes[i])[n].drawnormals = c;
+		(*meshes[i]).drawnormals = c;
 }
 
-void Renderer3D::AddMesh(MESH* mesh)
+void Renderer3D::AddMesh(Mesh* mesh)
 {
 	meshes.push_back(mesh);
 }
 
-void Renderer3D::DeleteMesh(MESH* mesh)
+void Renderer3D::DeleteMesh(Mesh* mesh)
 {
-	for (std::vector<MESH*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++)
+	for (std::vector<Mesh*>::iterator itr = meshes.begin(); itr != meshes.end(); itr++)
 		if (*itr == mesh)
 		{
 			meshes.erase(itr);
@@ -351,8 +350,7 @@ bool Renderer3D::IsInsideFrustum(const CameraComponent* camera, const AABB& aabb
 update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
-		for (uint n = 0; n < meshes[i]->size(); n++)
-			(*meshes[i])[n].Render(true);
+		(*meshes[i]).Render(true);
 
 	return UPDATE_CONTINUE;
 }
@@ -360,8 +358,7 @@ update_status Renderer3D::Draw()
 update_status Renderer3D::WireframeDraw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
-		for (uint n = 0; n < meshes[i]->size(); n++)
-			(*meshes[i])[n].Render(true);
+		(*meshes[i]).Render(true);
 	
 	return UPDATE_CONTINUE;
 }

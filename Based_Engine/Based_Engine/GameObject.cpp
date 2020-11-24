@@ -118,6 +118,22 @@ void GameObject::AddMeshComponent(const char* path, const char* texture_path, ch
 	components.push_back(comp);
 }
 
+void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* name, bool active)
+{
+	if (!name)
+	{
+		char str[10];
+		sprintf_s(str, "%d", comp_id);
+		name = str;
+	}
+	comp_id++;
+
+	MeshComponent* meshptr = new MeshComponent(name, mesh, texture_path, this, App, active);
+
+	Component* comp = meshptr;
+	components.push_back(comp);
+}
+
 void GameObject::CarryTransformChange(GameObject* child)
 {
 	child->transform.position.x -= last_transform.position.x;

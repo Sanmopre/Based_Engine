@@ -4,6 +4,7 @@
 #include "Math/float3.h"
 
 class Application;
+class Mesh;
 
 struct Transform
 {
@@ -56,6 +57,7 @@ public:
 	std::vector<GameObject*> children;
 
 	void AddMeshComponent(const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
+	void AddMeshComponent(Mesh mesh, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 
 	void DontTransformChilds() { transform_child = false; }
 

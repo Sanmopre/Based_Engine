@@ -6,6 +6,7 @@
 #include "Mesh.h"
 #include "TextureLoader.h"
 #include "GameObject.h"
+#include "ObjectManager.h"
 #include "Input.h"
 
 #include "GL/glew.h"
@@ -18,7 +19,23 @@
 MeshComponent::MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	std::string p = Simp::LoadMesh(path);
-	mesh = Simp::LoadMeshFile(p.c_str());
+	std::vector<Mesh> meshes = Simp::LoadMeshFile(p.c_str());
+
+	if (meshes.size() == 0)
+		return;
+
+	mesh = *meshes.begin();
+	if (meshes.size() > 1)
+	{
+		for (int i = 1; i < meshes.size(); i++)
+		{
+			char n[64];
+			memset(n, 0, 64);
+			sprintf(n, "%s%d", parent->name.c_str(), i);
+			GameObject* obj = App->objects->AddObject(n, parent);
+			obj->AddMeshComponent(meshes[i], texture_path);
+		}
+	}
 
 	this->path = path;
 	path_buffer = path;
@@ -32,6 +49,23 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 		App->renderer3D->AddMesh(&mesh);
 }
 
+MeshComponent::MeshComponent(char* name, Mesh mesh, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
+{
+
+	this->mesh = mesh;
+
+	this->path = path;
+	path_buffer = path;
+
+	to_draw_normals = false;
+
+	texture = NULL;
+	AddTexture(texture_path);
+
+	if (active)
+		App->renderer3D->AddMesh(&this->mesh);
+}
+
 MeshComponent::~MeshComponent()
 {
 	App->renderer3D->DeleteMesh(&mesh);
@@ -41,15 +75,12 @@ bool MeshComponent::Update(float dt)
 {
 	if (parent->last_transform != parent->transform)
 	{
-		for (uint m = 0; m < mesh.size(); m++)
+		if (parent->transform.scale.x * parent->transform.scale.y * parent->transform.scale.z == 0)
 		{
-			if (parent->transform.scale.x * parent->transform.scale.y * parent->transform.scale.z == 0)
-			{
-				parent->transform.scale = parent->last_transform.scale;
-			}
-			mesh[m].UpdateScale(parent->transform.scale, parent->last_transform.scale);
-			mesh[m].UpdatePosition(parent->transform.position, parent->last_transform.position);
+			parent->transform.scale = parent->last_transform.scale;
 		}
+		mesh.UpdateScale(parent->transform.scale, parent->last_transform.scale);
+		mesh.UpdatePosition(parent->transform.position, parent->last_transform.position);
 	}
 
 	if (active != to_activate)
@@ -94,8 +125,7 @@ void MeshComponent::DisplayComponentMenu()
 
 		sprintf_s(str, "normals (%s)", name.c_str());
 		if(ImGui::Checkbox(str, &to_draw_normals))
-			for (uint m = 0; m < mesh.size(); m++)
-				mesh[m].drawnormals = to_draw_normals;
+			mesh.drawnormals = to_draw_normals;
 		ImGui::SameLine();
 
 		sprintf_s(str, "delete (%s)", name.c_str());
@@ -120,19 +150,19 @@ void MeshComponent::DisplayComponentMenu()
 				name_buffer = name;
 		}
 
-		sprintf_s(str, "mesh (%s)", name.c_str());
-		if (ImGui::InputText(str, &path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
-		{
-			MESH m = Simp::LoadFile(path_buffer.c_str());
-
-			if (m.size() != 0)
-			{
-				mesh = m;
-				path = path_buffer;
-			}
-			else
-				path_buffer = path;
-		}
+		//sprintf_s(str, "mesh (%s)", name.c_str());
+		//if (ImGui::InputText(str, &path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+		//{
+		//	MESH m = Simp::LoadFile(path_buffer.c_str());
+		//
+		//	if (m.size() != 0)
+		//	{
+		//		mesh = m;
+		//		path = path_buffer;
+		//	}
+		//	else
+		//		path_buffer = path;
+		//}
 		sprintf_s(str, "texture (%s)", name.c_str());
 		if (ImGui::InputText(str, &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			if (text_path != text_path_buffer)
@@ -183,6 +213,5 @@ void MeshComponent::GenerateAABB()
 
 void MeshComponent::PushTexture(uint texture)
 {
-	for (uint m = 0; m < mesh.size(); m++)
-		mesh[m].tex_id = texture;
+	mesh.tex_id = texture;
 }

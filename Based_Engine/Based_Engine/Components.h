@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "MathGeoLib.h"
 #include "MathBuildConfig.h"
+#include "Mesh.h"
 
 class Application;
 class Mesh;
@@ -50,6 +51,7 @@ class MeshComponent : public Component
 public:
 
 	MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
+	MeshComponent(char* name, Mesh mesh, const char* texture_path, GameObject* parent, Application* app, bool active = true);
 	virtual ~MeshComponent();
 
 	bool Update(float dt);
@@ -79,7 +81,7 @@ private:
 	std::string text_path;
 	std::string text_path_buffer;
 
-	MESH mesh;
+	Mesh mesh;
 	uint texture;
 
 

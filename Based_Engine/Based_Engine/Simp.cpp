@@ -227,6 +227,7 @@ std::string Simp::LoadMesh(const char* file_path)
 
 			Enter(file);
 		}
+		FileSystem::Close(file);
 	}
 
 	aiReleaseImport(scene);
@@ -389,11 +390,8 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		if (bufferName != "TEX")
 		{
 			LOG("No texture coordinates found: %s", path);
-			delete[] mesh.vertices;
-			delete[] mesh.indices;
-			delete[] mesh.normals;
-			delete[] data;
-			return meshes;
+			bit -= 3;
+			continue;
 		}
 
 		unsigned int textureNum = Binary::GetDataFromStream<unsigned int>(&data[bit]);

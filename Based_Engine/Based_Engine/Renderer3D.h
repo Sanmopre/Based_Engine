@@ -37,8 +37,8 @@ public:
 	void EndDrawMode();
 	void ActivateMeshNormals(bool c);
 
-	void AddMesh(MESH*);
-	void DeleteMesh(MESH*);
+	void AddMesh(Mesh*);
+	void DeleteMesh(Mesh*);
 
 	void UpdateCameraMatrix(CameraComponent* camera);
 
@@ -51,7 +51,7 @@ public:
 
 public:
 
-	std::vector<MESH*> meshes;
+	std::vector<Mesh*> meshes;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
