@@ -2,39 +2,11 @@
 
 #include "Globals.h"
 #include "Math/float3.h"
+#include "Transform.h"
 
 class Application;
 class Mesh;
-
-struct Transform
-{
-	Transform()
-	{
-		position = { 0,0,0 };
-		rotation = { 0,0,0 };
-		scale = { 1,1,1 };
-	}
-
-	float3 position, rotation, scale;
-
-	bool operator==(Transform t)
-	{
-		if(position.x == t.position.x && position.y == t.position.y && position.z == t.position.z &&
-			rotation.x == t.rotation.x && rotation.y == t.rotation.y && rotation.z == t.rotation.z &&
-			scale.x == t.scale.x && scale.y == t.scale.y && scale.z == t.scale.z)
-			return true;
-		return false;
-	}
-	bool operator!=(Transform t)
-	{
-		if (position.x == t.position.x && position.y == t.position.y && position.z == t.position.z &&
-			rotation.x == t.rotation.x && rotation.y == t.rotation.y && rotation.z == t.rotation.z &&
-			scale.x == t.scale.x && scale.y == t.scale.y && scale.z == t.scale.z)
-			return false;
-		return true;
-	}
-};
-
+struct Transform;
 class Component;
 
 

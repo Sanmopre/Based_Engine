@@ -101,6 +101,7 @@
     <ClInclude Include="Simp.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
@@ -138,6 +139,7 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Simp.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="log.cpp" />

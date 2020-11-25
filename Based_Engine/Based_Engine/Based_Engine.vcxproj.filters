@@ -109,6 +109,9 @@
     <ClCompile Include="CameraComponent.cpp">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -221,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="FileSystem.h">
       <Filter>Engine\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
