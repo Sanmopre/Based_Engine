@@ -62,12 +62,14 @@ public:
 	void DisplayComponentMenu();
 	bool AddTexture(const char* path);
 
-	void GenerateAABB();
+	AABB GenerateAABB();
 
-public:
+	void RecalculateAABB_OBB();
+	const AABB GetGlobalAABB() const;
+	const OBB GetOBB() const;
 
-	AABB bbox;
-	OBB obb;
+	void DrawGlobalAABB();
+	void DrawOBB();
 
 private:
 
@@ -84,7 +86,9 @@ private:
 	Mesh mesh;
 	uint texture;
 
-
+	AABB local_aabb;
+	OBB obb;
+	AABB global_aabb;
 };
 
 class CameraComponent : public Component
