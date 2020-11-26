@@ -44,6 +44,15 @@ bool FileSystem::Init()
 		PHYSFS_mkdir("Library/Materials");
 	}
 
+	LOG("Files:")
+	char** rc = PHYSFS_enumerateFiles("Library");
+	char** i;
+
+	for (i = rc; *i != NULL; i++)
+		LOG("We've got [%s].", *i);
+
+	PHYSFS_freeList(rc);
+
 	return true;
 }
 
