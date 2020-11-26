@@ -72,7 +72,7 @@ MeshComponent::~MeshComponent()
 }
 
 bool MeshComponent::Update(float dt)
-{
+{	
 	if (parent->last_transform != parent->transform)
 	{
 		if (parent->transform.scale.x * parent->transform.scale.y * parent->transform.scale.z == 0)
@@ -90,6 +90,8 @@ bool MeshComponent::Update(float dt)
 		else
 			Deactivate();
 	}
+
+
 
 	return true;
 }
@@ -205,19 +207,21 @@ bool MeshComponent::AddTexture(const char* path)
 
 AABB MeshComponent::GenerateAABB()
 {	
-	/*
-	if (mesh != nullptr) {
-		local_aabb.SetNegativeInfinity();
-		local_aabb.Enclose((float3*)mesh->vertices, NUM_VERTICES);
-	}
-	*/
+	local_aabb.SetNegativeInfinity();
+	local_aabb.Enclose((float3*)mesh.vertices, mesh.buffersLength[Mesh::vertex] * 3);
+
 	return local_aabb;
 }
 
 void MeshComponent::RecalculateAABB_OBB()
 {
+	float3x3 matrix = { { 	parent->transform.position[0], 	parent->transform.position[1], 	parent->transform.position[2] },
+						 { 	parent->transform.rotation[0], 	parent->transform.rotation[1], 	parent->transform.rotation[2] },
+						 { 	parent->transform.scale[0], 	parent->transform.scale[1], 	parent->transform.scale[2] }
+	};
+
 	obb = GenerateAABB();
-	//obb.Transform(TRANSFORM);
+	obb.Transform(matrix);
 
 	global_aabb.SetNegativeInfinity();
 	global_aabb.Enclose(obb);
@@ -235,7 +239,7 @@ const OBB MeshComponent::GetOBB() const
 
 void MeshComponent::DrawGlobalAABB()
 {
-	glColor3f(200, 10, 10);
+//	glColor3f(200, 10, 10);
 	glLineWidth(1);
 	glBegin(GL_LINES);
 
@@ -282,7 +286,7 @@ void MeshComponent::DrawGlobalAABB()
 
 void MeshComponent::DrawOBB()
 {
-	glColor3f(100,100,100);
+//	glColor3f(100,100,100);
 	glLineWidth(1);
 	float3* obb_points = nullptr;
 	obb.GetCornerPoints(obb_points);

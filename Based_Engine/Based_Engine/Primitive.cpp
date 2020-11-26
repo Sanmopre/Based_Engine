@@ -29,20 +29,20 @@ void Primitive::Render() const
 
 		glBegin(GL_LINES);
 
-		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+		//glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 
 		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
 		glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
 
-		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+		//glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 
 		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
 		glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
 		glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
 
-		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+		//glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 
 		glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
@@ -72,7 +72,7 @@ void Primitive::InnerRender() const
 	glPointSize(5.0f);
 
 	glBegin(GL_POINTS);
-
+	//glColor3f(0,0, 0);
 	glVertex3f(0.0f, 0.0f, 0.0f);
 
 	glEnd();
@@ -260,7 +260,7 @@ void B_Plane::InnerRender() const
 	glLineWidth(1.0f);
 
 	glBegin(GL_LINES);
-	glColor3f(255, 255, 255);
+	//glColor3f(255, 255, 255);
 	float d = 200.0f;
 
 	for(float i = -d; i <= d; i += 1.0f)
