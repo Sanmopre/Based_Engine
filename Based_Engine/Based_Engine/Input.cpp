@@ -137,7 +137,7 @@ update_status Input::PreUpdate()
 					App->objects->selected->AddMeshComponent(file.c_str());
 				}
 			}
-			else if (type == "png" || type == "PNG" || type == "jpg" || type == "JPG" || type == "dds" || type == "DDS")
+			else if (type == "png" || type == "PNG" || type == "jpg" || type == "JPG" || type == "dds" || type == "DDS" || type == "tga" || type == "TGA")
 			{
 				GameObject* object = App->objects->selected;
 				if (!object)

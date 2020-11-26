@@ -106,7 +106,7 @@ std::string Simp::LoadMesh(const char* file_path)
 	}
 	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
 	{
-		if (*c == '/')
+		if (*c == '/' || *c == '\\')
 		{
 			name.erase(name.begin(), c + 1);
 			break;
@@ -391,6 +391,9 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		{
 			LOG("No texture coordinates found: %s", path);
 			bit -= 3;
+			delete[] mesh.vertices;
+			delete[] mesh.indices;
+			delete[] mesh.normals;
 			continue;
 		}
 
