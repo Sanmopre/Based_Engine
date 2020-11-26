@@ -235,7 +235,7 @@ const OBB MeshComponent::GetOBB() const
 
 void MeshComponent::DrawGlobalAABB()
 {
-	glColor3f(200, 10, 10);
+//	glColor3f(200, 10, 10);
 	glLineWidth(1);
 	glBegin(GL_LINES);
 
@@ -282,7 +282,7 @@ void MeshComponent::DrawGlobalAABB()
 
 void MeshComponent::DrawOBB()
 {
-	glColor3f(100,100,100);
+//	glColor3f(100,100,100);
 	glLineWidth(1);
 	float3* obb_points = nullptr;
 	obb.GetCornerPoints(obb_points);
