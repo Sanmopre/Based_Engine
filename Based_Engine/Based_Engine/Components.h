@@ -6,10 +6,11 @@
 #include "MathBuildConfig.h"
 #include "Mesh.h"
 
+
 class Application;
 class Mesh;
 class GameObject;
-struct Transform;
+class Transform;
 
 class Component
 {

@@ -1,6 +1,7 @@
 #include "ObjectManager.h"
 #include "Application.h"
 #include "GameObject.h"
+#include "Transform.h"
 #include "Input.h"
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
@@ -19,15 +20,15 @@ bool ObjectManager::Start()
 {
 	GameObject* street = AddObject("street");
 	street->AddMeshComponent("Assets/Meshes/Primitives/Cube.fbx", "Assets/Textures/Street.png");
-	street->transform.scale.x = 25;
-	street->transform.scale.z = 25;
-	street->transform.position.z = -12.5;
+	street->transform->scale.x = 25;
+	street->transform->scale.z = 25;
+	street->transform->position.z = -12.5;
 	street->DontTransformChilds();
 
 	GameObject* house = AddObject("house", street);
 	house->AddMeshComponent("Assets/Meshes/Baker_House.fbx", "Assets/Textures/Baker_House.png");
-	house->transform.position.x = -0.5;
-	house->transform.position.y = 0.5;
+	house->transform->position.x = -0.5;
+	house->transform->position.y = 0.5;
 
 	house = nullptr;
 

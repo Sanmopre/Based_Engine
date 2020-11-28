@@ -2,11 +2,10 @@
 
 #include "Globals.h"
 #include "Math/float3.h"
-#include "Transform.h"
 
 class Application;
 class Mesh;
-struct Transform;
+class Transform;
 class Component;
 
 
@@ -20,8 +19,8 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
-	Transform transform;
-	Transform last_transform;
+	Transform* transform = nullptr;
+	Transform* last_transform = nullptr;
 
 	std::vector<Component*> components;
 

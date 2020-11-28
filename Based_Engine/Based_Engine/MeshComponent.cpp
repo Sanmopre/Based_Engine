@@ -7,6 +7,7 @@
 #include "TextureLoader.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "Transform.h"
 #include "Input.h"
 
 #include "GL/glew.h"
@@ -73,14 +74,14 @@ MeshComponent::~MeshComponent()
 
 bool MeshComponent::Update(float dt)
 {	
-	if (parent->last_transform != parent->transform)
+	if (*parent->last_transform != *parent->transform)
 	{
-		if (parent->transform.scale.x * parent->transform.scale.y * parent->transform.scale.z == 0)
+		if (parent->transform->scale.x * parent->transform->scale.y * parent->transform->scale.z == 0)
 		{
-			parent->transform.scale = parent->last_transform.scale;
+			parent->transform->scale = parent->last_transform->scale;
 		}
-		mesh.UpdateScale(parent->transform.scale, parent->last_transform.scale);
-		mesh.UpdatePosition(parent->transform.position, parent->last_transform.position);
+		mesh.UpdateScale(parent->transform->scale, parent->last_transform->scale);
+		mesh.UpdatePosition(parent->transform->position, parent->last_transform->position);
 	}
 
 	if (active != to_activate)
@@ -215,9 +216,9 @@ AABB MeshComponent::GenerateAABB()
 
 void MeshComponent::RecalculateAABB_OBB()
 {
-	float3x3 matrix = { { 	parent->transform.position[0], 	parent->transform.position[1], 	parent->transform.position[2] },
-						 { 	parent->transform.rotation[0], 	parent->transform.rotation[1], 	parent->transform.rotation[2] },
-						 { 	parent->transform.scale[0], 	parent->transform.scale[1], 	parent->transform.scale[2] }
+	float3x3 matrix = { { 	parent->transform->position[0], 	parent->transform->position[1], 	parent->transform->position[2] },
+						 { 	parent->transform->rotation[0], 	parent->transform->rotation[1], 	parent->transform->rotation[2] },
+						 { 	parent->transform->scale[0], 	parent->transform->scale[1], 	parent->transform->scale[2] }
 	};
 
 	obb = GenerateAABB();

@@ -2,9 +2,11 @@
 #include "Math/float3.h"
 #include "MathGeoLib.h"
 
+class GameObject;
 
-struct Transform
+class Transform
 {
+public:
 	Transform();
 	virtual ~Transform();
 
@@ -13,6 +15,8 @@ struct Transform
 	float3 forward = { 0,0,0 };
 	float3 up = { 0,0,0 };
 	float3 right = { 0,0,0 };
+
+	GameObject* object;
 
 	float4x4 global_transformation;
 	float4x4 local_transformation;
