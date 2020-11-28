@@ -7,7 +7,7 @@ class GameObject;
 class Transform
 {
 public:
-	Transform();
+	Transform(GameObject* game_object);
 	virtual ~Transform();
 
 	float3 position, rotation, scale;
@@ -29,6 +29,9 @@ public:
 	Quat local_rotation = { 0,0,0,0 };
 
 	float3 euler_rotation = { 0,0,0 };
+
+	void RecalculateTransform();
+
 
 	//Operators
 	bool operator==(Transform t)
