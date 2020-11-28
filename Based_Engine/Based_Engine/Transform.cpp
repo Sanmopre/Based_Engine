@@ -78,4 +78,108 @@ void Transform::RecalculateTransform()
 
 }
 
+void Transform::SetLocalPosition(const float3& new_local_pos)
+{
+	local_position = new_local_pos;
+
+	RecalculateTransform();
+}
+
+void Transform::SetLocalPosition(const float& x, const float& y, const float& z)
+{
+	local_position.x = x;
+	local_position.y = y;
+	local_position.z = z;
+
+	RecalculateTransform();
+}
+
+const float3 Transform::GetLocalPosition() const
+{
+	return local_position;
+}
+
+const float3 Transform::GetGlobalPosition() const
+{
+	float3 pos, scale;
+	Quat rot;
+
+	global_transformation.Decompose(pos, rot, scale);
+
+	return pos;
+}
+
+void Transform::SetLocalScale(const float3& new_local_scale)
+{
+	local_scale = new_local_scale;
+
+	RecalculateTransform();
+}
+
+void Transform::SetLocalScale(const float& x, const float& y, const float& z)
+{
+	local_scale.x = x;
+	local_scale.y = y;
+	local_scale.z = z;
+
+	RecalculateTransform();
+}
+
+const float3 Transform::GetLocalScale() const
+{
+	return local_scale;
+}
+
+const float3 Transform::GetGlobalScale() const
+{
+	float3 pos, scale;
+	Quat rot;
+
+	global_transformation.Decompose(pos, rot, scale);
+
+	return scale;
+}
+
+void Transform::SetLocalRotation(const Quat& new_local_rotation)
+{
+	local_rotation.Set(new_local_rotation.x, new_local_rotation.y, new_local_rotation.z, new_local_rotation.w);
+
+	euler_rotation = local_rotation.ToEulerXYZ();
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	RecalculateTransform();
+}
+
+void Transform::SetLocalRotation(const float& x, const float& y, const float& z, const float& angle)
+{
+	local_rotation.x = x;
+	local_rotation.y = y;
+	local_rotation.z = z;
+	local_rotation.w = angle;
+
+	euler_rotation = local_rotation.ToEulerXYZ();
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	RecalculateTransform();
+}
+
+const Quat Transform::GetLocalRotation() const
+{
+	return local_rotation;
+}
+
+const Quat Transform::GetGlobalRotation() const
+{
+	float3 pos, scale;
+	Quat rot;
+
+	global_transformation.Decompose(pos, rot, scale);
+
+	return rot;
+}
+
 

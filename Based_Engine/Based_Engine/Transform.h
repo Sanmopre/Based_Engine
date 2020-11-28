@@ -12,6 +12,7 @@ public:
 
 	float3 position, rotation, scale;
 
+private:
 	float3 forward = { 0,0,0 };
 	float3 up = { 0,0,0 };
 	float3 right = { 0,0,0 };
@@ -31,6 +32,28 @@ public:
 	float3 euler_rotation = { 0,0,0 };
 
 	void RecalculateTransform();
+
+
+public:
+
+	void SetLocalPosition(const float3& new_local_pos);
+	void SetLocalPosition(const float& x, const float& y, const float& z);
+
+	const float3 GetLocalPosition() const;
+	const float3 GetGlobalPosition() const;
+
+	void SetLocalScale(const float3& new_local_scale);
+	void SetLocalScale(const float& x, const float& y, const float& z);
+
+	const float3 GetLocalScale() const;
+	const float3 GetGlobalScale() const;
+
+	void SetLocalRotation(const Quat& new_local_rotation);
+	void SetLocalRotation(const float& x, const float& y, const float& z, const float& angle);
+
+	const Quat GetLocalRotation() const;
+	const Quat GetGlobalRotation() const;
+
 
 
 	//Operators
