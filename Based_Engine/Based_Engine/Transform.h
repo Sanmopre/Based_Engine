@@ -12,7 +12,6 @@ public:
 
 	float3 position, rotation, scale;
 
-private:
 	float3 forward = { 0,0,0 };
 	float3 up = { 0,0,0 };
 	float3 right = { 0,0,0 };
@@ -33,6 +32,12 @@ private:
 
 	void RecalculateTransform();
 
+	void AddPosition(const float3 pos);
+	void AddScale(const float3 scale);
+	void AddRotation(const float3 rot);
+
+	void Reparent(const float4x4& transform);
+	void Reset();
 
 public:
 

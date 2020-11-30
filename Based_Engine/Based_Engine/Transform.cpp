@@ -12,7 +12,7 @@ Transform::Transform(GameObject* game_object)
 	object = game_object;
 
 	local_position = { 0,0,0 };
-	local_rotation = { 0,0,0 };
+	local_rotation = { 0,0,0 }; // ??? //
 	local_scale = { 0,0,0 };
 	euler_rotation = local_rotation.ToEulerXYX();
 	euler_rotation.x = RadToDeg(euler_rotation.x);
@@ -76,6 +76,62 @@ void Transform::RecalculateTransform()
 
 	//recalculate		mesh->RecalculateAABB_OBB();
 
+}
+
+void Transform::AddPosition(const float3 pos)
+{
+	local_position += pos;
+	RecalculateTransform();
+}
+
+void Transform::AddScale(const float3 scale)
+{
+	local_scale += scale;
+	RecalculateTransform();
+}
+
+void Transform::AddRotation(const float3 rot)
+{
+	euler_rotation += rot;
+	float3 aux = euler_rotation;
+	aux.x = DegToRad(euler_rotation.x);
+	aux.y = DegToRad(euler_rotation.y);
+	aux.z = DegToRad(euler_rotation.z);
+	local_rotation = Quat::FromEulerXYZ(aux.x, aux.y, aux.z);
+
+	RecalculateTransform();
+}
+
+void Transform::Reparent(const float4x4& transform)
+{
+	float3 position, scale;
+	Quat rotation;
+	transform.Decompose(position, rotation, scale);
+
+	this->local_scale = scale;
+	this->local_position = position;
+	this->local_rotation = rotation;
+	euler_rotation = local_rotation.ToEulerXYZ();
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	RecalculateTransform();
+}
+
+void Transform::Reset()
+{
+	local_scale = { 1,1,1 };
+	local_position = { 0,0,0 };
+	// ???????  Quat only takes 3 floats  ?????  //
+	local_rotation = { 0,0,0 };
+
+	euler_rotation = local_rotation.ToEulerXYZ();
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	RecalculateTransform();
 }
 
 void Transform::SetLocalPosition(const float3& new_local_pos)
