@@ -12,7 +12,7 @@ Transform::Transform(GameObject* game_object)
 	object = game_object;
 
 	local_position = { 0,0,0 };
-	local_rotation = { 0,0,0 }; // ??? //
+	local_rotation = {0,0,0,0 };
 	local_scale = { 0,0,0 };
 	euler_rotation = local_rotation.ToEulerXYX();
 	euler_rotation.x = RadToDeg(euler_rotation.x);
@@ -123,8 +123,7 @@ void Transform::Reset()
 {
 	local_scale = { 1,1,1 };
 	local_position = { 0,0,0 };
-	// ???????  Quat only takes 3 floats  ?????  //
-	local_rotation = { 0,0,0 };
+	local_rotation = {0,0,0,0 };
 
 	euler_rotation = local_rotation.ToEulerXYZ();
 	euler_rotation.x = RadToDeg(euler_rotation.x);

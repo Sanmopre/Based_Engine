@@ -4,6 +4,7 @@
 
 #include "Math/float3.h"
 #include "Math/float2.h"
+#include "MathGeoLib.h"
 
 struct Vertex
 {
@@ -24,6 +25,7 @@ public:
 	void InnerRender() const;
 
 	void DrawNormals() const;
+	void UpdateMeshTransform(float4x4 transform);
 	void UpdatePosition(float3 position, float3 last_position);
 	void UpdateScale(float3 scale, float3 last_scale);
 	void DrawBoundingBox(bool active);

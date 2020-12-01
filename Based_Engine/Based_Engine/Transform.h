@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Math/float3.h"
 #include "MathGeoLib.h"
+#include "MathBuildConfig.h"
 
 class GameObject;
 
