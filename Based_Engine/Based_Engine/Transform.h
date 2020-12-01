@@ -9,6 +9,7 @@ class Transform
 {
 public:
 	Transform(GameObject* game_object);
+	Transform(GameObject* game_object, float4x4 transform);
 	virtual ~Transform();
 
 	float3 position, rotation, scale;
