@@ -60,6 +60,7 @@ public:
 	bool quit;
 
 private:
+
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
@@ -68,4 +69,10 @@ private:
 	int mouse_x_motion;
 	int mouse_y_motion;
 	//int mouse_z_motion;
+
+	void ProccesDroppedFile(char* path);
+	void ProccesMesh(std::string file);
+	void ProccesImage(std::string file);
+
+	std::string CopyFileToAssets(const char* path);
 };

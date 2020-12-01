@@ -19,8 +19,7 @@
 
 MeshComponent::MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
-	std::string p = Simp::LoadMesh(path);
-	std::vector<Mesh> meshes = Simp::LoadMeshFile(p.c_str());
+	std::vector<Mesh> meshes = Simp::LoadMeshFile(path);
 
 	if (meshes.size() == 0)
 		return;

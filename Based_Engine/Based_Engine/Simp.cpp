@@ -8,6 +8,8 @@
 #include "postprocess.h"
 #include "Mesh.h"
 
+#include "Math/float4x4.h"
+
 void Simp::InitializeDebugger() 
 {
 	struct aiLogStream stream;
@@ -58,7 +60,17 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 
 	char* data = "MESH";
 	FileSystem::Write(file, data, 4u, 1u);
+	for (int y = 0; y < 4; y++)
+	{
+		for (int x = 0; x < 4; x++)
+		{
+			data = Binary::GetBinaryStream<float>(transform[x][y]);
+			FileSystem::Write(file, data, sizeof(float), 1u);
+			delete[] data;
+		}
+	}
 	Enter(file);
+
 	data = "VEC";
 	FileSystem::Write(file, data, 3u, 1u);
 	data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
@@ -156,7 +168,7 @@ void ExpandNode(aiNode* node, File* file, const aiScene* scene)
 		ExpandNode(node->mChildren[i], file, scene);
 }
 
-std::string Simp::LoadMesh(const char* file_path)
+std::string Simp::LoadMesh(const char* file_path, bool redo)
 {
 	std::string path = CreateFileName(file_path);
 
@@ -164,7 +176,12 @@ std::string Simp::LoadMesh(const char* file_path)
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		FileSystem::Delete(path.c_str());
+		if (FileSystem::Exists(path.c_str()))
+			if(redo)
+				FileSystem::Delete(path.c_str());
+			else
+				return path;
+
 		File* file = FileSystem::Open(path.c_str(), APPEND);
 		if (file == nullptr)
 		{
@@ -182,6 +199,10 @@ std::string Simp::LoadMesh(const char* file_path)
 		ExpandNode(scene->mRootNode, file, scene);
 
 		FileSystem::Close(file);
+	}
+	else
+	{
+		LOG("Scene could not load, %s", aiGetErrorString());
 	}
 
 	aiReleaseImport(scene);
@@ -225,7 +246,6 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 			bufferName += data[i];
 			bit++;
 		}
-		bit++;
 		if (bufferName != "MESH")
 		{
 			LOG("No mesh found: %s", path);
@@ -233,6 +253,17 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 			return meshes;
 		}
 		Mesh mesh;
+
+		float transform[16];
+		int firstBit = bit;
+		limit = bit + 16;
+		for (int i = bit; i < limit; i++)
+		{
+			transform[i - firstBit] = Binary::GetDataFromStream<float>(&data[bit]);
+
+			bit += 4;
+		}
+		bit++;
 
 		mesh.buffersId[Mesh::index] = 0;
 		mesh.buffersId[Mesh::normal] = 0;
@@ -258,7 +289,7 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersLength[Mesh::vertex] = vertexNum;
 		mesh.vertices = new float[vertexNum * 3];
 
-		int firstBit = bit;
+		firstBit = bit;
 		limit = bit + vertexNum * 3;
 		for (int i = bit; i < limit; i ++)
 		{

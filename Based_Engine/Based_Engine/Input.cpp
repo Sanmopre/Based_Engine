@@ -4,6 +4,8 @@
 #include "ObjectManager.h"
 #include "GameObject.h"
 #include "Components.h"
+#include "FileSystem.h"
+#include "Simp.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
@@ -103,68 +105,7 @@ update_status Input::PreUpdate()
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(App->window->window))
 			quit = true;
 		if (event.type == SDL_DROPFILE)
-		{
-			std::string file = event.drop.file;
-			LOG("Loading file: %s", file.c_str());
-
-			std::string type;
-			for (uint i = file.size() - 1; i != -1; i--)
-			{
-				if (file[i] == '.')
-				{
-					std::string reverse;
-					for (uint c = type.size() - 1; c != -1; c--)
-						reverse.push_back(type[c]);
-					type = reverse;
-					
-					break;
-				}
-
-				type.push_back(file[i]);
-			}
-			LOG("File type: %s", type.c_str());
-
-			if (type == "fbx" || type == "FBX" || type == "obj" || type == "OBJ")
-			{
-				if (!App->objects->selected)
-				{
-					GameObject* object = App->objects->AddObject();
-					object->AddMeshComponent(file.c_str());
-					App->objects->selected = object;
-				}
-				else
-				{
-					App->objects->selected->AddMeshComponent(file.c_str());
-				}
-			}
-			else if (type == "png" || type == "PNG" || type == "jpg" || type == "JPG" || type == "dds" || type == "DDS" || type == "tga" || type == "TGA")
-			{
-				GameObject* object = App->objects->selected;
-				if (!object)
-				{
-					object = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
-					object->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx", file.c_str());
-				}
-				else
-				{
-					bool found = false;
-					for (uint c = 0; c < object->components.size(); c++)
-					{
-						if (object->components[c]->AddTexture(file.c_str()))
-						{
-							found = true;
-							break;
-						}
-					}
-					if(!found)
-						object->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx", file.c_str());
-				}
-			}
-			else
-			{
-				LOG("Unable to load file, unknown file type");
-			}
-		}
+			ProccesDroppedFile(event.drop.file);
 	}
 
 	if(quit == true || keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
@@ -179,4 +120,84 @@ bool Input::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void Input::ProccesDroppedFile(char* path)
+{
+	std::string file = path;
+	LOG("Loading file: %s", file.c_str());
+
+	FileType type = FileSystem::GetFileType(file);
+
+	file = CopyFileToAssets(file.c_str());
+
+	switch (type)
+	{
+	case FileType::MESH:
+		ProccesMesh(file);
+		break;
+	case FileType::IMAGE:
+		ProccesImage(file);
+		break;
+	}
+}
+
+std::string Input::CopyFileToAssets(const char* path)
+{
+	std::string name = path;
+	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+	{
+		if (*c == '/' || *c == '\\')
+		{
+			name.erase(name.begin(), c + 1);
+			break;
+		}
+	}
+
+	std::string newPath = "Meshes/" + name;
+
+	int length = FileSystem::FileLength(path);
+	char* data = new char[length];
+	//memset(data, 0, length);
+
+	FILE* src = fopen(path, "r");
+	fread(data, length, 1, src);
+	fclose(src);
+
+	File* dst = FileSystem::Open(newPath.c_str(), APPEND);
+	FileSystem::Write(dst, data, length, 1);
+	FileSystem::Close(dst);
+
+	delete[] data;
+
+	return newPath;
+}
+
+void Input::ProccesMesh(std::string file)
+{
+	Simp::LoadMesh(file.c_str(), true);
+}
+
+void Input::ProccesImage(std::string file)
+{
+	GameObject* object = App->objects->selected;
+	if (!object)
+	{
+		object = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
+		object->AddMeshComponent("Library/Meshes/plane.monki", file.c_str());
+	}
+	else
+	{
+		bool found = false;
+		for (uint c = 0; c < object->components.size(); c++)
+		{
+			if (object->components[c]->AddTexture(file.c_str()))
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+			object->AddMeshComponent("Library/Meshes/plane.monki", file.c_str());
+	}
 }

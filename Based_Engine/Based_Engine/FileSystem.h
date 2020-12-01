@@ -13,6 +13,13 @@ enum OpenFormat
 	APPEND = 2
 };
 
+enum class FileType
+{
+	MESH,
+	IMAGE,
+	UNKNOWN
+};
+
 class File
 {
 public:
@@ -33,8 +40,14 @@ namespace FileSystem
 	bool Write(File* file, const char* buffer, uint size, uint count);
 	char* ReadAll(File* file);
 	bool Read(File* file, void* buffer, uint size, uint count);
-	bool Delete(const char* path);
 
 	bool Exists(const char* path);
-	int FileLength(File*);
+	int FileLength(File* file);
+	int FileLength(const char* path);
+	FileType GetFileType(std::string path);
+
+
+	bool CreateFolder(char* directory);
+	bool Delete(const char* path);
+	std::vector<std::string> GetFiles(char* directory);
 }

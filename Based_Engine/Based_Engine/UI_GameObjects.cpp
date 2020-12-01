@@ -37,27 +37,27 @@ void GameObjects::Update(float dt)
 			if (ImGui::Button("Create Cube"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cube");
-				go->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+				go->AddMeshComponent("Library/Meshes/cube.monki");
 			}
 			if (ImGui::Button("Create Sphere"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Sphere");
-				go->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+				go->AddMeshComponent("Library/Meshes/sphere.monki");
 			}
 			if (ImGui::Button("Create Pyramid"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Pyramid");
-				go->AddMeshComponent("Assets/Meshes/Primitives/pyramid.fbx");
+				go->AddMeshComponent("Library/Meshes/pyramid.monki");
 			}
 			if (ImGui::Button("Create Cylinder"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cylinder");
-				go->AddMeshComponent("Assets/Meshes/Primitives/cylinder.fbx");
+				go->AddMeshComponent("Library/Meshes/cylinder.monki");
 			}
 			if (ImGui::Button("Create Plane"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
-				go->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx");
+				go->AddMeshComponent("Library/Meshes/plane.monki");
 			}
 
 			ImGui::EndMenu();
