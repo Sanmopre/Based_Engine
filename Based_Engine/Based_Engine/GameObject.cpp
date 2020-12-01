@@ -7,8 +7,8 @@ GameObject::GameObject(std::string name, GameObject* parent, Application* app, b
 {
 	this->name = name;
 	this->parent = parent;
-	transform = new Transform();
-	last_transform = new Transform();
+	transform = new Transform(this);
+	last_transform = new Transform(this);
 	App = app;
 	this->active = active;
 

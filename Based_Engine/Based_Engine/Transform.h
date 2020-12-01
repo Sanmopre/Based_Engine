@@ -1,13 +1,15 @@
 #include "Globals.h"
 #include "Math/float3.h"
 #include "MathGeoLib.h"
+#include "MathBuildConfig.h"
 
 class GameObject;
 
 class Transform
 {
 public:
-	Transform();
+	Transform(GameObject* game_object);
+	Transform(GameObject* game_object, float4x4 transform);
 	virtual ~Transform();
 
 	float3 position, rotation, scale;
@@ -29,6 +31,37 @@ public:
 	Quat local_rotation = { 0,0,0,0 };
 
 	float3 euler_rotation = { 0,0,0 };
+
+	void RecalculateTransform();
+
+	void AddPosition(const float3 pos);
+	void AddScale(const float3 scale);
+	void AddRotation(const float3 rot);
+
+	void Reparent(const float4x4& transform);
+	void Reset();
+
+public:
+
+	void SetLocalPosition(const float3& new_local_pos);
+	void SetLocalPosition(const float& x, const float& y, const float& z);
+
+	const float3 GetLocalPosition() const;
+	const float3 GetGlobalPosition() const;
+
+	void SetLocalScale(const float3& new_local_scale);
+	void SetLocalScale(const float& x, const float& y, const float& z);
+
+	const float3 GetLocalScale() const;
+	const float3 GetGlobalScale() const;
+
+	void SetLocalRotation(const Quat& new_local_rotation);
+	void SetLocalRotation(const float& x, const float& y, const float& z, const float& angle);
+
+	const Quat GetLocalRotation() const;
+	const Quat GetGlobalRotation() const;
+
+
 
 	//Operators
 	bool operator==(Transform t)
