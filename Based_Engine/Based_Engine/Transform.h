@@ -38,6 +38,8 @@ public:
 	void AddScale(const float3 scale);
 	void AddRotation(const float3 rot);
 
+	void SetTransform(float4x4 transform);
+
 	void Reparent(const float4x4& transform);
 	void Reset();
 

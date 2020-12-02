@@ -125,6 +125,11 @@ void Transform::AddRotation(const float3 rot)
 	RecalculateTransform();
 }
 
+void Transform::SetTransform(float4x4 transform)
+{
+	local_transformation = transform;
+}
+
 void Transform::Reparent(const float4x4& transform)
 {
 	float3 position, scale;
