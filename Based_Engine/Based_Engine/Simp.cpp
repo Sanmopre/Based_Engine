@@ -240,10 +240,9 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 	for (int m = 0; m < meshNum; m++)
 	{
 		std::string bufferName;
-		int limit = bit + 4;
-		for (uint i = bit; i < limit; i++)
+		for (uint i = 0; i < 4; i++)
 		{
-			bufferName += data[i];
+			bufferName += data[bit];
 			bit++;
 		}
 		if (bufferName != "MESH")
@@ -254,14 +253,13 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		}
 		Mesh mesh;
 
-		float transform[16];
-		int firstBit = bit;
-		limit = bit + 16;
-		for (int i = bit; i < limit; i++)
+		for (uint y = 0; y < 4; y++)
 		{
-			transform[i - firstBit] = Binary::GetDataFromStream<float>(&data[bit]);
-
-			bit += 4;
+			for (uint x = 0; x < 4; x++)
+			{
+				mesh.transform[x][y] = Binary::GetDataFromStream<float>(&data[bit]);
+				bit += 4;
+			}
 		}
 		bit++;
 
@@ -270,10 +268,9 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersId[Mesh::vertex] = 0;
 
 		bufferName = "";
-		limit = bit + 3;
-		for (uint i = bit; i < limit; i++)
+		for (uint i = 0; i < 3; i++)
 		{
-			bufferName += data[i];
+			bufferName += data[bit];
 			bit++;
 		}
 		if (bufferName != "VEC")
@@ -289,22 +286,19 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersLength[Mesh::vertex] = vertexNum;
 		mesh.vertices = new float[vertexNum * 3];
 
-		firstBit = bit;
-		limit = bit + vertexNum * 3;
-		for (int i = bit; i < limit; i ++)
+		for (uint i = 0; i < vertexNum * 3; i ++)
 		{
 			float vertex = Binary::GetDataFromStream<float>(&data[bit]);
-			mesh.vertices[i - firstBit] = vertex;
+			mesh.vertices[i] = vertex;
 
 			bit += 4;
 		}
 		bit++;
 
 		bufferName = "";
-		limit = bit + 3;
-		for (uint i = bit; i < limit; i++)
+		for (uint i = 0; i < 3; i++)
 		{
-			bufferName += data[i];
+			bufferName += data[bit];
 			bit++;
 		}
 		if (bufferName != "IND")
@@ -321,22 +315,19 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersLength[Mesh::index] = indexNum * 3;
 		mesh.indices = new uint[indexNum * 3];
 
-		firstBit = bit;
-		limit = bit + indexNum * 3;
-		for (int i = bit; i < limit; i++)
+		for (uint i = 0; i < indexNum * 3; i++)
 		{
 			uint index = Binary::GetDataFromStream<uint>(&data[bit]);
-			mesh.indices[i - firstBit] = index;
+			mesh.indices[i] = index;
 
 			bit += 4;
 		}
 		bit++;
 
 		bufferName = "";
-		limit = bit + 3;
-		for (uint i = bit; i < limit; i++)
+		for (uint i = 0; i < 3; i++)
 		{
-			bufferName += data[i];
+			bufferName += data[bit];
 			bit++;
 		}
 		if (bufferName != "NOR")
@@ -354,22 +345,19 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersLength[Mesh::normal] = normalNum;
 		mesh.normals = new float[normalNum * 3];
 
-		firstBit = bit;
-		limit = bit + normalNum * 3;
-		for (int i = bit; i < limit; i++)
+		for (uint i = 0; i < normalNum * 3; i++)
 		{
 			float normal = Binary::GetDataFromStream<float>(&data[bit]);
-			mesh.normals[i - firstBit] = normal;
+			mesh.normals[i] = normal;
 
 			bit += 4;
 		}
 		bit++;
 
 		bufferName = "";
-		limit = bit + 3;
-		for (uint i = bit; i < limit; i++)
+		for (uint i = 0; i < 3; i++)
 		{
-			bufferName += data[i];
+			bufferName += data[bit];
 			bit++;
 		}
 		if (bufferName != "TEX")
@@ -388,12 +376,10 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 		mesh.buffersLength[Mesh::texture] = textureNum;
 		mesh.texture_coord = new float[textureNum * 2];
 		
-		firstBit = bit;
-		limit = bit + textureNum * 2;
-		for (int i = bit; i < limit; i++)
+		for (uint i = 0; i < textureNum * 2; i++)
 		{
 			float texture = Binary::GetDataFromStream<float>(&data[bit]);
-			mesh.texture_coord[i - firstBit] = texture;
+			mesh.texture_coord[i] = texture;
 		
 			bit += 4;
 		}

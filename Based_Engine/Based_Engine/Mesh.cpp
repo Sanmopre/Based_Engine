@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include <GL/glew.h>
 
+#include "Math/Quat.h"
 
 Mesh::Mesh()
 {
@@ -103,7 +104,6 @@ void Mesh::UpdateMeshTransform(float4x4 transform)
 	float3 position, scale;
 	Quat rotation;
 	transform.Decompose(position, rotation, scale);
-
 }
 
 void Mesh::UpdatePosition(float3 position, float3 last_position)

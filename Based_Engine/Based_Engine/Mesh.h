@@ -4,7 +4,7 @@
 
 #include "Math/float3.h"
 #include "Math/float2.h"
-#include "MathGeoLib.h"
+#include "Math/float4x4.h"
 
 struct Vertex
 {
@@ -52,6 +52,8 @@ public:
 
 	uint tex_id;
 	bool drawnormals = false;
+
+	float4x4 transform;
 
 private:
 

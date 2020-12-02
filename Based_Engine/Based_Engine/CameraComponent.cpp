@@ -8,8 +8,7 @@
 #include "GameObject.h"
 #include "Input.h"
 #include "imgui.h"
-#include "MathGeoLib.h"
-#include "MathBuildConfig.h"
+#include "Math/float3.h"
 
 #include "GL/glew.h"
 
@@ -18,12 +17,9 @@ CameraComponent::CameraComponent(char* name, const char* path, const char* textu
 {
 	frustum.type = FrustumType::PerspectiveFrustum;
 
-	//frustum.pos = float3::zero();
-	frustum.pos = { 0,0,0 };
-	//frustum.front = float3::unitZ();
-	frustum.front = { 0,0,1 };
-	//frustum.up = float3::unitY();
-	frustum.up = { 0,1,0 };
+	frustum.pos = float3::zero;
+	frustum.front = float3::unitZ;
+	frustum.up = float3::unitY;
 
 	frustum.nearPlaneDistance = near_plane;
 	frustum.farPlaneDistance = far_plane;
