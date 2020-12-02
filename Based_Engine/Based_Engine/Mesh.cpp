@@ -40,7 +40,7 @@ void Mesh::GenerateBuffers()
 }
 
 
-void Mesh::Render(bool globalWireMode) 
+void Mesh::Render(float4x4 transform, bool globalWireMode)
 {
 	if (!generated_frame_buffers) 
 	{	
@@ -50,7 +50,8 @@ void Mesh::Render(bool globalWireMode)
 	}
 
 	glPushMatrix();
-	//SetMaterialColor(10, 10, 10);
+	glMultMatrixf((float*)&transform.Transposed());
+
 	DrawBoundingBox(float4x4::identity,show_bounding_box);
 	if(drawnormals)
 		DrawNormals();
@@ -222,46 +223,6 @@ void Mesh::DrawOBB(bool active)
 	}
 }
 
-void Mesh::UpdateMeshTransform(float4x4 transform)
-{
-	float3 position, scale;
-	Quat rotation;
-	transform.Decompose(position, rotation, scale);
-}
-
-void Mesh::UpdatePosition(float3 position, float3 last_position)
-{
-	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v += 3)
-	{
-		vertices[v] -= last_position.x;
-		vertices[v] += position.x;
-
-		vertices[v + 1] -= last_position.y;
-		vertices[v + 1] += position.y;
-
-		vertices[v + 2] -= last_position.z;
-		vertices[v + 2] += position.z;
-	}
-	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
-}
-
-void Mesh::UpdateScale(float3 scale, float3 last_scale)
-{
-	for (int v = 0; v < buffersLength[Mesh::vertex] * 3; v += 3)
-	{
-		vertices[v] /= last_scale.x;
-		vertices[v] *= scale.x;
-
-		vertices[v + 1] /= last_scale.y;
-		vertices[v + 1] *= scale.y;
-
-		vertices[v + 2] /= last_scale.z;
-		vertices[v + 2] *= scale.z;
-	}
-	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
-}
 
 void Mesh::SetMaterialColor(float r, float g, float b, float a)
 {

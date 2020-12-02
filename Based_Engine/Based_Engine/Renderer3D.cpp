@@ -350,7 +350,7 @@ bool Renderer3D::IsInsideFrustum(const CameraComponent* camera, const AABB& aabb
 update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
-		(*meshes[i]).Render(true);
+		(*meshes[i]).Render((*meshes[i]).transform, true);
 
 	return UPDATE_CONTINUE;
 }
@@ -358,7 +358,7 @@ update_status Renderer3D::Draw()
 update_status Renderer3D::WireframeDraw()
 {
 	for (uint i = 0; i < meshes.size(); i++)
-		(*meshes[i]).Render(true);
+		(*meshes[i]).Render((*meshes[i]).transform,true);
 	
 	return UPDATE_CONTINUE;
 }

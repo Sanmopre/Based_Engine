@@ -58,6 +58,9 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	
+	//temporal for testing
+	float4x4 matrix_pog = float4x4::identity;
+
 	uint frameBuffer;
 	uint texColorBuffer;
 	uint depthBuffer;

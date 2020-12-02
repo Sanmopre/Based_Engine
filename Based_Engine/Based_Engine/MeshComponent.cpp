@@ -74,15 +74,6 @@ MeshComponent::~MeshComponent()
 
 bool MeshComponent::Update(float dt)
 {	
-	if (*parent->last_transform != *parent->transform)
-	{
-		if (parent->transform->scale.x * parent->transform->scale.y * parent->transform->scale.z == 0)
-		{
-			parent->transform->scale = parent->last_transform->scale;
-		}
-		mesh.UpdateScale(parent->transform->scale, parent->last_transform->scale);
-		mesh.UpdatePosition(parent->transform->position, parent->last_transform->position);
-	}
 
 	if (active != to_activate)
 	{

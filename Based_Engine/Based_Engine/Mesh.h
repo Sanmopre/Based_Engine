@@ -23,7 +23,7 @@ public:
 
 	void GenerateBuffers();
 
-	void Render(bool globalWireMode = false);
+	void Render(float4x4 transform, bool globalWireMode = false);
 	void InnerRender() const;
 
 	void DrawNormals() const;
@@ -33,10 +33,6 @@ public:
 	void RecalculateAABB_OBB(float4x4 transform);
 	void DrawBoundingBox(float4x4 transform, bool active);
 	void DrawOBB(bool active);
-
-	void UpdateMeshTransform(float4x4 transform);
-	void UpdatePosition(float3 position, float3 last_position);
-	void UpdateScale(float3 scale, float3 last_scale);
 
 	void SetMaterialColor(float r, float g, float b, float a = 1.0f);
 

@@ -8,7 +8,6 @@ GameObject::GameObject(std::string name, GameObject* parent, Application* app, b
 	this->name = name;
 	this->parent = parent;
 	transform = new Transform(this);
-	last_transform = new Transform(this);
 	App = app;
 	this->active = active;
 
@@ -20,7 +19,6 @@ GameObject::GameObject(std::string name, GameObject* parent, Application* app, b
 GameObject::~GameObject()
 {
 	delete(transform);
-	delete(last_transform);
 	CleanUp(); 
 }
 
@@ -49,11 +47,6 @@ bool GameObject::Update(float dt)
 		end = true;
 	}
 
-	bool trans = false;
-	if (transform_child)
-		if (last_transform != transform)
-			trans = true;
-	transform_child = true;
 
 	last = 0;
 	end = false;
@@ -66,9 +59,6 @@ bool GameObject::Update(float dt)
 
 			if (!child->to_delete)
 			{
-				if (trans)
-					CarryTransformChange(child);
-
 				child->Update(dt);
 			}
 			else
@@ -82,8 +72,6 @@ bool GameObject::Update(float dt)
 		}
 		end = true;
 	}
-
-	*last_transform = *transform;
 
 	return true;
 }
@@ -137,29 +125,3 @@ void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* nam
 	components.push_back(comp);
 }
 
-void GameObject::CarryTransformChange(GameObject* child)
-{
-	child->transform->position.x -= last_transform->position.x;
-	child->transform->position.y -= last_transform->position.y;
-	child->transform->position.z -= last_transform->position.z;
-					
-	child->transform->position.x += transform->position.x;
-	child->transform->position.y += transform->position.y;
-	child->transform->position.z += transform->position.z;
-					
-	child->transform->rotation.x -= last_transform->rotation.x;
-	child->transform->rotation.y -= last_transform->rotation.y;
-	child->transform->rotation.z -= last_transform->rotation.z;
-					
-	child->transform->rotation.x += transform->rotation.x;
-	child->transform->rotation.y += transform->rotation.y;
-	child->transform->rotation.z += transform->rotation.z;
-					
-	child->transform->scale.x -= last_transform->scale.x;
-	child->transform->scale.y -= last_transform->scale.y;
-	child->transform->scale.z -= last_transform->scale.z;
-					
-	child->transform->scale.x += transform->scale.x;
-	child->transform->scale.y += transform->scale.y;
-	child->transform->scale.z += transform->scale.z;
-}

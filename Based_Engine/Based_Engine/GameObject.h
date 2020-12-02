@@ -20,7 +20,6 @@ public:
 	bool CleanUp();
 
 	Transform* transform = nullptr;
-	Transform* last_transform = nullptr;
 
 	std::vector<Component*> components;
 
@@ -38,8 +37,6 @@ public:
 	std::string name;
 
 private:
-
-	void CarryTransformChange(GameObject*);
 
 	int comp_id;
 	bool transform_child;
