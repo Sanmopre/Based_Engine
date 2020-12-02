@@ -45,12 +45,13 @@ void Mesh::Render(bool globalWireMode)
 	if (!generated_frame_buffers) 
 	{	
 	GenerateBuffers();
+	Generate_AABB();
 	generated_frame_buffers = true;
 	}
 
 	glPushMatrix();
 	//SetMaterialColor(10, 10, 10);
-	DrawBoundingBox(show_bounding_box);
+	DrawBoundingBox(float4x4::identity,show_bounding_box);
 	if(drawnormals)
 		DrawNormals();
 	InnerRender();
@@ -99,6 +100,67 @@ void Mesh::DrawNormals() const
 	glEnd();
 }
 
+void Mesh::Generate_AABB()
+{
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)vertices, buffersLength[vertex]);
+}
+
+void Mesh::DrawBoundingBox(float4x4 transform, bool active)
+{
+	if (active) {
+		float3 corners[8];
+		glColor4f(255, 255, 0, 255);
+		aabb.GetCornerPoints(corners);
+
+		glPushMatrix();
+		glMultMatrixf((float*)&transform.Transposed());
+
+		glBegin(GL_LINES);
+
+		//Between-planes right
+		glVertex3fv((GLfloat*)&corners[1]);
+		glVertex3fv((GLfloat*)&corners[5]);
+		glVertex3fv((GLfloat*)&corners[7]);
+		glVertex3fv((GLfloat*)&corners[3]);
+
+		//Between-planes left
+		glVertex3fv((GLfloat*)&corners[4]);
+		glVertex3fv((GLfloat*)&corners[0]);
+		glVertex3fv((GLfloat*)&corners[2]);
+		glVertex3fv((GLfloat*)&corners[6]);
+
+		//Far plane horizontal
+		glVertex3fv((GLfloat*)&corners[5]);
+		glVertex3fv((GLfloat*)&corners[4]);
+		glVertex3fv((GLfloat*)&corners[6]);
+		glVertex3fv((GLfloat*)&corners[7]);
+
+		//Near plane horizontal
+		glVertex3fv((GLfloat*)&corners[0]);
+		glVertex3fv((GLfloat*)&corners[1]);
+		glVertex3fv((GLfloat*)&corners[3]);
+		glVertex3fv((GLfloat*)&corners[2]);
+
+		//Near plane vertical
+		glVertex3fv((GLfloat*)&corners[1]);
+		glVertex3fv((GLfloat*)&corners[3]);
+		glVertex3fv((GLfloat*)&corners[0]);
+		glVertex3fv((GLfloat*)&corners[2]);
+
+		//Far plane vertical
+		glVertex3fv((GLfloat*)&corners[5]);
+		glVertex3fv((GLfloat*)&corners[7]);
+		glVertex3fv((GLfloat*)&corners[4]);
+		glVertex3fv((GLfloat*)&corners[6]);
+
+		glEnd();
+
+		glPopMatrix();
+		glColor4f(255, 255, 255, 255);
+	}
+}
+
 void Mesh::UpdateMeshTransform(float4x4 transform)
 {
 	float3 position, scale;
@@ -138,13 +200,6 @@ void Mesh::UpdateScale(float3 scale, float3 last_scale)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, buffersId[vertex]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffersLength[vertex] * 3, vertices, GL_STATIC_DRAW);
-}
-
-void Mesh::DrawBoundingBox(bool active)
-{
-	if (active) {
-	
-	}
 }
 
 void Mesh::SetMaterialColor(float r, float g, float b, float a)

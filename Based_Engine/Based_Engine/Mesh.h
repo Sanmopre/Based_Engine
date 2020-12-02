@@ -6,6 +6,8 @@
 #include "Math/float2.h"
 #include "Math/float4x4.h"
 
+#include "MathGeoLib.h"
+
 struct Vertex
 {
 	float3 Position;
@@ -25,10 +27,15 @@ public:
 	void InnerRender() const;
 
 	void DrawNormals() const;
+
+	//AABB
+	void Generate_AABB();
+	void DrawBoundingBox(float4x4 transform, bool active);
+
 	void UpdateMeshTransform(float4x4 transform);
 	void UpdatePosition(float3 position, float3 last_position);
 	void UpdateScale(float3 scale, float3 last_scale);
-	void DrawBoundingBox(bool active);
+
 	void SetMaterialColor(float r, float g, float b, float a = 1.0f);
 
 public:
@@ -52,7 +59,7 @@ public:
 
 	uint tex_id;
 	bool drawnormals = false;
-
+	bool show_bounding_box = false;
 	float4x4 transform;
 
 private:
@@ -60,6 +67,7 @@ private:
 	Color color;
 	bool wire, noFace;
 	bool generated_frame_buffers = false;
-	bool show_bounding_box = true;
 
+
+	AABB aabb;
 };

@@ -41,6 +41,7 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 	path_buffer = path;
 
 	to_draw_normals = false;
+	to_draw_AABB = false;
 
 	texture = NULL;
 	AddTexture(texture_path);
@@ -129,6 +130,11 @@ void MeshComponent::DisplayComponentMenu()
 		if(ImGui::Checkbox(str, &to_draw_normals))
 			mesh.drawnormals = to_draw_normals;
 		ImGui::SameLine();
+
+		sprintf_s(str, "AABB (%s)", name.c_str());
+		if (ImGui::Checkbox(str, &to_draw_AABB))
+			mesh.show_bounding_box = to_draw_AABB;
+
 
 		sprintf_s(str, "delete (%s)", name.c_str());
 		if(ImGui::Button(str))

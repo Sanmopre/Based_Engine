@@ -75,6 +75,7 @@ public:
 private:
 
 	bool to_draw_normals;
+	bool to_draw_AABB;
 
 	void PushTexture(uint texture);
 
