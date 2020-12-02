@@ -20,8 +20,8 @@ public:
 
 	GameObject* object;
 
-	float4x4 global_transformation;
-	float4x4 local_transformation;
+	float4x4 global_transformation = float4x4::identity;
+	float4x4 local_transformation = float4x4::identity;
 
 	// position
 	float3 local_position = { 0,0,0 };

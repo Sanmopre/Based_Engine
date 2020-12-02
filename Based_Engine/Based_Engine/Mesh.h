@@ -30,7 +30,9 @@ public:
 
 	//AABB
 	void Generate_AABB();
+	void RecalculateAABB_OBB(float4x4 transform);
 	void DrawBoundingBox(float4x4 transform, bool active);
+	void DrawOBB(bool active);
 
 	void UpdateMeshTransform(float4x4 transform);
 	void UpdatePosition(float3 position, float3 last_position);
@@ -59,6 +61,7 @@ public:
 
 	uint tex_id;
 	bool drawnormals = false;
+	bool show_OBB = false;
 	bool show_bounding_box = false;
 	float4x4 transform;
 
@@ -69,5 +72,7 @@ private:
 	bool generated_frame_buffers = false;
 
 
-	AABB aabb;
+	AABB local_aabb;
+	OBB obb;
+	AABB global_aabb;
 };
