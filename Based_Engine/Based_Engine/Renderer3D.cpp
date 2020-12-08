@@ -280,7 +280,7 @@ void Renderer3D::DeleteMesh(Mesh* mesh)
 			break;
 		}
 }
-
+/*
 void Renderer3D::UpdateCameraMatrix(CameraComponent* camera)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -346,7 +346,7 @@ bool Renderer3D::IsInsideFrustum(const CameraComponent* camera, const AABB& aabb
 
 	return true;
 }
-
+*/
 update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++)

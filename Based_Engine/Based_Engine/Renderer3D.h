@@ -40,12 +40,13 @@ public:
 	void AddMesh(Mesh*);
 	void DeleteMesh(Mesh*);
 
+	/*
 	void UpdateCameraMatrix(CameraComponent* camera);
 
 	bool SetCameraToDraw(const CameraComponent* camera);
 
 	bool IsInsideFrustum(const CameraComponent* camera, const AABB& aabb);
-
+*/
 	update_status Draw();
 	update_status WireframeDraw();
 
