@@ -100,5 +100,33 @@ public:
 	CameraComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
 	virtual ~CameraComponent();
 
+	bool Update(float dt);
+
+	void Setposition(float3 pos);
+
+	void SetNearPlane(float distance);
+	void SetFarPlane(float distance);
+
+	void SetVerticalFov(float verticalFov);
+	void SetHorizontalFov(float horizontalFov);
+
+	float ComputeAspectRatio(float verticalFov, float horizontalFov);
+
+	float* GetViewMatrix();
+	void UpdatePlanes();
+
+	Frustum GetFrustum()const;
+	float3 GetPos()const;
+	float GetNearPlaneDistance()const;
+	float GetFarPlaneDistance()const;
+	float GetVerticalFov()const;
+	float GetHorizontalFov()const;
+
+	void DrawFrustum();
+public:
+
 	Frustum frustum;
+	bool cull = true;
+	Plane planes[6];
+	//vec* corners;
 };
