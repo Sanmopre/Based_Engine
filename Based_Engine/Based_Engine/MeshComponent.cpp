@@ -81,6 +81,7 @@ bool MeshComponent::Update(float dt)
 	//TEMP//
 	mesh.transform = this->parent->transform->global_transformation;
 	this->parent->transform->RecalculateTransform();
+	//mesh.RecalculateAABB_OBB(this->parent->transform->local_transformation);
 	////////
 
 	if (active != to_activate)
