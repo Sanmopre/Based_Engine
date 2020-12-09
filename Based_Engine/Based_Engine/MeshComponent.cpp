@@ -46,6 +46,8 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 	texture = NULL;
 	AddTexture(texture_path);
 
+	this->parent->transform->Reparent(mesh.transform);
+
 	if (active)
 		App->renderer3D->AddMesh(&mesh);
 }
@@ -63,6 +65,9 @@ MeshComponent::MeshComponent(char* name, Mesh mesh, const char* texture_path, Ga
 	texture = NULL;
 	AddTexture(texture_path);
 
+
+	this->parent->transform->Reparent(mesh.transform);
+
 	if (active)
 		App->renderer3D->AddMesh(&this->mesh);
 }
@@ -74,6 +79,11 @@ MeshComponent::~MeshComponent()
 
 bool MeshComponent::Update(float dt)
 {	
+
+	//TEMP//
+	mesh.transform = this->parent->transform->global_transformation;
+	this->parent->transform->RecalculateTransform();
+	////////
 
 	if (active != to_activate)
 	{
