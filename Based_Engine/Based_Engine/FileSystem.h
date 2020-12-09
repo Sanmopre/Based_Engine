@@ -5,7 +5,6 @@
 class SDL_RWops;
 struct PHYSFS_File;
 
-
 enum OpenFormat
 {
 	READ = 0,
@@ -50,4 +49,6 @@ namespace FileSystem
 	bool CreateFolder(char* directory);
 	bool Delete(const char* path);
 	std::vector<std::string> GetFiles(char* directory);
+
+	void Enter(File* file);
 }

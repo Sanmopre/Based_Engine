@@ -12,7 +12,6 @@
 
 #include "GL/glew.h"
 
-
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
@@ -79,7 +78,6 @@ MeshComponent::~MeshComponent()
 
 bool MeshComponent::Update(float dt)
 {	
-
 	//TEMP//
 	mesh.transform = this->parent->transform->global_transformation;
 	this->parent->transform->RecalculateTransform();

@@ -45,6 +45,7 @@ bool FileSystem::Init()
 
 		CreateFolder("Library/Meshes");
 		CreateFolder("Library/Materials");
+		CreateFolder("Library/Folders");
 	}
 
 	return true;
@@ -254,4 +255,10 @@ std::vector<std::string> FileSystem::GetFiles(char* directory)
 	PHYSFS_freeList(rc);
 
 	return output;
+}
+
+void FileSystem::Enter(File* file)
+{
+	char data = 10;
+	FileSystem::Write(file, &data, 1u, 1u);
 }

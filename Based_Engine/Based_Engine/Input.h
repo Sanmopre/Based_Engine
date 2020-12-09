@@ -3,6 +3,8 @@
 
 #define MAX_MOUSE_BUTTONS 5
 
+enum class FileType;
+
 enum KEY_STATE
 {
 	KEY_IDLE = 0,
@@ -74,5 +76,5 @@ private:
 	void ProccesMesh(std::string file);
 	void ProccesImage(std::string file);
 
-	std::string CopyFileToAssets(const char* path);
+	std::string CopyFileToAssets(const char* path, FileType type);
 };

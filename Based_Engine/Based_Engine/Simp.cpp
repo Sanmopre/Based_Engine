@@ -24,12 +24,6 @@ void Simp::CleanDebugger()
 	aiDetachAllLogStreams();
 }
 
-void Enter(File* file)
-{
-	char data = 10;
-	FileSystem::Write(file, &data, 1u, 1u);
-}
-
 std::string CreateFileName(const char* path)
 {
 	std::string name = path;
@@ -69,7 +63,7 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 			delete[] data;
 		}
 	}
-	Enter(file);
+	FileSystem::Enter(file);
 
 	data = "VEC";
 	FileSystem::Write(file, data, 3u, 1u);
@@ -90,7 +84,7 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 
 	if (mesh->HasFaces())
 	{
-		Enter(file);
+		FileSystem::Enter(file);
 		data = "IND";
 		FileSystem::Write(file, data, 3u, 1u);
 		data = Binary::GetBinaryStream<unsigned int>(mesh->mNumFaces);
@@ -113,7 +107,7 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 
 	if (mesh->HasNormals())
 	{
-		Enter(file);
+		FileSystem::Enter(file);
 		data = "NOR";
 		FileSystem::Write(file, data, 3u, 1u);
 		data = Binary::GetBinaryStream<unsigned int>(mesh->mNumVertices);
@@ -133,7 +127,7 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 	}
 	if (scene->mMeshes[i]->HasTextureCoords(0))
 	{
-		Enter(file);
+		FileSystem::Enter(file);
 		data = "TEX";
 		FileSystem::Write(file, data, 3u, 1u);
 		data = Binary::GetBinaryStream<unsigned int>(scene->mMeshes[i]->mNumVertices);
@@ -156,7 +150,7 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 		}
 	}
 
-	Enter(file);
+	FileSystem::Enter(file);
 }
 
 void ExpandNode(aiNode* node, File* file, const aiScene* scene)
@@ -194,11 +188,12 @@ std::string Simp::LoadMesh(const char* file_path, bool redo)
 		data = Binary::GetBinaryStream<unsigned int>(scene->mNumMeshes);
 		FileSystem::Write(file, data, sizeof(unsigned int), 1u);
 		delete[] data;
-		Enter(file);
+		FileSystem::Enter(file);
 
 		ExpandNode(scene->mRootNode, file, scene);
 
-		FileSystem::Close(file);
+		if (!FileSystem::Close(file))
+			LOG("Sadge");
 	}
 	else
 	{

@@ -129,20 +129,20 @@ void Input::ProccesDroppedFile(char* path)
 
 	FileType type = FileSystem::GetFileType(file);
 
-	file = CopyFileToAssets(file.c_str());
+	//file = CopyFileToAssets(file.c_str(), type);
 
 	switch (type)
 	{
 	case FileType::MESH:
-		ProccesMesh(file);
+		ProccesMesh(path);
 		break;
 	case FileType::IMAGE:
-		ProccesImage(file);
+		ProccesImage(path);
 		break;
 	}
 }
 
-std::string Input::CopyFileToAssets(const char* path)
+std::string Input::CopyFileToAssets(const char* path, FileType type)
 {
 	std::string name = path;
 	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
@@ -154,7 +154,16 @@ std::string Input::CopyFileToAssets(const char* path)
 		}
 	}
 
-	std::string newPath = "Meshes/" + name;
+	std::string newPath;
+	switch (type)
+	{
+	case FileType::MESH:
+		newPath = "Meshes/" + name;
+		break;
+	case FileType::IMAGE:
+		newPath = "Textures/" + name;
+		break;
+	}
 
 	int length = FileSystem::FileLength(path);
 	char* data = new char[length];

@@ -68,7 +68,6 @@ Transform::~Transform()
 
 void Transform::RecalculateTransform()
 {
-
 	local_rotation = Quat::FromEulerXYZ(DegToRad(euler_rotation.x), DegToRad(euler_rotation.y), DegToRad(euler_rotation.z));
 	local_transformation = float4x4::FromTRS(local_position, local_rotation, local_scale);
 	
