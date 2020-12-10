@@ -123,3 +123,18 @@ void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* nam
 	components.push_back(comp);
 }
 
+void GameObject::AddCameraComponent(char* name)
+{
+	if (!name)
+	{
+		char str[10];
+		sprintf_s(str, "%d", comp_id);
+		name = str;
+	}
+	comp_id++;
+
+	CameraComponent* cameraptr = new CameraComponent(name, this, App, true);
+	Component* comp = cameraptr;
+	components.push_back(comp);
+}
+

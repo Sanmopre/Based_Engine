@@ -13,7 +13,7 @@
 #include "GL/glew.h"
 
 
-CameraComponent::CameraComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
+CameraComponent::CameraComponent(char* name, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetPos(float3(0, 0, 0));
@@ -24,7 +24,7 @@ CameraComponent::CameraComponent(char* name, const char* path, const char* textu
 	frustum.SetPerspective(1.0f, 1.0f);
 
 	UpdatePlanes();
-	//corners = new vec[8];
+	corners = new vec[8];
 }
 
 CameraComponent::~CameraComponent()
@@ -34,35 +34,35 @@ CameraComponent::~CameraComponent()
 bool CameraComponent::Update(float dt)
 {
 	DrawFrustum();
-	return false;
+	return true;
 }
 
 void CameraComponent::Setposition(float3 pos)
 {
-	//frustum.SetPos(pos);
+	frustum.SetPos(pos);
 	UpdatePlanes();
 }
 
 void CameraComponent::SetNearPlane(float distance)
 {
-	//frustum.SetViewPlaneDistances(distance, GetFarPlaneDistance());
+	frustum.SetViewPlaneDistances(distance, GetFarPlaneDistance());
 	UpdatePlanes();
 }
 
 void CameraComponent::SetFarPlane(float distance)
 {
-	//frustum.SetViewPlaneDistances(GetNearPlaneDistance(), distance);
+	frustum.SetViewPlaneDistances(GetNearPlaneDistance(), distance);
 	UpdatePlanes();
 }
 
 void CameraComponent::SetVerticalFov(float verticalFov)
 {
-	//frustum.SetVerticalFovAndAspectRatio(verticalFov, frustum.AspectRatio());
+	frustum.SetVerticalFovAndAspectRatio(verticalFov, frustum.AspectRatio());
 }
 
 void CameraComponent::SetHorizontalFov(float horizontalFov)
 {
-	//frustum.SetHorizontalFovAndAspectRatio(horizontalFov, frustum.AspectRatio());
+	frustum.SetHorizontalFovAndAspectRatio(horizontalFov, frustum.AspectRatio());
 }
 
 float CameraComponent::ComputeAspectRatio(float verticalFov, float horizontalFov)
@@ -89,32 +89,46 @@ Frustum CameraComponent::GetFrustum() const
 
 float3 CameraComponent::GetPos() const
 {
-	return float3::zero;
-//	return frustum.Pos();
+	return frustum.Pos();
 }
 
 float CameraComponent::GetNearPlaneDistance() const
 {
-	return 0.0f;
-//	return frustum.NearPlaneDistance();
+	return frustum.NearPlaneDistance();
 }
 
 float CameraComponent::GetFarPlaneDistance() const
 {
-	return 0.0f;
-//	return frustum.FarPlaneDistance();
+	return frustum.FarPlaneDistance();
 }
 
 float CameraComponent::GetVerticalFov() const
 {
-	return 0.0f;
-//	return frustum.VerticalFov();
+	return frustum.VerticalFov();
 }
 
 float CameraComponent::GetHorizontalFov() const
 {
-	return 0.0f;
-//	return frustum.HorizontalFov();
+	return frustum.HorizontalFov();
+}
+
+void CameraComponent::DisplayComponentMenu()
+{
+
+
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Checkbox("Camera active", &to_activate);
+		ImGui::SameLine();
+
+		if (ImGui::Checkbox("Camera culling", &cull))
+			cull != cull;
+		ImGui::SameLine();
+
+		if (ImGui::Button("Delete Camera"))
+			to_delete = true;
+
+	}
 }
 
 void CameraComponent::DrawFrustum()

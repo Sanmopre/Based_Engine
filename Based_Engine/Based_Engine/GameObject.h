@@ -29,6 +29,8 @@ public:
 	void AddMeshComponent(const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 	void AddMeshComponent(Mesh mesh, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 
+	void AddCameraComponent(char* name = nullptr);
+
 	void DontTransformChilds() { transform_child = false; }
 
 	bool active;

@@ -80,11 +80,16 @@ void GameObject_Inspector::Update(float dt)
 				ImGui::Separator();
 			}
 
-			if (ImGui::InputText("Add Mesh Component", &mesh_path, ImGuiInputTextFlags_EnterReturnsTrue))
+			if (ImGui::BeginMenu("Add Component"))
 			{
-				object->AddMeshComponent(mesh_path.c_str());
-				mesh_path = "";
+				if (ImGui::MenuItem("Camera Component")) 
+				{
+					object->AddCameraComponent("Camera1");
+				}
+
+				ImGui::EndMenu();
 			}
+
 		}
 		else
 		{

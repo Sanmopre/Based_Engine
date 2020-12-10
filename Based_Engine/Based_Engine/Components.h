@@ -63,15 +63,6 @@ public:
 	void DisplayComponentMenu();
 	bool AddTexture(const char* path);
 
-	AABB GenerateAABB();
-
-	void RecalculateAABB_OBB();
-	const AABB GetGlobalAABB() const;
-	const OBB GetOBB() const;
-
-	void DrawGlobalAABB();
-	void DrawOBB();
-
 private:
 
 	bool to_draw_normals;
@@ -87,17 +78,13 @@ private:
 
 	Mesh mesh;
 	uint texture;
-
-	AABB local_aabb;
-	OBB obb;
-	AABB global_aabb;
 };
 
 class CameraComponent : public Component
 {
 public:
 
-	CameraComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
+	CameraComponent(char* name, GameObject* parent, Application* app, bool active = true);
 	virtual ~CameraComponent();
 
 	bool Update(float dt);
@@ -122,11 +109,12 @@ public:
 	float GetVerticalFov()const;
 	float GetHorizontalFov()const;
 
+	void DisplayComponentMenu();
 	void DrawFrustum();
 public:
 
 	Frustum frustum;
 	bool cull = true;
 	Plane planes[6];
-	//vec* corners;
+	vec* corners;
 };
