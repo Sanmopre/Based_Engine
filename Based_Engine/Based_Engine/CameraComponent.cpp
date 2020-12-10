@@ -15,7 +15,6 @@
 
 CameraComponent::CameraComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
-	/*
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetPos(float3(0, 0, 0));
 	frustum.SetFront(float3::unitZ);
@@ -25,8 +24,7 @@ CameraComponent::CameraComponent(char* name, const char* path, const char* textu
 	frustum.SetPerspective(1.0f, 1.0f);
 
 	UpdatePlanes();
-	corners = new vec[8];
-	*/
+	//corners = new vec[8];
 }
 
 CameraComponent::~CameraComponent()
@@ -91,26 +89,31 @@ Frustum CameraComponent::GetFrustum() const
 
 float3 CameraComponent::GetPos() const
 {
+	return float3::zero;
 //	return frustum.Pos();
 }
 
 float CameraComponent::GetNearPlaneDistance() const
 {
+	return 0.0f;
 //	return frustum.NearPlaneDistance();
 }
 
 float CameraComponent::GetFarPlaneDistance() const
 {
+	return 0.0f;
 //	return frustum.FarPlaneDistance();
 }
 
 float CameraComponent::GetVerticalFov() const
 {
+	return 0.0f;
 //	return frustum.VerticalFov();
 }
 
 float CameraComponent::GetHorizontalFov() const
 {
+	return 0.0f;
 //	return frustum.HorizontalFov();
 }
 

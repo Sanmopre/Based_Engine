@@ -33,7 +33,7 @@ public:
 	Folder(const char* name, Archive* parent);
 	virtual ~Folder();
 
-	std::vector<Resource*> archives;
+	std::vector<Archive*> archives;
 };
 
 class Resource : public Archive

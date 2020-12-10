@@ -179,8 +179,8 @@ void Mesh::DrawOBB(bool active)
 		glColor3f(1, 1, 1);
 		glLineWidth(1);
 		float3* obb_points = nullptr;
-		obb.GetCornerPoints(obb_points);
-
+		//obb.GetCornerPoints(obb_points); BIG BOOM
+		
 		glBegin(GL_LINES);
 
 		glVertex3f(obb.CornerPoint(0).x, obb.CornerPoint(0).y, obb.CornerPoint(0).z);
