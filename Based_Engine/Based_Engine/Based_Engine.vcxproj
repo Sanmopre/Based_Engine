@@ -49,7 +49,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\Json\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
