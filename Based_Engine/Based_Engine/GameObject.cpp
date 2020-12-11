@@ -1,7 +1,9 @@
 #include "GameObject.h"
 #include "Application.h"
-#include "Components.h"
 #include "Transform.h"
+#include "Component.h"
+#include "MeshComponent.h"
+#include "CameraComponent.h"
 
 GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
 {

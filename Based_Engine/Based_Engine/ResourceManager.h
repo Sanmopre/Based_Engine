@@ -2,49 +2,13 @@
 #define __RESOURCES_H__
 
 #include "Module.h"
+#include <map>
 
-enum class FileType;
-
-enum class ArchiveType
-{
-	FOLDER,
-	ARCHIVE
-};
-
-class Archive
+class Resource
 {
 public:
 
-	Archive(char* name, ArchiveType type, Archive* parent);
-	Archive(const char* name, ArchiveType type, Archive* parent);
-	virtual ~Archive();
-
-	std::string name;
-	ArchiveType type;
-
-	Archive* parent;
-};
-
-class Folder : public Archive
-{
-public:
-
-	Folder(char* name, Archive* parent);
-	Folder(const char* name, Archive* parent);
-	virtual ~Folder();
-
-	std::vector<Archive*> archives;
-};
-
-class Resource : public Archive
-{
-public:
-
-	Resource(char* name, FileType type, Archive* parent);
-	Resource(const char* name, FileType type, Archive* parent);
-	virtual ~Resource();
-
-	FileType fileType;
+	enum class Type;
 };
 
 class ResourceManager : public Module
@@ -55,15 +19,24 @@ public:
 	~ResourceManager();
 
 	bool Start();
-	update_status Update();
+	update_status Update(float dt);
 	bool CleanUp();
 
-	Folder* assets;
+
+	uint Find(const char* file_in_assets) const;
+	uint ImportFile(const char* new_file_in_assets);
+
+	const Resource* RequestResource(uint uid) const;
+	Resource* RequestResource(uint uid);
+	void ReleaseResource(uint uid);
 
 private:
 
-	void SaveFolderFiles(Folder* folder);
-	void LoadFolderFiles(Folder* folder);
+	uint GenerateUID();
+	Resource* CreateNewResource(const char* assetsFile, Resource::Type type);
+
+	std::map<uint, Resource*> resources;
+	std::string currentFolder;
 };
 
 #endif //__RESOURCES_H__ 

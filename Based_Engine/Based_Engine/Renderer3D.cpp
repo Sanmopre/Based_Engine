@@ -18,9 +18,7 @@
 #include "postprocess.h"
 #include "TextureLoader.h"
 
-#include "Components.h"
-#include "MathGeoLib.h"
-
+#include "Component.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>

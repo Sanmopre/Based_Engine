@@ -83,8 +83,9 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Binary.h" />
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Components.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
     <ClInclude Include="External\ImGui\imgui.h" />
     <ClInclude Include="External\ImGui\imgui_impl_opengl3.h" />
@@ -174,10 +175,14 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="glmath.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="MeshComponent.h" />
+    <ClInclude Include="MeshResource.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Simp.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="TextureResource.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Light.h" />
@@ -255,10 +260,13 @@
     <ClCompile Include="External\ImGui\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
+    <ClCompile Include="MeshResource.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Simp.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="TextureResource.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Light.cpp" />

@@ -1,4 +1,4 @@
-#include "Components.h"
+#include "Component.h"
 #include "Application.h"
 
 Component::Component(char* name, GameObject* parent, Application* app, bool active)

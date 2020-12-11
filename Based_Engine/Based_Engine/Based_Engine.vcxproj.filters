@@ -241,6 +241,15 @@
     <ClCompile Include="External\MathGeoLib\src\Time\Clock.cpp">
       <Filter>Engine\External\MathGeoLib\Time</Filter>
     </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshResource.cpp">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureResource.cpp">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -340,9 +349,6 @@
       <Filter>Engine\Tools</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Engine\Tools\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Components.h">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Simp.h">
@@ -588,6 +594,24 @@
     <ClInclude Include="External\MathGeoLib\src\emscripten\library_system.h">
       <Filter>Engine\External\MathGeoLib\emscripten</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshResource.h">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureResource.h">
+      <Filter>Engine\Tools\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -643,6 +667,9 @@
     </Filter>
     <Filter Include="Engine\External\MathGeoLib\emscripten">
       <UniqueIdentifier>{4e9550a0-1e8b-4cfb-9eaa-f39848038544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Tools\Resources">
+      <UniqueIdentifier>{df6fea91-7cca-45c2-a95f-5b1ac8696152}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

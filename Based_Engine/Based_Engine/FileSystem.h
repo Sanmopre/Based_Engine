@@ -44,11 +44,12 @@ namespace FileSystem
 	int FileLength(File* file);
 	int FileLength(const char* path);
 	FileType GetFileType(std::string path);
-
+	bool IsAFolder(std::string fileName);
 
 	bool CreateFolder(char* directory);
 	bool Delete(const char* path);
 	std::vector<std::string> GetFiles(char* directory);
+	std::vector<std::string> GetFiles(const char* directory);
 
 	void Enter(File* file);
 }

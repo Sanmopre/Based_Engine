@@ -214,6 +214,19 @@ FileType FileSystem::GetFileType(std::string path)
 	return FileType::UNKNOWN;
 }
 
+bool FileSystem::IsAFolder(std::string fileName)
+{
+	bool output = true;
+	for (uint i = 0; i < fileName.size(); i++)
+		if (fileName[i] == '.')
+		{
+			output = false;
+			break;
+		}
+
+	return output;
+}
+
 bool FileSystem::CreateFolder(char* directory)
 {
 	if (!PHYSFS_mkdir(directory))
@@ -241,6 +254,23 @@ bool FileSystem::Delete(const char* path)
 }
 
 std::vector<std::string> FileSystem::GetFiles(char* directory)
+{
+	std::vector<std::string> output;
+
+	char** rc = PHYSFS_enumerateFiles(directory);
+	char** i;
+
+	for (i = rc; *i != NULL; i++)
+	{
+		std::string file = *i;
+		output.push_back(file);
+	}
+	PHYSFS_freeList(rc);
+
+	return output;
+}
+
+std::vector<std::string> FileSystem::GetFiles(const char* directory)
 {
 	std::vector<std::string> output;
 

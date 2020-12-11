@@ -1,9 +1,8 @@
-#include "Components.h"
+#include "MeshComponent.h"
 
 #include "Application.h"
 #include "Renderer3D.h"
 #include "Simp.h"
-#include "Mesh.h"
 #include "TextureLoader.h"
 #include "GameObject.h"
 #include "ObjectManager.h"

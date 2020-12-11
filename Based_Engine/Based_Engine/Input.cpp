@@ -3,7 +3,7 @@
 #include "Window.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
-#include "Components.h"
+#include "Component.h"
 #include "FileSystem.h"
 #include "Simp.h"
 

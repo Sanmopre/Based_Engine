@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ObjectManager.h"
 #include "GameObject.h"
-#include "Components.h"
+#include "Component.h"
 #include "Transform.h"
 
 #include "imgui.h"
