@@ -12,7 +12,6 @@
 Assets::Assets(bool isActive, Application* application) : UI("Console", isActive, App)
 {
 	App = application;
-	inputlog = "";
 }
 
 Assets::~Assets()
@@ -61,4 +60,49 @@ void Assets::Update(float dt)
 		}
 	}
 	ImGui::End();
+
+	if (ImGui::Begin("Assets Tree", nullptr))
+	{
+		IterateFolder(App->resources->assets);
+	}
+	ImGui::End();
+}
+
+bool Assets::IterateFolder(Folder* folder)
+{
+	bool output = true;
+
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
+	if (folder->GetDirectory() == App->resources->currentFolder)
+		flags |= ImGuiTreeNodeFlags_Selected;
+	if (folder->entries.size() == 0)
+		flags |= ImGuiTreeNodeFlags_Leaf;
+
+	if (ImGui::TreeNodeEx(folder->name.c_str(), flags))
+	{
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+			App->resources->currentFolder = folder->GetDirectory();
+
+		for (std::vector<Entry*>::iterator ent = folder->entries.begin(); ent != folder->entries.end(); ent++)
+		{
+			Entry* entry = *ent;
+
+			if (FileSystem::IsAFolder(folder->name))
+			{
+				if (!IterateFolder((Folder*)entry))
+				{
+					ImGui::TreePop();
+					return false;
+				}
+			}
+		}
+		ImGui::TreePop();
+	}
+	else
+	{
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+			App->resources->currentFolder = folder->GetDirectory();
+	}
+
+	return output;
 }

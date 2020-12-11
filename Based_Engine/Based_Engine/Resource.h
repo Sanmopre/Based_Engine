@@ -4,22 +4,16 @@
 #include "Globals.h"
 #include <config.h>
 
+enum class FileType;
+
 class Resource
 {
 public:
 
-	enum Type 
-	{
-		TEXTURE,
-		MESH,
-		SCENE,
-		UNKNOWN
-	};
-
-	Resource(uint uid, Resource::Type type);
+	Resource(uint uid, FileType type);
 	virtual ~Resource();
 
-	Resource::Type GetType() const;
+	FileType GetType() const;
 	uint GetUID() const;
 	const char* GetAssetFile() const;
 	const char* GetLibraryFile() const;
@@ -37,7 +31,7 @@ protected:
 	uint uid = 0;
 	std::string assetsFile;
 	std::string libraryFile;
-	Type type = UNKNOWN;
+	FileType type;
 	uint referenceCount = 0;
 };
 

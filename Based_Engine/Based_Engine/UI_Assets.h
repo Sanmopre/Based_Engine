@@ -1,5 +1,7 @@
 #include "UI.h"
 
+class Folder;
+
 class Assets : public UI
 {
 public:
@@ -8,7 +10,5 @@ public:
 
 	void Update(float dt);
 
-public:
-
-	std::string inputlog;
+	bool IterateFolder(Folder*);
 };

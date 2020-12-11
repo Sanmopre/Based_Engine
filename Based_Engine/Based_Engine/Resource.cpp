@@ -1,6 +1,8 @@
 #include "Resource.h"
 
-Resource::Resource(uint uid, Resource::Type type) : uid(uid), type(type)
+#include "FileSystem.h"
+
+Resource::Resource(uint uid, FileType type) : uid(uid), type(type)
 {
 }
 
@@ -8,7 +10,7 @@ Resource::~Resource()
 {
 }
 
-Resource::Type Resource::GetType() const
+FileType Resource::GetType() const
 {
 	return type;
 }

@@ -1,6 +1,8 @@
 #include "TextureResource.h"
 
-TextureResource::TextureResource(uint uid) : Resource(uid, Resource::Type::TEXTURE)
+#include "FileSystem.h"
+
+TextureResource::TextureResource(uint uid) : Resource(uid, FileType::IMAGE)
 {
 }
 

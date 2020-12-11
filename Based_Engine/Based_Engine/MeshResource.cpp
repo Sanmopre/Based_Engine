@@ -1,8 +1,9 @@
 #include "MeshResource.h"
 
+#include "FileSystem.h"
 #include "Simp.h"
 
-MeshResource::MeshResource(uint uid) : Resource(uid, Resource::Type::MESH)
+MeshResource::MeshResource(uint uid) : Resource(uid, FileType::MESH)
 {
 }
 

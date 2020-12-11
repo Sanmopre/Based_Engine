@@ -4,11 +4,39 @@
 #include "Module.h"
 #include <map>
 
-class Resource
+class Resource;
+enum class FileType;
+
+class Entry
 {
 public:
 
-	enum class Type;
+	Entry(const char* name, Entry* parent);
+	virtual ~Entry();
+
+	std::string name;
+	Entry* parent = nullptr;
+};
+
+class Folder : public Entry
+{
+public:
+
+	Folder(const char* name, Entry* parent);
+	virtual ~Folder();
+
+	std::string GetDirectory();
+
+	std::vector<Entry*> entries;
+};
+class Archive : public Entry
+{
+public:
+
+	Archive(const char* name, FileType type, Entry* parent);
+	virtual ~Archive();
+
+	FileType type;
 };
 
 class ResourceManager : public Module
@@ -33,10 +61,13 @@ public:
 private:
 
 	uint GenerateUID();
-	Resource* CreateNewResource(const char* assetsFile, Resource::Type type);
+	Resource* CreateNewResource(const char* assetsFile, FileType type);
+	void UpdateEntriesTree();
 
 	std::map<uint, Resource*> resources;
 	std::string currentFolder;
+
+	Folder* assets = nullptr;
 
 	friend class Assets;
 };
