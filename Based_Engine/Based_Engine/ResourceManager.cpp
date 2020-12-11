@@ -25,44 +25,6 @@ bool ResourceManager::Start()
 
 update_status ResourceManager::Update(float dt)
 {
-	std::vector<std::string> files = FileSystem::GetFiles(currentFolder.c_str());
-
-	std::string name = "Assets";
-	if (currentFolder != "")
-		name += "/" + currentFolder;
-
-	if (ImGui::Begin(name.c_str(), nullptr))
-	{
-		if(ImGui::Button("Back"))
-		{
-			if (currentFolder != "")
-			{
-				bool found = false;
-				for (std::string::iterator itr = currentFolder.end() - 1; itr != currentFolder.begin(); itr--)
-					if (*itr == '/')
-					{
-						found = true;
-						currentFolder.erase(itr, currentFolder.end());
-						break;
-					}
-				if(!found)
-					currentFolder.erase(currentFolder.begin(), currentFolder.end());
-			}
-		}
-		for (uint i = 0; i < files.size(); i++)
-		{
-			if (ImGui::Button(files[i].c_str()))
-			{
-				if (FileSystem::IsAFolder(files[i]))
-				{
-					if (currentFolder != "")
-						currentFolder += "/";
-					currentFolder += files[i];
-				}
-			}
-		}
-	}
-	ImGui::End();
 	return UPDATE_CONTINUE;
 }
 

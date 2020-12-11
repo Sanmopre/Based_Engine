@@ -191,6 +191,7 @@
     <ClInclude Include="Renderer3D.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="UI_Assets.h" />
     <ClInclude Include="UI_GameObject.h" />
     <ClInclude Include="UI_GameObjects.h" />
     <ClInclude Include="Window.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Camera3D.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Renderer3D.cpp" />
+    <ClCompile Include="UI_Assets.cpp" />
     <ClCompile Include="UI_GameObject.cpp" />
     <ClCompile Include="UI_GameObjects.cpp" />
     <ClCompile Include="Window.cpp" />

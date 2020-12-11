@@ -60,20 +60,21 @@ GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active
 	return output;
 }
 
-void ObjectManager::ChildGameObject(GameObject* child, GameObject* parent)
+bool ObjectManager::ChildGameObject(GameObject* newChild, GameObject* newParent)
 {
-	if (child->parent == parent)
-		return;
-	for (uint i = 0; i < parent->children.size(); i++)
-		if (parent->children[i] == child)
-			return;
+	if (newChild->parent == newParent)
+		return false;
+	else if (newParent->parent == newChild)
+		ChildGameObject(newParent, newChild->parent);
 
-	for(std::vector<GameObject*>::iterator g = child->parent->children.begin(); g != child->parent->children.begin(); g++)
-		if (*g == child)
+	for (std::vector<GameObject*>::iterator g = newChild->parent->children.begin(); g != newChild->parent->children.end(); g++)
+		if (*g == newChild)
 		{
-			child->parent->children.erase(g);
+			newChild->parent->children.erase(g);
 			break;
 		}
-	child->parent = parent;
-	parent->children.push_back(child);
+	newChild->parent = newParent;
+	newParent->children.push_back(newChild);
+
+	return true;
 }

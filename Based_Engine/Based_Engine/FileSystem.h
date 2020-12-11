@@ -45,6 +45,7 @@ namespace FileSystem
 	int FileLength(const char* path);
 	FileType GetFileType(std::string path);
 	bool IsAFolder(std::string fileName);
+	const char* GetMainDirectory();
 
 	bool CreateFolder(char* directory);
 	bool Delete(const char* path);

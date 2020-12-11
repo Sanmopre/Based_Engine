@@ -227,6 +227,11 @@ bool FileSystem::IsAFolder(std::string fileName)
 	return output;
 }
 
+const char* FileSystem::GetMainDirectory()
+{
+	return ASSETS_PATH;
+}
+
 bool FileSystem::CreateFolder(char* directory)
 {
 	if (!PHYSFS_mkdir(directory))

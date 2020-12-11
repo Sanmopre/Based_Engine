@@ -13,11 +13,13 @@ public:
 	void Update(float dt);
 
 
-	void IterateGameObjects(GameObject*);
+	bool IterateGameObjects(GameObject*);
 
 	int i;
 
 private:
 
 	std::string create_name;
+
+	GameObject* dragDropGo = nullptr;
 };

@@ -73,8 +73,10 @@ void GameObjects::Update(float dt)
 	ImGui::End();
 }
 
-void GameObjects::IterateGameObjects(GameObject* gameobject)
+bool GameObjects::IterateGameObjects(GameObject* gameobject)
 {
+	bool output = true;
+
 	char bName[10];
 	sprintf_s(bName, "select%d", i);
 	i++;
@@ -89,12 +91,33 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			App->objects->selected = gameobject;
+		if (ImGui::BeginDragDropSource())
+		{
+			ImGui::SetDragDropPayload("_TREENODE", NULL, 0);
+			dragDropGo = gameobject;
+			ImGui::Text(gameobject->name.c_str());
+			ImGui::EndDragDropSource();
+		}
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE"))
+				if (App->objects->ChildGameObject(dragDropGo, gameobject))
+				{
+					dragDropGo = nullptr;
+					output = false;
+				}
+			ImGui::EndDragDropTarget();
+		}
 
 		for (std::vector<GameObject*>::iterator obj = gameobject->children.begin(); obj != gameobject->children.end(); obj++)
 		{
 			GameObject* object = *obj;
 
-			IterateGameObjects(object);
+			if (!IterateGameObjects(object))
+			{
+				ImGui::TreePop();
+				return false;
+			}
 		}
 		ImGui::TreePop();
 	}
@@ -103,6 +126,8 @@ void GameObjects::IterateGameObjects(GameObject* gameobject)
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 			App->objects->selected = gameobject;
 	}
+
+	return output;
 }
 
 

@@ -8,6 +8,7 @@ class Topbar;
 class Scene;
 class GameObjects;
 class GameObject_Inspector;
+class Assets;
 
 class GUI : public Module
 {
@@ -35,4 +36,5 @@ public:
 	Scene* scene;
 	GameObjects* game_objects;
 	GameObject_Inspector* inspector;
+	Assets* assets;
 };

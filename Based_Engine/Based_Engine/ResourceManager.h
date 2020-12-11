@@ -37,6 +37,8 @@ private:
 
 	std::map<uint, Resource*> resources;
 	std::string currentFolder;
+
+	friend class Assets;
 };
 
 #endif //__RESOURCES_H__ 

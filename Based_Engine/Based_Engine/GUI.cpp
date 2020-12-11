@@ -9,6 +9,7 @@
 #include "UI_Scene.h"
 #include "UI_Topbar.h"
 #include "UI_GameObject.h"
+#include "UI_Assets.h"
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -40,6 +41,7 @@ bool GUI::Start()
 	gui.push_back(scene = new Scene(true, App));
 	gui.push_back(game_objects = new GameObjects(true, App));
 	gui.push_back(inspector = new GameObject_Inspector(true, App));
+	gui.push_back(assets = new Assets(true, App));
 
 	for (uint i = 0; i < gui.size(); i++)
 	{

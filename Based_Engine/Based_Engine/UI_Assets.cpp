@@ -1,0 +1,64 @@
+#include "UI_Assets.h"
+
+#include "Application.h"
+#include "ResourceManager.h"
+
+#include "FileSystem.h"
+
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
+
+Assets::Assets(bool isActive, Application* application) : UI("Console", isActive, App)
+{
+	App = application;
+	inputlog = "";
+}
+
+Assets::~Assets()
+{
+}
+
+void Assets::Update(float dt)
+{
+	std::vector<std::string> files = FileSystem::GetFiles(App->resources->currentFolder.c_str());
+
+	std::string name = "Assets";
+	if (App->resources->currentFolder != "")
+		name += "/" + App->resources->currentFolder;
+
+	if (ImGui::Begin("Assets", nullptr))
+	{
+		ImGui::Text(name.c_str());
+		ImGui::Separator();
+		if (ImGui::Button("Back"))
+		{
+			if (App->resources->currentFolder != "")
+			{
+				bool found = false;
+				for (std::string::iterator itr = App->resources->currentFolder.end() - 1; itr != App->resources->currentFolder.begin(); itr--)
+					if (*itr == '/')
+					{
+						found = true;
+						App->resources->currentFolder.erase(itr, App->resources->currentFolder.end());
+						break;
+					}
+				if (!found)
+					App->resources->currentFolder.erase(App->resources->currentFolder.begin(), App->resources->currentFolder.end());
+			}
+		}
+		for (uint i = 0; i < files.size(); i++)
+		{
+			if (ImGui::Button(files[i].c_str()))
+			{
+				if (FileSystem::IsAFolder(files[i]))
+				{
+					if (App->resources->currentFolder != "")
+						App->resources->currentFolder += "/";
+					App->resources->currentFolder += files[i];
+				}
+			}
+		}
+	}
+	ImGui::End();
+}

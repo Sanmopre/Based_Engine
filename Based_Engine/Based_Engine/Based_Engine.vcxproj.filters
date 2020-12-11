@@ -250,6 +250,9 @@
     <ClCompile Include="TextureResource.cpp">
       <Filter>Engine\Tools\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Assets.cpp">
+      <Filter>Engine\UI_Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -611,6 +614,9 @@
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Assets.h">
+      <Filter>Engine\UI_Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
