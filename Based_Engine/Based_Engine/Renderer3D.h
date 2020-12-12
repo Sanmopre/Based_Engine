@@ -41,19 +41,16 @@ public:
 	void AddMesh(Mesh*);
 	void DeleteMesh(Mesh*);
 
-	/*
-	void UpdateCameraMatrix(CameraComponent* camera);
+	void Culling(CameraComponent* camera);
 
-	bool SetCameraToDraw(const CameraComponent* camera);
-
-	bool IsInsideFrustum(const CameraComponent* camera, const AABB& aabb);
-*/
 	update_status Draw();
 	update_status WireframeDraw();
 
 public:
 
 	std::vector<Mesh*> meshes;
+
+	CameraComponent* main_camera;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

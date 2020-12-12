@@ -59,6 +59,9 @@ public:
 	bool drawnormals = false;
 	bool show_OBB = false;
 	bool show_bounding_box = false;
+
+	bool isOnScreen = true;
+
 	float4x4 transform;
 
 	AABB local_aabb;

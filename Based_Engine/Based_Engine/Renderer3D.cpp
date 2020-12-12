@@ -19,6 +19,7 @@
 #include "TextureLoader.h"
 
 #include "Component.h"
+#include "CameraComponent.h"
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -278,85 +279,38 @@ void Renderer3D::DeleteMesh(Mesh* mesh)
 			break;
 		}
 }
-/*
-void Renderer3D::UpdateCameraMatrix(CameraComponent* camera)
+
+void Renderer3D::Culling(CameraComponent* camera)
 {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glLoadMatrixf(camera->GetProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}
-
-bool Renderer3D::SetCameraToDraw(const CameraComponent* camera)
-{
-	if (camera == nullptr) {
-		return false;
-	}
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	glClearStencil(0);
-
-	glClearColor(camera->camera_color_background.r, camera->camera_color_background.g, camera->camera_color_background.b, camera->camera_color_background.a);
-	
-	glLoadIdentity();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glLoadMatrixf(camera->GetProjectionMatrix());
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(camera->GetViewMatrix());
-
-	return true;
-}
-
-bool Renderer3D::IsInsideFrustum(const CameraComponent* camera, const AABB& aabb)
-{
-	float3 corners[8];
-	aabb.GetCornerPoints(corners);
-
-	Plane planes[6];
-	camera->frustum.GetPlanes(planes);
-
-	for (uint i = 0; i < 6; ++i)
-	{
-		uint point_inside_plane = 8;
-
-		for (uint p = 0; p < 8; ++p)
+	for (uint i = 0; i < meshes.size(); i++) {
+		if (camera->IsObjectInFrustum(meshes[i])) 
 		{
-			if (planes[i].IsOnPositiveSide(corners[p]))
-			{
-				--point_inside_plane;
-			}
+			(*meshes[i]).isOnScreen = true;
+		}
+		else 
+		{
+			(*meshes[i]).isOnScreen = false;
 		}
 
-		if (point_inside_plane == 0)
-		{
-			return false;
-		}
 	}
-
-	return true;
 }
-*/
+
+
 update_status Renderer3D::Draw()
 {
-	for (uint i = 0; i < meshes.size(); i++)
+	for (uint i = 0; i < meshes.size(); i++) {
+		if((*meshes[i]).isOnScreen)
 		(*meshes[i]).Render((*meshes[i]).transform, true);
-
+	}
 	return UPDATE_CONTINUE;
 }
 
 update_status Renderer3D::WireframeDraw()
 {
-	for (uint i = 0; i < meshes.size(); i++)
-		(*meshes[i]).Render((*meshes[i]).transform,true);
+	for (uint i = 0; i < meshes.size(); i++) {
+		if ((*meshes[i]).isOnScreen)
+			(*meshes[i]).Render((*meshes[i]).transform, true);
+	}
 	
 	return UPDATE_CONTINUE;
 }
