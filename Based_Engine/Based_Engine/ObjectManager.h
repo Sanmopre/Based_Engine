@@ -16,6 +16,7 @@ public:
 	bool CleanUp();
 
 	GameObject* AddObject(char* name = nullptr, GameObject* parent = nullptr, bool active = true, const char* type = "GameObject");
+	GameObject* AddObject(const char* name = nullptr, GameObject* parent = nullptr, bool active = true, const char* type = "GameObject");
 
 	bool ChildGameObject(GameObject* child, GameObject* parent);
 

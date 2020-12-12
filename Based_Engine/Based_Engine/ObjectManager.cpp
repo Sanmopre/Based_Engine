@@ -65,6 +65,24 @@ GameObject* ObjectManager::AddObject(char* name, GameObject* parent, bool active
 	
 	return output;
 }
+GameObject* ObjectManager::AddObject(const char* name, GameObject* parent, bool active, const char* type)
+{
+	if (name == nullptr)
+	{
+		char str[64];
+		sprintf_s(str, "%s%d", type, go_id);
+		go_id++;
+		name = str;
+	}
+
+	if (!parent)
+		parent = this->parent;
+	GameObject* output = new GameObject(name, parent, App, active);
+
+	parent->children.push_back(output);
+
+	return output;
+}
 
 bool ObjectManager::ChildGameObject(GameObject* newChild, GameObject* newParent)
 {

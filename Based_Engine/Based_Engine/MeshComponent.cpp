@@ -209,24 +209,26 @@ void MeshComponent::PushMesh(const char* path, const char* texture_path, bool li
 
 	if (meshes.size() == 0)
 		return;
-
-	mesh = *meshes.begin();
-	if (meshes.size() > 1)
+	if (meshes.size() == 1)
 	{
-		for (int i = 1; i < meshes.size(); i++)
+		mesh = *meshes.begin();
+		this->path = path;
+
+		if (active)
+			App->renderer3D->AddMesh(&mesh);
+	}
+	else
+	{
+		for (int i = 0; i < meshes.size(); i++)
 		{
-			char n[64];
-			memset(n, 0, 64);
-			sprintf(n, "%s%d", parent->name.c_str(), i);
-			GameObject* obj = App->objects->AddObject(n, parent);
+			GameObject* obj = App->objects->AddObject(meshes[i].name.c_str(), parent);
 			obj->AddMeshComponent(meshes[i], path, texture_path);
 		}
+
+		this->path = " ";
+		App->resources->ReleaseResource(resource);
+		resource = 0;
 	}
-
-	this->path = path;
-
-	if (active)
-		App->renderer3D->AddMesh(&mesh);
 }
 
 void MeshComponent::PushTexture(uint texture)

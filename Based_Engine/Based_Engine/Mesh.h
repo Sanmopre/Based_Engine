@@ -68,6 +68,8 @@ public:
 	OBB obb;
 	AABB global_aabb;
 
+	std::string name;
+
 private:
 
 	Color color;

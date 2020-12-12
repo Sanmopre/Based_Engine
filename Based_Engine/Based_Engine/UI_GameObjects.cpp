@@ -30,33 +30,34 @@ void GameObjects::Update(float dt)
 
 		if (ImGui::BeginCombo(" ", "Create"))
 		{
+			char* ch = nullptr;
 			if (ImGui::Selectable("Create GameObject"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected);
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected);
 			}
 			if (ImGui::Selectable("Create Cube"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cube");
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected, true, "Cube");
 				go->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 			}
 			if (ImGui::Selectable("Create Sphere"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Sphere");
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected, true, "Sphere");
 				go->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
 			}
 			if (ImGui::Selectable("Create Pyramid"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Pyramid");
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected, true, "Pyramid");
 				go->AddMeshComponent("Assets/Meshes/Primitives/pyramid.fbx");
 			}
 			if (ImGui::Selectable("Create Cylinder"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cylinder");
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected, true, "Cylinder");
 				go->AddMeshComponent("Assets/Meshes/Primitives/cylinder.fbx");
 			}
 			if (ImGui::Selectable("Create Plane"))
 			{
-				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
+				GameObject* go = App->objects->AddObject(ch, App->objects->selected, true, "Plane");
 				go->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx");
 			}
 

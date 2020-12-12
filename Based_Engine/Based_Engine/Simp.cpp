@@ -48,12 +48,27 @@ std::string Simp::CreateFileName(const char* assetsPath)
 	return output;
 }
 
-void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
+void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene, std::string name)
 {
 	aiMesh* mesh = scene->mMeshes[i];
 
 	char* data = "MESH";
 	FileSystem::Write(file, data, 4u, 1u);
+
+	uint s = name.size();
+	data = Binary::GetBinaryStream<unsigned int>(s);
+	FileSystem::Write(file, data, sizeof(uint), 1u);
+	delete[] data;
+	FileSystem::Write(file, name.c_str(), s, 1u);
+
+	aiVector3D pos;
+	aiQuaternion rot;
+	transform.DecomposeNoScaling(rot, pos);
+	float b = pos.z;
+	pos.z = pos.y;
+	pos.y = b;
+	transform.Translation(pos, transform);
+
 	for (int y = 0; y < 4; y++)
 	{
 		for (int x = 0; x < 4; x++)
@@ -74,6 +89,13 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 	int vertex_size = mesh->mNumVertices * 3;
 	float* vertices = new float[vertex_size];
 	memcpy(vertices, mesh->mVertices, sizeof(float) * vertex_size);
+
+	for (uint v = 0; v < vertex_size; v += 3)
+	{
+		float bu = vertices[v + 1];
+		vertices[v + 1] = vertices[v + 2];
+		vertices[v + 2] = bu;
+	}
 
 	for (int v = 0; v < vertex_size; v++)
 	{
@@ -96,6 +118,13 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 		for (int j = 0; j < mesh->mNumFaces; ++j)
 			if (mesh->mFaces[j].mNumIndices == 3)
 				memcpy(indices + j * 3, mesh->mFaces[j].mIndices, sizeof(unsigned int) * 3);
+
+		for (uint j = 0; j < index_size; j += 3)
+		{
+			uint bu = indices[j + 1];
+			indices[j + 1] = indices[j + 2];
+			indices[j + 2] = bu;
+		}
 
 		for (int j = 0; j < index_size; j++)
 		{
@@ -156,7 +185,10 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene)
 void ExpandNode(aiNode* node, File* file, const aiScene* scene)
 {
 	for (int i = 0; i < node->mNumMeshes; i++)
-		SimpToMonki(node->mMeshes[i], node->mTransformation, file, scene);
+	{
+		std::string name = node->mName.C_Str();
+		SimpToMonki(node->mMeshes[i], node->mTransformation, file, scene, name);
+	}
 
 	for (int i = 0; i < node->mNumChildren; i++)
 		ExpandNode(node->mChildren[i], file, scene);
@@ -166,7 +198,7 @@ std::string Simp::LoadMesh(const char* file_path, bool redo)
 {
 	std::string path = CreateFileName(file_path);
 
-	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
+	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_Quality | aiProcess_ValidateDataStructure | aiProcess_OptimizeMeshes | aiProcess_Triangulate);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -247,6 +279,16 @@ std::vector<Mesh> Simp::LoadMeshFile(const char* path)
 			return meshes;
 		}
 		Mesh mesh;
+
+		unsigned int nameSize = Binary::GetDataFromStream<unsigned int>(&data[bit]);
+		bit += 4;
+		bufferName = "";
+		for (uint i = 0; i < nameSize; i++)
+		{
+			bufferName += data[bit];
+			bit++;
+		}
+		mesh.name = bufferName;
 
 		for (uint y = 0; y < 4; y++)
 		{

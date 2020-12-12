@@ -176,27 +176,34 @@ uint ResourceManager::ImportFile(const char* newAssetsFile, bool newFile, bool r
 
 const Resource* ResourceManager::RequestResource(uint uid) const
 {
-	return resources.find(uid)->second;
+	if(resources.find(uid) != resources.end())
+		return resources.find(uid)->second;
+	return nullptr;
 }
 
 Resource* ResourceManager::RequestResource(uint uid)
 {
-	return resources.find(uid)->second;
+	if (resources.find(uid) != resources.end())
+		return resources.find(uid)->second;
+	return nullptr;
 }
 
 void ResourceManager::ReleaseResource(uint uid)
 {
-	Resource* resource = resources[uid];
+	if (resources.find(uid) != resources.end())
+	{
+		Resource* resource = resources[uid];
 
-	if (!resource)
-		return;
+		if (!resource)
+			return;
 
-	if (!resource->IsReferenced())
-		return;
+		if (!resource->IsReferenced())
+			return;
 
-	resource->SubstractReference();
-	if (!resource->IsReferenced())
-		resource->Unload();
+		resource->SubstractReference();
+		if (!resource->IsReferenced())
+			resource->Unload();
+	}
 }
 
 const std::string ResourceManager::GetCurrentFolder()
