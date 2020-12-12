@@ -60,8 +60,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-
 	uint Find(const char* assetsFile) const;
+	uint FindFromLibrary(const char* libraryFile) const;
 	uint ImportFile(const char* newAssetsFile, bool newFile, bool redo = false);
 
 	const Resource* RequestResource(uint uid) const;
@@ -69,6 +69,7 @@ public:
 	void ReleaseResource(uint uid);
 
 	const std::string GetCurrentFolder();
+	const Folder* const GetFolder(const char* folderName);
 
 private:
 

@@ -6,8 +6,11 @@
 #include "TextureLoader.h"
 #include "GameObject.h"
 #include "ObjectManager.h"
+#include "ResourceManager.h"
 #include "Transform.h"
 #include "Input.h"
+
+#include "MeshResource.h"
 
 #include "GL/glew.h"
 
@@ -17,26 +20,10 @@
 
 MeshComponent::MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
-	std::vector<Mesh> meshes = Simp::LoadMeshFile(path);
-
-	if (meshes.size() == 0)
-		return;
-
-	mesh = *meshes.begin();
-	if (meshes.size() > 1)
-	{
-		for (int i = 1; i < meshes.size(); i++)
-		{
-			char n[64];
-			memset(n, 0, 64);
-			sprintf(n, "%s%d", parent->name.c_str(), i);
-			GameObject* obj = App->objects->AddObject(n, parent);
-			obj->AddMeshComponent(meshes[i], texture_path);
-		}
-	}
-
-	this->path = path;
-	path_buffer = path;
+	if (path)
+		PushMesh(path, texture_path);
+	else
+		this->path = " ";
 
 	to_draw_normals = false;
 	to_draw_AABB = false;
@@ -44,19 +31,17 @@ MeshComponent::MeshComponent(char* name, const char* path, const char* texture_p
 	texture = NULL;
 	AddTexture(texture_path);
 
-	this->parent->transform->Reparent(mesh.transform);
-
-	if (active)
-		App->renderer3D->AddMesh(&mesh);
+	if(mesh.vertices)
+		this->parent->transform->Reparent(mesh.transform);
 }
 
-MeshComponent::MeshComponent(char* name, Mesh mesh, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
+MeshComponent::MeshComponent(char* name, Mesh mesh, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
+	resource = App->resources->Find(path);
 
 	this->mesh = mesh;
 
 	this->path = path;
-	path_buffer = path;
 
 	to_draw_normals = false;
 
@@ -73,15 +58,20 @@ MeshComponent::MeshComponent(char* name, Mesh mesh, const char* texture_path, Ga
 MeshComponent::~MeshComponent()
 {
 	App->renderer3D->DeleteMesh(&mesh);
+
+	App->resources->ReleaseResource(resource);
 }
 
 bool MeshComponent::Update(float dt)
 {	
-	//TEMP//
-	mesh.transform = this->parent->transform->global_transformation;
-	this->parent->transform->RecalculateTransform();
-	//mesh.RecalculateAABB_OBB(this->parent->transform->local_transformation);
-	////////
+	if (path != " ")
+	{
+		//TEMP//
+		mesh.transform = this->parent->transform->global_transformation;
+		this->parent->transform->RecalculateTransform();
+		//mesh.RecalculateAABB_OBB(this->parent->transform->local_transformation);
+		////////
+	}
 
 	if (active != to_activate)
 	{
@@ -90,8 +80,6 @@ bool MeshComponent::Update(float dt)
 		else
 			Deactivate();
 	}
-
-
 
 	return true;
 }
@@ -116,6 +104,12 @@ void MeshComponent::Deactivate()
 
 void MeshComponent::DisplayComponentMenu()
 {
+	if (path == " ")
+	{
+		int a = 0;
+		a++;
+		a = 4;
+	}
 	char str[24];
 	sprintf_s(str, "Mesh Component (%s)", name.c_str());
 
@@ -157,20 +151,28 @@ void MeshComponent::DisplayComponentMenu()
 				name_buffer = name;
 		}
 
-		//sprintf_s(str, "mesh (%s)", name.c_str());
-		//if (ImGui::InputText(str, &path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
-		//{
-		//	MESH m = Simp::LoadFile(path_buffer.c_str());
-		//
-		//	if (m.size() != 0)
-		//	{
-		//		mesh = m;
-		//		path = path_buffer;
-		//	}
-		//	else
-		//		path_buffer = path;
-		//}
-		sprintf_s(str, "texture (%s)", name.c_str());
+		std::string meshName = path;
+		if (resource != 0)
+		{
+			MeshResource* mRes = (MeshResource*)App->resources->RequestResource(resource);
+			meshName = mRes->GetAssetFile();
+		}
+		if (ImGui::BeginCombo("mesh", meshName.c_str()))
+		{
+			const Folder* const lMeshes = App->resources->GetFolder("LMeshes");
+			for (uint i = 0; i < lMeshes->entries.size(); i++)
+			{
+				if (ImGui::Selectable(lMeshes->entries[i]->name.c_str()))
+				{
+					if (resource != 0)
+						App->resources->ReleaseResource(resource);
+
+					PushMesh(lMeshes->entries[i]->GetDirectory().c_str(), nullptr, true);
+				}
+			}
+			ImGui::EndCombo();
+		}
+		sprintf_s(str, "texture", name.c_str());
 		if (ImGui::InputText(str, &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			if (text_path != text_path_buffer)
 			{
@@ -208,6 +210,38 @@ bool MeshComponent::AddTexture(const char* path)
 	}
 
 	return true;
+}
+
+void MeshComponent::PushMesh(const char* path, const char* texture_path, bool library)
+{
+	if(!library)
+		resource = App->resources->Find(path);
+	else
+		resource = App->resources->FindFromLibrary(path);
+
+	MeshResource* mRes = (MeshResource*)App->resources->RequestResource(resource);
+	std::vector<Mesh> meshes = *mRes->GetMeshes();
+
+	if (meshes.size() == 0)
+		return;
+
+	mesh = *meshes.begin();
+	if (meshes.size() > 1)
+	{
+		for (int i = 1; i < meshes.size(); i++)
+		{
+			char n[64];
+			memset(n, 0, 64);
+			sprintf(n, "%s%d", parent->name.c_str(), i);
+			GameObject* obj = App->objects->AddObject(n, parent);
+			obj->AddMeshComponent(meshes[i], path, texture_path);
+		}
+	}
+
+	this->path = path;
+
+	if (active)
+		App->renderer3D->AddMesh(&mesh);
 }
 
 void MeshComponent::PushTexture(uint texture)

@@ -9,7 +9,7 @@ class MeshComponent : public Component
 public:
 
 	MeshComponent(char* name, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
-	MeshComponent(char* name, Mesh mesh, const char* texture_path, GameObject* parent, Application* app, bool active = true);
+	MeshComponent(char* name, Mesh mesh, const char* path, const char* texture_path, GameObject* parent, Application* app, bool active = true);
 	virtual ~MeshComponent();
 
 	bool Update(float dt);
@@ -25,13 +25,15 @@ private:
 	bool to_draw_normals;
 	bool to_draw_AABB;
 
+	void PushMesh(const char* path, const char* texture_path, bool library = false);
 	void PushTexture(uint texture);
 
 	std::string path;
-	std::string path_buffer;
 
 	std::string text_path;
 	std::string text_path_buffer;
+
+	uint resource = 0;
 
 	Mesh mesh;
 	uint texture;

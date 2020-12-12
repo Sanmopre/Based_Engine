@@ -29,7 +29,7 @@ public:
 	std::vector<GameObject*> children;
 
 	void AddMeshComponent(const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
-	void AddMeshComponent(Mesh mesh, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
+	void AddMeshComponent(Mesh mesh, const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 
 	void AddCameraComponent(char* name = nullptr);
 

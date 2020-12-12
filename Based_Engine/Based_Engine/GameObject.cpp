@@ -87,7 +87,6 @@ bool GameObject::CleanUp()
 	}
 	while (children.size() != 0)
 	{
-		(*children.begin())->CleanUp();
 		delete* children.begin();
 		children.erase(children.begin());
 	}
@@ -97,21 +96,25 @@ bool GameObject::CleanUp()
 
 void GameObject::AddMeshComponent(const char* path, const char* texture_path, char* name, bool active)
 {
-	if (!name)
+	if (!meshComp)
 	{
-		char str[10];
-		sprintf_s(str, "%d", comp_id);
-		name = str;
-	}
-	comp_id++;
+		if (!name)
+		{
+			char str[10];
+			sprintf_s(str, "%d", comp_id);
+			name = str;
+		}
+		comp_id++;
 
-	MeshComponent* mesh = new MeshComponent(name, path, texture_path, this, App, active);
-	Component* comp = mesh;
-	meshComp = mesh;
-	components.push_back(comp);
+		Component* comp = new MeshComponent(name, path, texture_path, this, App, active);
+		meshComp = (MeshComponent*)comp;
+		components.push_back(comp);
+	}
+	else
+		LOG("This GameObject aready has a Mesh Component");
 }
 
-void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* name, bool active)
+void GameObject::AddMeshComponent(Mesh mesh, const char* path, const char* texture_path, char* name, bool active)
 {
 	if (!name)
 	{
@@ -121,7 +124,7 @@ void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* nam
 	}
 	comp_id++;
 
-	MeshComponent* meshptr = new MeshComponent(name, mesh, texture_path, this, App, active);
+	MeshComponent* meshptr = new MeshComponent(name, mesh, path, texture_path, this, App, active);
 	Component* comp = meshptr;
 	meshComp = meshptr;
 	components.push_back(comp);

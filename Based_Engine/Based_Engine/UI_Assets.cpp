@@ -87,6 +87,8 @@ bool Assets::IterateFolder(Folder* folder)
 {
 	bool output = true;
 
+	if (folder->name == "Library")
+		return true;
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
 	if (folder->GetDirectory() == App->resources->currentFolder)
 		flags |= ImGuiTreeNodeFlags_Selected;

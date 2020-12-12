@@ -28,39 +28,39 @@ void GameObjects::Update(float dt)
 			if (App->input->GetKey(1) == KEY_DOWN)
 				App->objects->selected = nullptr;
 
-		if (ImGui::BeginMenu("Create"))
+		if (ImGui::BeginCombo(" ", "Create"))
 		{
-			if (ImGui::Button("Create GameObject"))
+			if (ImGui::Selectable("Create GameObject"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected);
 			}
-			if (ImGui::Button("Create Cube"))
+			if (ImGui::Selectable("Create Cube"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cube");
-				go->AddMeshComponent("Library/Meshes/cube.monki");
+				go->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 			}
-			if (ImGui::Button("Create Sphere"))
+			if (ImGui::Selectable("Create Sphere"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Sphere");
-				go->AddMeshComponent("Library/Meshes/sphere.monki");
+				go->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
 			}
-			if (ImGui::Button("Create Pyramid"))
+			if (ImGui::Selectable("Create Pyramid"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Pyramid");
-				go->AddMeshComponent("Library/Meshes/pyramid.monki");
+				go->AddMeshComponent("Assets/Meshes/Primitives/pyramid.fbx");
 			}
-			if (ImGui::Button("Create Cylinder"))
+			if (ImGui::Selectable("Create Cylinder"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Cylinder");
-				go->AddMeshComponent("Library/Meshes/cylinder.monki");
+				go->AddMeshComponent("Assets/Meshes/Primitives/cylinder.fbx");
 			}
-			if (ImGui::Button("Create Plane"))
+			if (ImGui::Selectable("Create Plane"))
 			{
 				GameObject* go = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
-				go->AddMeshComponent("Library/Meshes/plane.monki");
+				go->AddMeshComponent("Assets/Meshes/Primitives/plane.fbx");
 			}
 
-			ImGui::EndMenu();
+			ImGui::EndCombo();
 		}
 		ImGui::Separator();
 

@@ -80,14 +80,18 @@ void GameObject_Inspector::Update(float dt)
 				ImGui::Separator();
 			}
 
-			if (ImGui::BeginMenu("Add Component"))
+			if (ImGui::BeginCombo("  ", "Add New Component"))
 			{
-				if (ImGui::MenuItem("Camera Component")) 
+				if (ImGui::Selectable("Camera Component")) 
 				{
-					object->AddCameraComponent("Camera1");
+					object->AddCameraComponent("Camera");
+				}
+				if (ImGui::Selectable("Mesh Component"))
+				{
+					object->AddMeshComponent(nullptr);
 				}
 
-				ImGui::EndMenu();
+				ImGui::EndCombo();
 			}
 
 		}

@@ -6,20 +6,19 @@
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
-	parent = new GameObject("BASEDObject", nullptr, App, true);
-
 	go_id = 0;
 }
 
 ObjectManager::~ObjectManager()
 {
-	delete parent;
 }
 
 bool ObjectManager::Start()
 {
+	parent = new GameObject("BASEDObject", nullptr, App, true);
+
 	GameObject* street = AddObject("street");
-	street->AddMeshComponent("Library/LMeshes/Street environment_V01.monki");
+	street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
 
 	return true;
 }
@@ -33,11 +32,18 @@ update_status ObjectManager::Update(float dt)
 
 update_status ObjectManager::PostUpdate()
 {
+	if (selected && App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+	{
+		selected->to_delete = true;
+		selected = nullptr;
+	}
+
 	return UPDATE_CONTINUE;
 }
 
 bool ObjectManager::CleanUp()
 {
+	delete parent;
 	return true;
 }
 

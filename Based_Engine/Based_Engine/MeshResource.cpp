@@ -12,14 +12,14 @@ MeshResource::~MeshResource()
 {
 }
 
-const std::vector<Mesh> MeshResource::GetMeshes() const
+const std::vector<Mesh>* MeshResource::GetMeshes() const
 {
-    return meshes;
+    return &meshes;
 }
 
 bool MeshResource::LoadInMemory()
 {
-    std::vector<Mesh> meshes = Simp::LoadMeshFile(libraryFile.c_str());
+    meshes = Simp::LoadMeshFile(libraryFile.c_str());
 
     if (meshes.size() == 0)
         return false;

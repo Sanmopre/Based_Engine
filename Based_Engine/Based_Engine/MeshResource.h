@@ -12,7 +12,7 @@ public:
 	MeshResource(uint uid, const char* assetsFile, const char* libraryFile);
 	~MeshResource();
 
-	const std::vector<Mesh> GetMeshes() const;
+	const std::vector<Mesh>* GetMeshes() const;
 	bool LoadInMemory() override;
 	bool Unload() override;
 
