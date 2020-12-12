@@ -1,5 +1,7 @@
 #include "Transform.h"
 #include "GameObject.h"
+#include "MeshComponent.h"
+#include "Mesh.h"
 
 Transform::Transform(GameObject* game_object)
 {
@@ -97,9 +99,9 @@ void Transform::RecalculateTransform()
 		}
 	}
 
-
-	//recalculate		mesh->RecalculateAABB_OBB();
-
+	if (object->meshComp != nullptr) {
+		object->meshComp->mesh.RecalculateAABB_OBB(global_transformation);
+	}
 }
 
 void Transform::AddPosition(const float3 pos)

@@ -22,9 +22,12 @@ CameraComponent::CameraComponent(char* name, GameObject* parent, Application* ap
 
 	frustum.SetViewPlaneDistances(0.1f, 10.0f);
 	frustum.SetPerspective(1.0f, 1.0f);
+	
+
 
 	UpdatePlanes();
-	corners = new vec[8];
+	corners = new vec[8];	
+	App->renderer3D->main_camera = this;
 }
 
 CameraComponent::~CameraComponent()
@@ -33,7 +36,7 @@ CameraComponent::~CameraComponent()
 
 bool CameraComponent::Update(float dt)
 {
-	DrawFrustum();
+//	DrawFrustum();
 	return true;
 }
 
@@ -128,6 +131,35 @@ void CameraComponent::DisplayComponentMenu()
 		if (ImGui::Button("Delete Camera"))
 			to_delete = true;
 
+		float3 pos = GetPos();
+		if (ImGui::DragFloat3("Position", (float*)&pos, 0.5))
+		{
+			Setposition(pos);
+		}
+
+		float nearPlane = GetNearPlaneDistance();
+		if (ImGui::DragFloat("Near Plane Distance", &nearPlane, 0.5f, 0.f))
+		{
+			SetNearPlane(nearPlane);
+		}
+
+		float farPlane = GetFarPlaneDistance();
+		if (ImGui::DragFloat("Far Plane Distance", &farPlane, 0.5f, 0.1f))
+		{
+			SetFarPlane(farPlane);
+		}
+
+		float verticalFov = GetVerticalFov();
+		if (ImGui::DragFloat("Vertical Fov", &verticalFov, 0.1f, 0.1f))
+		{
+			SetVerticalFov(verticalFov);
+		}
+
+		float horizontalFov = GetHorizontalFov();
+		if (ImGui::DragFloat("Horizontal Fov", &horizontalFov, 0.1f, 0.1f))
+		{
+			SetHorizontalFov(horizontalFov);
+		}
 	}
 }
 
@@ -182,7 +214,7 @@ void CameraComponent::DrawFrustum()
 bool CameraComponent::IsObjectInFrustum(Mesh* mesh)
 {
 	float3 corners[8];
-	mesh->global_aabb.GetCornerPoints(corners);
+	mesh->obb.GetCornerPoints(corners);
 
 	for (int plane = 0; plane < 6; ++plane) {
 

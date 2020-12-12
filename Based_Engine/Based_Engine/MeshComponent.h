@@ -20,6 +20,7 @@ public:
 	void DisplayComponentMenu();
 	bool AddTexture(const char* path);
 
+	Mesh mesh;
 private:
 
 	bool to_draw_normals;
@@ -35,7 +36,6 @@ private:
 
 	uint resource = 0;
 
-	Mesh mesh;
 	uint texture;
 };
 

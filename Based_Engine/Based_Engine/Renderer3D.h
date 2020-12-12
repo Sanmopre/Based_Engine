@@ -50,7 +50,7 @@ public:
 
 	std::vector<Mesh*> meshes;
 
-	CameraComponent* main_camera;
+	CameraComponent* main_camera = nullptr;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
