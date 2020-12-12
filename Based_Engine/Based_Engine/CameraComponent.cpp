@@ -131,6 +131,35 @@ void CameraComponent::DisplayComponentMenu()
 		if (ImGui::Button("Delete Camera"))
 			to_delete = true;
 
+		float3 pos = GetPos();
+		if (ImGui::DragFloat3("Position", (float*)&pos, 0.5))
+		{
+			Setposition(pos);
+		}
+
+		float nearPlane = GetNearPlaneDistance();
+		if (ImGui::DragFloat("Near Plane Distance", &nearPlane, 0.5f, 0.f))
+		{
+			SetNearPlane(nearPlane);
+		}
+
+		float farPlane = GetFarPlaneDistance();
+		if (ImGui::DragFloat("Far Plane Distance", &farPlane, 0.5f, 0.1f))
+		{
+			SetFarPlane(farPlane);
+		}
+
+		float verticalFov = GetVerticalFov();
+		if (ImGui::DragFloat("Vertical Fov", &verticalFov, 0.1f, 0.1f))
+		{
+			SetVerticalFov(verticalFov);
+		}
+
+		float horizontalFov = GetHorizontalFov();
+		if (ImGui::DragFloat("Horizontal Fov", &horizontalFov, 0.1f, 0.1f))
+		{
+			SetHorizontalFov(horizontalFov);
+		}
 	}
 }
 

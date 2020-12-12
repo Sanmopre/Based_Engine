@@ -304,8 +304,9 @@ void Renderer3D::Culling(CameraComponent* camera)
 update_status Renderer3D::Draw()
 {
 	for (uint i = 0; i < meshes.size(); i++) {
-		if((*meshes[i]).isOnScreen)
-		(*meshes[i]).Render((*meshes[i]).transform, true);
+		if ((*meshes[i]).isOnScreen) 
+			(*meshes[i]).Render((*meshes[i]).transform, true);
+
 	}
 	return UPDATE_CONTINUE;
 }
