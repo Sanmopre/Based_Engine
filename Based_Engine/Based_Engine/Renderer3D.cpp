@@ -157,11 +157,16 @@ update_status Renderer3D::Update(float dt)
 		BeginDebugMode();	
 		WireframeDraw();		
 		plane->Render();
-		
+
 		EndDebugMode();
 	}
 	else
-	{
+	{		
+		if (main_camera != nullptr)
+		{
+			main_camera->DrawFrustum();
+			Culling(main_camera);
+		}
 		plane->Render();
 		Draw();
 	}

@@ -22,9 +22,12 @@ CameraComponent::CameraComponent(char* name, GameObject* parent, Application* ap
 
 	frustum.SetViewPlaneDistances(0.1f, 10.0f);
 	frustum.SetPerspective(1.0f, 1.0f);
+	
+
 
 	UpdatePlanes();
-	corners = new vec[8];
+	corners = new vec[8];	
+	App->renderer3D->main_camera = this;
 }
 
 CameraComponent::~CameraComponent()
@@ -33,7 +36,7 @@ CameraComponent::~CameraComponent()
 
 bool CameraComponent::Update(float dt)
 {
-	DrawFrustum();
+//	DrawFrustum();
 	return true;
 }
 
