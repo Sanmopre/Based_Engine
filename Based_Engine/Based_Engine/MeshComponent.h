@@ -20,6 +20,7 @@ public:
 	void DisplayComponentMenu();
 	bool AddTexture(const char* path);
 
+	Mesh mesh;
 private:
 
 	bool to_draw_normals;
@@ -33,7 +34,7 @@ private:
 	std::string text_path;
 	std::string text_path_buffer;
 
-	Mesh mesh;
+
 	uint texture;
 };
 

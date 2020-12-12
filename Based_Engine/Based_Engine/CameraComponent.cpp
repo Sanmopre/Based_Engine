@@ -214,7 +214,7 @@ void CameraComponent::DrawFrustum()
 bool CameraComponent::IsObjectInFrustum(Mesh* mesh)
 {
 	float3 corners[8];
-	mesh->global_aabb.GetCornerPoints(corners);
+	mesh->obb.GetCornerPoints(corners);
 
 	for (int plane = 0; plane < 6; ++plane) {
 

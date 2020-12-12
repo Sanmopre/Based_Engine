@@ -53,7 +53,7 @@ void Mesh::Render(float4x4 transform, bool globalWireMode)
 	glMultMatrixf((float*)&transform.Transposed());
 
 	DrawBoundingBox(float4x4::identity,show_bounding_box); 
-	DrawOBB(true);
+	DrawOBB(false);
 	if(drawnormals)
 		DrawNormals();
 	InnerRender();
