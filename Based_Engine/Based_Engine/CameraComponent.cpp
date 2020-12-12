@@ -179,10 +179,10 @@ void CameraComponent::DrawFrustum()
 	glLineWidth(1);
 }
 
-bool CameraComponent::IsObjectInFrustum(GameObject* gameObject)
+bool CameraComponent::IsObjectInFrustum(Mesh* mesh)
 {
 	float3 corners[8];
-	//get AABB CORNERS
+	mesh->global_aabb.GetCornerPoints(corners);
 
 	for (int plane = 0; plane < 6; ++plane) {
 
