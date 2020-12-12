@@ -61,14 +61,13 @@ public:
 	bool show_bounding_box = false;
 	float4x4 transform;
 
+	AABB local_aabb;
+	OBB obb;
+	AABB global_aabb;
+
 private:
 
 	Color color;
 	bool wire, noFace;
 	bool generated_frame_buffers = false;
-
-
-	AABB local_aabb;
-	OBB obb;
-	AABB global_aabb;
 };

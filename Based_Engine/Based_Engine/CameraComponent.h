@@ -7,7 +7,7 @@
 #include "Geometry/Frustum.h"
 #include "Geometry/Plane.h"
 
-class GameObject;
+class Mesh;
 
 class CameraComponent : public Component
 {
@@ -41,7 +41,7 @@ public:
 	void DisplayComponentMenu();
 	void DrawFrustum();
 
-	bool IsObjectInFrustum(GameObject* gameObject);
+	bool IsObjectInFrustum(Mesh* mesh);
 
 public:
 
