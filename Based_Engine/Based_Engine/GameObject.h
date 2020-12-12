@@ -6,6 +6,7 @@
 class Application;
 class Mesh;
 class Transform;
+class MeshComponent;
 class Component;
 
 
@@ -20,6 +21,7 @@ public:
 	bool CleanUp();
 
 	Transform* transform = nullptr;
+	MeshComponent* meshComp = nullptr;
 
 	std::vector<Component*> components;
 

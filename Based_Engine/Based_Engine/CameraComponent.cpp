@@ -179,4 +179,28 @@ void CameraComponent::DrawFrustum()
 	glLineWidth(1);
 }
 
+bool CameraComponent::IsObjectInFrustum(GameObject* gameObject)
+{
+	float3 corners[8];
+	//get AABB CORNERS
+
+	for (int plane = 0; plane < 6; ++plane) {
+
+		int iInCount = 8;
+		int iPtIn = 1;
+
+		for (int i = 0; i < 8; ++i) {
+			if (planes[plane].IsOnPositiveSide(corners[i])) { 
+				iPtIn = 0;
+				--iInCount;
+			}
+		}
+
+		if (iInCount == 0)
+			return(false);
+	}
+
+	return(true);
+}
+
 

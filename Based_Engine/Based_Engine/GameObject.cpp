@@ -107,6 +107,7 @@ void GameObject::AddMeshComponent(const char* path, const char* texture_path, ch
 
 	MeshComponent* mesh = new MeshComponent(name, path, texture_path, this, App, active);
 	Component* comp = mesh;
+	meshComp = mesh;
 	components.push_back(comp);
 }
 
@@ -122,6 +123,7 @@ void GameObject::AddMeshComponent(Mesh mesh, const char* texture_path, char* nam
 
 	MeshComponent* meshptr = new MeshComponent(name, mesh, texture_path, this, App, active);
 	Component* comp = meshptr;
+	meshComp = meshptr;
 	components.push_back(comp);
 }
 
