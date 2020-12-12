@@ -23,8 +23,8 @@ public:
 	Mesh mesh;
 private:
 
-	bool to_draw_normals;
-	bool to_draw_AABB;
+	bool to_draw_normals = false;
+	bool to_draw_AABB = false;
 
 	void PushMesh(const char* path, const char* texture_path, bool library = false);
 	void PushTexture(uint texture);

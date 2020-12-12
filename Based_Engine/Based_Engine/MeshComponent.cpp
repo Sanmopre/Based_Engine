@@ -104,37 +104,22 @@ void MeshComponent::Deactivate()
 
 void MeshComponent::DisplayComponentMenu()
 {
-	if (path == " ")
+	if (ImGui::CollapsingHeader("Mesh Component", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		int a = 0;
-		a++;
-		a = 4;
-	}
-	char str[24];
-	sprintf_s(str, "Mesh Component (%s)", name.c_str());
-
-	if (ImGui::CollapsingHeader(str, ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		sprintf_s(str, "active (%s)", name.c_str());
-		ImGui::Checkbox(str, &to_activate);
+		ImGui::Checkbox("active", &to_activate);
 		ImGui::SameLine();
 
-		sprintf_s(str, "normals (%s)", name.c_str());
-		if(ImGui::Checkbox(str, &to_draw_normals))
+		if(ImGui::Checkbox("normals", &to_draw_normals))
 			mesh.drawnormals = to_draw_normals;
 		ImGui::SameLine();
 
-		sprintf_s(str, "AABB (%s)", name.c_str());
-		if (ImGui::Checkbox(str, &to_draw_AABB))
+		if (ImGui::Checkbox("AABB", &to_draw_AABB))
 			mesh.show_bounding_box = to_draw_AABB;
 
-
-		sprintf_s(str, "delete (%s)", name.c_str());
-		if(ImGui::Button(str))
+		if(ImGui::Button("aelete"))
 			to_delete = true;
 
-		sprintf_s(str, "name (%s)", name.c_str());
-		if (ImGui::InputText(str, &name_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputText("name", &name_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			bool same = false;
 			for (uint i = 0; i < parent->components.size(); i++)
@@ -172,8 +157,8 @@ void MeshComponent::DisplayComponentMenu()
 			}
 			ImGui::EndCombo();
 		}
-		sprintf_s(str, "texture", name.c_str());
-		if (ImGui::InputText(str, &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
+
+		if (ImGui::InputText("texture", &text_path_buffer, ImGuiInputTextFlags_EnterReturnsTrue))
 			if (text_path != text_path_buffer)
 			{
 				bool valid = AddTexture(text_path_buffer.c_str());

@@ -70,8 +70,24 @@ bool ObjectManager::ChildGameObject(GameObject* newChild, GameObject* newParent)
 {
 	if (newChild->parent == newParent)
 		return false;
-	else if (newParent->parent == newChild)
-		ChildGameObject(newParent, newChild->parent);
+
+	GameObject* posPar = newParent->parent;
+	if (posPar)
+	{
+		bool out = false;
+		while (!out)
+		{
+			if (posPar == newChild)
+			{
+				ChildGameObject(newParent, newChild->parent);
+				out = true;
+				break;
+			}
+			posPar = posPar->parent;
+			if (!posPar)
+				out = true;
+		}
+	}
 
 	for (std::vector<GameObject*>::iterator g = newChild->parent->children.begin(); g != newChild->parent->children.end(); g++)
 		if (*g == newChild)
