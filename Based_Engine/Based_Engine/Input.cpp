@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Window.h"
 #include "ObjectManager.h"
+#include "ResourceManager.h"
 #include "GameObject.h"
 #include "Component.h"
 #include "FileSystem.h"
@@ -124,89 +125,5 @@ bool Input::CleanUp()
 
 void Input::ProccesDroppedFile(char* path)
 {
-	std::string file = path;
-	LOG("Loading file: %s", file.c_str());
-
-	FileType type = FileSystem::GetFileType(file);
-
-	//file = CopyFileToAssets(file.c_str(), type);
-
-	switch (type)
-	{
-	case FileType::MESH:
-		ProccesMesh(path);
-		break;
-	case FileType::IMAGE:
-		ProccesImage(path);
-		break;
-	}
-}
-
-std::string Input::CopyFileToAssets(const char* path, FileType type)
-{
-	std::string name = path;
-	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
-	{
-		if (*c == '/' || *c == '\\')
-		{
-			name.erase(name.begin(), c + 1);
-			break;
-		}
-	}
-
-	std::string newPath;
-	switch (type)
-	{
-	case FileType::MESH:
-		newPath = "Meshes/" + name;
-		break;
-	case FileType::IMAGE:
-		newPath = "Textures/" + name;
-		break;
-	}
-
-	int length = FileSystem::FileLength(path);
-	char* data = new char[length];
-	//memset(data, 0, length);
-
-	FILE* src = fopen(path, "r");
-	fread(data, length, 1, src);
-	fclose(src);
-
-	File* dst = FileSystem::Open(newPath.c_str(), APPEND);
-	FileSystem::Write(dst, data, length, 1);
-	FileSystem::Close(dst);
-
-	delete[] data;
-
-	return newPath;
-}
-
-void Input::ProccesMesh(std::string file)
-{
-	Simp::LoadMesh(file.c_str(), true);
-}
-
-void Input::ProccesImage(std::string file)
-{
-	GameObject* object = App->objects->selected;
-	if (!object)
-	{
-		object = App->objects->AddObject(nullptr, App->objects->selected, true, "Plane");
-		object->AddMeshComponent("Library/Meshes/plane.monki", file.c_str());
-	}
-	else
-	{
-		bool found = false;
-		for (uint c = 0; c < object->components.size(); c++)
-		{
-			if (object->components[c]->AddTexture(file.c_str()))
-			{
-				found = true;
-				break;
-			}
-		}
-		if (!found)
-			object->AddMeshComponent("Library/Meshes/plane.monki", file.c_str());
-	}
+	App->resources->ImportFile(path, true);
 }

@@ -19,7 +19,7 @@ ObjectManager::~ObjectManager()
 bool ObjectManager::Start()
 {
 	GameObject* street = AddObject("street");
-	street->AddMeshComponent("Library/Meshes/Street environment_V01.monki");
+	street->AddMeshComponent("Library/LMeshes/Street environment_V01.monki");
 
 	return true;
 }

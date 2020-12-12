@@ -9,15 +9,16 @@ class MeshResource : public Resource
 {
 public:
 
-	MeshResource(uint uid);
+	MeshResource(uint uid, const char* assetsFile, const char* libraryFile);
 	~MeshResource();
 
-	const Mesh* GetMesh() const;
+	const std::vector<Mesh> GetMeshes() const;
 	bool LoadInMemory() override;
+	bool Unload() override;
 
 private:
 
-	Mesh mesh;
+	std::vector<Mesh> meshes;
 };
 
 #endif //__MESHRESOURCE_H__

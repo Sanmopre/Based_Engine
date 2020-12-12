@@ -24,9 +24,9 @@ void Simp::CleanDebugger()
 	aiDetachAllLogStreams();
 }
 
-std::string CreateFileName(const char* path)
+std::string Simp::CreateFileName(const char* assetsPath)
 {
-	std::string name = path;
+	std::string name = assetsPath;
 	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
 	{
 		if (*c == '.')
@@ -44,7 +44,7 @@ std::string CreateFileName(const char* path)
 		}
 	}
 
-	std::string output = "Library/Meshes/" + name + ".monki";
+	std::string output = "Library/LMeshes/" + name + ".monki";
 	return output;
 }
 

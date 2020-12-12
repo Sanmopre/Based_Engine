@@ -11,11 +11,21 @@ class Entry
 {
 public:
 
-	Entry(const char* name, Entry* parent);
+	enum Type
+	{
+		ARCHIVE,
+		FOLDER
+	};
+
+	Entry(const char* name, Entry* parent, Type type);
 	virtual ~Entry();
+
+	std::string GetDirectory();
 
 	std::string name;
 	Entry* parent = nullptr;
+
+	Type type;
 };
 
 class Folder : public Entry
@@ -24,8 +34,8 @@ public:
 
 	Folder(const char* name, Entry* parent);
 	virtual ~Folder();
-
-	std::string GetDirectory();
+	 
+	bool HasFolders();
 
 	std::vector<Entry*> entries;
 };
@@ -36,7 +46,7 @@ public:
 	Archive(const char* name, FileType type, Entry* parent);
 	virtual ~Archive();
 
-	FileType type;
+	FileType fileType;
 };
 
 class ResourceManager : public Module
@@ -51,18 +61,22 @@ public:
 	bool CleanUp();
 
 
-	uint Find(const char* file_in_assets) const;
-	uint ImportFile(const char* new_file_in_assets);
+	uint Find(const char* assetsFile) const;
+	uint ImportFile(const char* newAssetsFile, bool newFile, bool redo = false);
 
 	const Resource* RequestResource(uint uid) const;
 	Resource* RequestResource(uint uid);
 	void ReleaseResource(uint uid);
 
+	const std::string GetCurrentFolder();
+
 private:
 
 	uint GenerateUID();
-	Resource* CreateNewResource(const char* assetsFile, FileType type);
-	void UpdateEntriesTree();
+	Resource* CreateNewResource(const char* assetsFile, const char* libraryFile, FileType type);
+	void UpdateEntriesTree(bool start = false);
+
+	void IterateFolder(Folder* folder, bool start);
 
 	std::map<uint, Resource*> resources;
 	std::string currentFolder;

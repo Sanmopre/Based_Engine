@@ -2,7 +2,8 @@
 
 #include "FileSystem.h"
 
-Resource::Resource(uint uid, FileType type) : uid(uid), type(type)
+Resource::Resource(uint uid, FileType type, const char* assetsFile, const char* libraryFile)
+	: uid(uid), type(type), assetsFile(assetsFile), libraryFile(libraryFile)
 {
 }
 
@@ -30,10 +31,20 @@ const char* Resource::GetLibraryFile() const
 	return libraryFile.c_str();
 }
 
-uint Resource::GetReferenceCount() const
+void Resource::AddReference()
 {
-	return referenceCount;
+	referenceCount++;
 }
+
+void Resource::SubstractReference()
+{
+	referenceCount--;
+}
+
+//uint Resource::GetReferenceCount() const
+//{
+//	return referenceCount;
+//}
 
 bool Resource::IsLoadedToMemory() const
 {
@@ -42,9 +53,10 @@ bool Resource::IsLoadedToMemory() const
 	return false;
 }
 
-bool Resource::LoadToMemory()
+
+bool Resource::IsReferenced()
 {
 	if (referenceCount == 0)
-		return true;
-	return false;
+		return false;
+	return true;
 }

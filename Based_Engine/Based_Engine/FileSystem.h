@@ -47,6 +47,7 @@ namespace FileSystem
 	bool IsAFolder(std::string fileName);
 	const char* GetMainDirectory();
 
+	std::string CopyFileToAssets(const char* destDir, const char* file, FileType type);
 	bool CreateFolder(char* directory);
 	bool Delete(const char* path);
 	std::vector<std::string> GetFiles(char* directory);

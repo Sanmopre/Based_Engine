@@ -73,8 +73,4 @@ private:
 	//int mouse_z_motion;
 
 	void ProccesDroppedFile(char* path);
-	void ProccesMesh(std::string file);
-	void ProccesImage(std::string file);
-
-	std::string CopyFileToAssets(const char* path, FileType type);
 };

@@ -1,5 +1,7 @@
 #include "FileSystem.h"
 
+#include "Application.h"
+
 #include "physfs.h"
 
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
@@ -43,9 +45,8 @@ bool FileSystem::Init()
 	{
 		LOG("PhysFS succesfully set %s as the write directory", ASSETS_PATH);
 
-		CreateFolder("Library/Meshes");
-		CreateFolder("Library/Materials");
-		CreateFolder("Library/Folders");
+		CreateFolder("Library/LMeshes");
+		CreateFolder("Library/LMaterials");
 	}
 
 	return true;
@@ -230,6 +231,38 @@ bool FileSystem::IsAFolder(std::string fileName)
 const char* FileSystem::GetMainDirectory()
 {
 	return ASSETS_PATH;
+}
+
+std::string FileSystem::CopyFileToAssets(const char* destDir, const char* path, FileType type)
+{
+	std::string name = path;
+	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+	{
+		if (*c == '/' || *c == '\\')
+		{
+			name.erase(name.begin(), c + 1);
+			break;
+		}
+	}
+
+	std::string newPath = destDir;
+	newPath = "/" + name;
+
+	int length = FileLength(path);
+	char* data = new char[length];
+	//memset(data, 0, length);
+
+	FILE* src = fopen(path, "r");
+	fread(data, length, 1, src);
+	fclose(src);
+
+	File* dst = Open(newPath.c_str(), APPEND);
+	Write(dst, data, length, 1);
+	Close(dst);
+
+	delete[] data;
+
+	return newPath;
 }
 
 bool FileSystem::CreateFolder(char* directory)

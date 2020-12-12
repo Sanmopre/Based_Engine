@@ -28,8 +28,14 @@ void Assets::Update(float dt)
 
 	if (ImGui::Begin("Assets", nullptr))
 	{
+		ImGui::Columns(2);
+
+		IterateFolder(App->resources->assets);
+
+		ImGui::NextColumn();
+
 		ImGui::Text(name.c_str());
-		ImGui::Separator();
+		ImGui::SameLine();
 		if (ImGui::Button("Back"))
 		{
 			if (App->resources->currentFolder != "")
@@ -46,24 +52,33 @@ void Assets::Update(float dt)
 					App->resources->currentFolder.erase(App->resources->currentFolder.begin(), App->resources->currentFolder.end());
 			}
 		}
+
 		for (uint i = 0; i < files.size(); i++)
 		{
+			if (files[i] == "Library")
+				continue;
+
+			bool isFolder = FileSystem::IsAFolder(files[i]);
+			if (isFolder)
+				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.5f, 0.5f, 0.2f, 1.0f });
+
 			if (ImGui::Button(files[i].c_str()))
 			{
-				if (FileSystem::IsAFolder(files[i]))
+				if (isFolder)
 				{
 					if (App->resources->currentFolder != "")
 						App->resources->currentFolder += "/";
 					App->resources->currentFolder += files[i];
 				}
-			}
-		}
-	}
-	ImGui::End();
+				else
+				{
 
-	if (ImGui::Begin("Assets Tree", nullptr))
-	{
-		IterateFolder(App->resources->assets);
+				}
+			}
+
+			if (isFolder)
+				ImGui::PopStyleColor();
+		}
 	}
 	ImGui::End();
 }
@@ -75,26 +90,26 @@ bool Assets::IterateFolder(Folder* folder)
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
 	if (folder->GetDirectory() == App->resources->currentFolder)
 		flags |= ImGuiTreeNodeFlags_Selected;
-	if (folder->entries.size() == 0)
+	if (folder->HasFolders() == 0)
 		flags |= ImGuiTreeNodeFlags_Leaf;
 
 	if (ImGui::TreeNodeEx(folder->name.c_str(), flags))
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+		{
+			//if(ImGui::GetIO().MouseDoubleClicked[ImGuiMouseButton_Left])
 			App->resources->currentFolder = folder->GetDirectory();
+		}
 
 		for (std::vector<Entry*>::iterator ent = folder->entries.begin(); ent != folder->entries.end(); ent++)
 		{
 			Entry* entry = *ent;
-
-			if (FileSystem::IsAFolder(folder->name))
-			{
+			if (entry->type == Entry::Type::FOLDER)
 				if (!IterateFolder((Folder*)entry))
 				{
 					ImGui::TreePop();
 					return false;
 				}
-			}
 		}
 		ImGui::TreePop();
 	}

@@ -9,11 +9,12 @@ class TextureResource : public Resource
 {
 public:
 
-	TextureResource(uint uid);
+	TextureResource(uint uid, const char* assetsFile, const char* libraryFile);
 	~TextureResource();
 
 	const Texture GetTexture() const;
 	bool LoadInMemory() override;
+	bool Unload() override;
 
 private:
 
