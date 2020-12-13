@@ -18,9 +18,10 @@ public:
 	void Deactivate();
 
 	void DisplayComponentMenu();
-	bool AddTexture(const char* path);
+	bool AddTexture(const char* path, bool library = false);
 
 	Mesh mesh;
+
 private:
 
 	bool to_draw_normals = false;
@@ -36,7 +37,7 @@ private:
 
 	uint resource = 0;
 
-	uint texture;
+	uint texResource;
 };
 
 #endif //__MESHCOMPONENT_H__

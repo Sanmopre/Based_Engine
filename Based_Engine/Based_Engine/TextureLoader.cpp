@@ -13,6 +13,22 @@ void TextureLoader::Init()
 	LOG("Initialize TextureLoader DevIL")
 }
 
+std::string TextureLoader::CreateFileName(const char* assetsPath)
+{
+	std::string name = assetsPath;
+	for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+	{
+		if (*c == '/' || *c == '\\')
+		{
+			name.erase(name.begin(), c + 1);
+			break;
+		}
+	}
+
+	std::string output = "Library/LMaterials/" + name;
+	return output;
+}
+
 Texture TextureLoader::Load(const char* path)
 {
 	Texture newTexture = { NULL,NULL,NULL };

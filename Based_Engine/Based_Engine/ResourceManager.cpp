@@ -82,6 +82,7 @@ bool ResourceManager::Start()
 	currentFolder = "";
 
 	UpdateEntriesTree(true);
+	UpdateEntriesTree(false);
 
 	return true;
 }
@@ -155,8 +156,11 @@ uint ResourceManager::ImportFile(const char* newAssetsFile, bool newFile, bool r
 
 	FileType type = FileSystem::GetFileType(file);
 
-	if(newFile)
+	if (newFile)
+	{
 		file = FileSystem::CopyFileToAssets(currentFolder.c_str(), file.c_str(), type);
+		UpdateEntriesTree(false);
+	}
 
 	std::string libraryPath;
 	switch (type)
@@ -165,7 +169,9 @@ uint ResourceManager::ImportFile(const char* newAssetsFile, bool newFile, bool r
 		libraryPath = Simp::LoadMesh(file.c_str(), redo);
 		break;
 	case FileType::IMAGE:
-		libraryPath = "";
+		libraryPath = TextureLoader::CreateFileName(file.c_str());
+		if (!FileSystem::Exists(libraryPath.c_str()))
+			FileSystem::CopyFileToAssets("Library/LMaterials", file.c_str(), type);
 		break;
 	}
 
@@ -292,13 +298,16 @@ void ResourceManager::IterateFolder(Folder* folder, bool start)
 			Archive* newArchive = new Archive(files[i].c_str(), FileSystem::GetFileType(files[i]), folder);
 			folder->entries.push_back(newArchive);
 
-			if (folder->name == "LMeshes" || folder->name == "LMaterials")
-				continue;
-			std::string path = "Assets/" + newArchive->GetDirectory();
-			bool redo = false;
-			if (folder->name == "Primitives")
-				redo = true;
-			ImportFile(path.c_str(), false, redo);
+			if (start)
+			{
+				if (folder->name == "LMeshes" || folder->name == "LMaterials")
+					continue;
+				std::string path = "Assets/" + newArchive->GetDirectory();
+				bool redo = false;
+				if (folder->name == "Primitives")
+					redo = true;
+				ImportFile(path.c_str(), false, redo);
+			}
 		}
 	}
 }

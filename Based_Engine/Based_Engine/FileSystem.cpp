@@ -246,9 +246,19 @@ std::string FileSystem::CopyFileToAssets(const char* destDir, const char* path, 
 	}
 
 	std::string newPath = destDir;
-	newPath = "../Game/Assets/" + name;
+	std::string newDest;
+	if (newPath != "")
+	{
+		newDest = "../Game/Assets/" + newPath;
+		newPath = "../Game/Assets/" + newPath + "/" + name;
+	}
+	else
+	{
+		newDest = "../Game/Assets";
+		newPath = "../Game/Assets/" + name;
+	}
 
-	std::experimental::filesystem::copy(path, newPath.c_str());
+	std::experimental::filesystem::copy(path, newDest.c_str());
 	
 	return newPath;
 }

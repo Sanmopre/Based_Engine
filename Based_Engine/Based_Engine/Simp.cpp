@@ -147,6 +147,13 @@ void SimpToMonki(int i, aiMatrix4x4 transform, File* file, const aiScene* scene,
 		float* normals = new float[normals_size];
 		memcpy(normals, mesh->mNormals, sizeof(float) * normals_size);
 
+		for (uint n = 0; n < normals_size; n += 3)
+		{
+			float bu = normals[n + 1];
+			normals[n + 1] = normals[n + 2];
+			normals[n + 2] = bu;
+		}
+
 		for (int n = 0; n < normals_size; n++)
 		{
 			data = Binary::GetBinaryStream<float>(normals[n]);

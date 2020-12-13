@@ -2,6 +2,7 @@
 #include "UI_Scene.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "Camera3D.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -20,9 +21,12 @@ Scene::~Scene()
 
 void Scene::Update(float dt)
 {
+
 	if (ImGui::Begin("Scene"))
 	{
 		ImGui::BeginChild("SceneImage");
+
+		App->camera->CameraMovement();
 
 		ImVec2 winSize = ImGui::GetWindowSize();
 		if (winSize.x != windowSize.x || winSize.y != windowSize.y)
