@@ -33,7 +33,6 @@ private:
 	std::string path;
 
 	std::string text_path;
-	std::string text_path_buffer;
 
 	uint resource = 0;
 

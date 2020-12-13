@@ -107,7 +107,7 @@ bool ResourceManager::CleanUp()
 	return true;
 }
 
-uint ResourceManager::Find(const char* assetsFile) const
+uint ResourceManager::Find(const char* assetsFile, bool noReference) const
 {
 	std::string str = assetsFile;
 	for (std::map<uint, Resource*>::const_iterator itr = resources.begin(); itr != resources.end(); itr++)
@@ -119,7 +119,8 @@ uint ResourceManager::Find(const char* assetsFile) const
 			if (!resource->IsReferenced())
 				resource->LoadInMemory();
 
-			resource->AddReference();
+			if(!noReference)
+				resource->AddReference();
 			
 			return resource->GetUID();
 		}
@@ -157,10 +158,7 @@ uint ResourceManager::ImportFile(const char* newAssetsFile, bool newFile, bool r
 	FileType type = FileSystem::GetFileType(file);
 
 	if (newFile)
-	{
 		file = FileSystem::CopyFileToAssets(currentFolder.c_str(), file.c_str(), type);
-		UpdateEntriesTree(false);
-	}
 
 	std::string libraryPath;
 	switch (type)
@@ -176,6 +174,9 @@ uint ResourceManager::ImportFile(const char* newAssetsFile, bool newFile, bool r
 	}
 
 	uint uid = CreateNewResource(file.c_str(), libraryPath.c_str(), type)->GetUID();
+
+	if (newFile)
+		UpdateEntriesTree(false);
 
 	return uid;
 }
@@ -241,6 +242,38 @@ const Folder* FindFolder(Folder* f, std::string folderName)
 const Folder* const ResourceManager::GetFolder(const char* folderName)
 {
 	return FindFolder(assets, folderName);
+}
+
+void ResourceManager::DeleteResource(const char* assetsFile)
+{
+	uint id = Find(assetsFile, true);
+	if (id == NULL)
+		return;
+
+	Resource* resource = RequestResource(id);
+	if (!resource)
+		return;
+
+	if (resource->IsReferenced())
+	{
+		LOG("This file (%s) can't be deleted because is being used by an object in the scene", assetsFile);
+		return;
+	}
+
+	std::string assetsPath = resource->GetAssetFile();
+	for (std::string::iterator c = assetsPath.begin(); c != assetsPath.end(); c++)
+	{
+		if (*c == '/')
+		{
+			assetsPath.erase(assetsPath.begin(), c + 1);
+			break;
+		}
+	}
+	FileSystem::Delete(assetsPath.c_str());
+	FileSystem::Delete(resource->GetLibraryFile());
+
+	delete resource;
+	resources.erase(resources.find(id));
 }
 
 uint ResourceManager::GenerateUID()

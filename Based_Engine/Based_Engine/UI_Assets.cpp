@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "ResourceManager.h"
+#include "Input.h"
 
 #include "FileSystem.h"
 
@@ -25,6 +26,22 @@ void Assets::Update(float dt)
 	std::string name = "Assets";
 	if (App->resources->currentFolder != "")
 		name += "/" + App->resources->currentFolder;
+
+	if (selected != "")
+		if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)
+		{
+			bool isFolder = FileSystem::IsAFolder(selected);
+			if (isFolder)
+			{
+
+			}
+			else
+			{
+				std::string str = name + "/" + selected;
+				App->resources->DeleteResource(str.c_str());
+				App->resources->UpdateEntriesTree(false);
+			}
+		}
 
 	if (ImGui::Begin("Assets", nullptr))
 	{
@@ -60,24 +77,41 @@ void Assets::Update(float dt)
 
 			bool isFolder = FileSystem::IsAFolder(files[i]);
 			if (isFolder)
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.5f, 0.5f, 0.2f, 1.0f });
+			{
+				if (selected == files[i])
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.5f, 0.5f, 0.2f, 1.0f });
+				else
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.8f, 0.4f, 1.0f });
+			}
+			else
+			{
+				if (selected == files[i])
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.8f, 1.0f });
+				else
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.5f, 0.5f, 1.0f, 1.0f });
+			}
 
 			if (ImGui::Button(files[i].c_str()))
 			{
-				if (isFolder)
+				if (selected == files[i])
 				{
-					if (App->resources->currentFolder != "")
-						App->resources->currentFolder += "/";
-					App->resources->currentFolder += files[i];
+					if (isFolder)
+					{
+						if (App->resources->currentFolder != "")
+							App->resources->currentFolder += "/";
+						App->resources->currentFolder += files[i];
+						selected = "";
+					}
+					else
+					{
+
+					}
 				}
 				else
-				{
-
-				}
+					selected = files[i];
 			}
 
-			if (isFolder)
-				ImGui::PopStyleColor();
+			ImGui::PopStyleColor();
 		}
 	}
 	ImGui::End();
@@ -99,8 +133,8 @@ bool Assets::IterateFolder(Folder* folder)
 	{
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
 		{
-			//if(ImGui::GetIO().MouseDoubleClicked[ImGuiMouseButton_Left])
 			App->resources->currentFolder = folder->GetDirectory();
+			selected = "";
 		}
 
 		for (std::vector<Entry*>::iterator ent = folder->entries.begin(); ent != folder->entries.end(); ent++)
