@@ -28,8 +28,12 @@ bool GameObject::Update(float dt)
 {
 	int last = 0;
 	bool end = false;
+
 	while (!end)
 	{
+		if (transform != nullptr) 
+		this->transform->RecalculateTransform();
+
 		std::vector<Component*>::iterator comp = components.begin() + last;
 		for (comp; comp != components.end(); comp++)
 		{

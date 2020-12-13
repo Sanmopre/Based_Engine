@@ -68,7 +68,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\Json\single_include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

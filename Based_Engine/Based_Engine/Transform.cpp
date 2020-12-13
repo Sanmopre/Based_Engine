@@ -5,12 +5,6 @@
 
 Transform::Transform(GameObject* game_object)
 {
-	//temp//
-	position = { 0,0,0 };
-	rotation = { 0,0,0 };
-	scale = { 1,1,1 };
-	//   //
-
 	object = game_object;
 
 	local_position = { 0,0,0 };
@@ -28,16 +22,6 @@ Transform::Transform(GameObject* game_object)
 	}
 	else 
 		global_transformation = local_transformation;
-
-	up = { 2 * (local_rotation.x * local_rotation.y - local_rotation.w * local_rotation.z),
-		1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.z * local_rotation.z),
-		2 * (local_rotation.y * local_rotation.z + local_rotation.w * local_rotation.x) };
-	forward = { 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y),
-			2 * (local_rotation.y * local_rotation.z - local_rotation.w * local_rotation.x),
-			1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.y * local_rotation.y) };
-	right = { 1 - 2 * (local_rotation.y * local_rotation.y + local_rotation.z * local_rotation.z),
-		 2 * (local_rotation.x * local_rotation.y + local_rotation.w * local_rotation.z),
-		 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y) };
 }
 
 Transform::Transform(GameObject* game_object, float4x4 transform)
@@ -52,15 +36,6 @@ Transform::Transform(GameObject* game_object, float4x4 transform)
 	else
 		global_transformation = local_transformation;
 
-	up = { 2 * (local_rotation.x * local_rotation.y - local_rotation.w * local_rotation.z),
-		1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.z * local_rotation.z),
-		2 * (local_rotation.y * local_rotation.z + local_rotation.w * local_rotation.x) };
-	forward = { 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y),
-			2 * (local_rotation.y * local_rotation.z - local_rotation.w * local_rotation.x),
-			1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.y * local_rotation.y) };
-	right = { 1 - 2 * (local_rotation.y * local_rotation.y + local_rotation.z * local_rotation.z),
-		 2 * (local_rotation.x * local_rotation.y + local_rotation.w * local_rotation.z),
-		 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y) };
 }
 
 Transform::~Transform()
@@ -82,15 +57,6 @@ void Transform::RecalculateTransform()
 	else {
 		global_transformation = local_transformation;
 	}
-	up = { 2 * (local_rotation.x * local_rotation.y - local_rotation.w * local_rotation.z),
-			1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.z * local_rotation.z),
-			2 * (local_rotation.y * local_rotation.z + local_rotation.w * local_rotation.x) };
-	forward = { 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y),
-				2 * (local_rotation.y * local_rotation.z - local_rotation.w * local_rotation.x),
-				1 - 2 * (local_rotation.x * local_rotation.x + local_rotation.y * local_rotation.y) };
-	right = { 1 - 2 * (local_rotation.y * local_rotation.y + local_rotation.z * local_rotation.z),
-			 2 * (local_rotation.x * local_rotation.y + local_rotation.w * local_rotation.z),
-			 2 * (local_rotation.x * local_rotation.z + local_rotation.w * local_rotation.y) };
 
 	std::vector<GameObject*>::iterator item = object->children.begin();
 	for (; item != object->children.end(); ++item) {
