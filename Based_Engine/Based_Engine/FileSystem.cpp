@@ -246,22 +246,10 @@ std::string FileSystem::CopyFileToAssets(const char* destDir, const char* path, 
 	}
 
 	std::string newPath = destDir;
-	newPath = "/" + name;
+	newPath = "../Game/Assets/" + name;
 
-	int length = FileLength(path);
-	char* data = new char[length];
-	//memset(data, 0, length);
-
-	FILE* src = fopen(path, "r");
-	fread(data, length, 1, src);
-	fclose(src);
-
-	File* dst = Open(newPath.c_str(), APPEND);
-	Write(dst, data, length, 1);
-	Close(dst);
-
-	delete[] data;
-
+	std::experimental::filesystem::copy(path, newPath.c_str());
+	
 	return newPath;
 }
 
