@@ -33,13 +33,28 @@ void Assets::Update(float dt)
 			bool isFolder = FileSystem::IsAFolder(selected);
 			if (isFolder)
 			{
-
+				LOG("Can't delete folders")
 			}
 			else
 			{
-				std::string str = name + "/" + selected;
-				App->resources->DeleteResource(str.c_str());
-				App->resources->UpdateEntriesTree(false);
+				std::string folder;
+				for (std::string::iterator c = name.end() - 1; c != name.begin(); c--)
+				{
+					if (*c == '/')
+						break;
+					folder.push_back(*c);
+				}
+				std::reverse(folder.begin(), folder.end());
+				if (folder != "Primitives")
+				{
+					std::string str = name + "/" + selected;
+					App->resources->DeleteResource(str.c_str());
+					App->resources->UpdateEntriesTree(false);
+				}
+				else
+				{
+					LOG("Primitives can't be deleted");
+				}
 			}
 		}
 
