@@ -11,4 +11,6 @@ public:
 	void Update(float dt);
 
 	bool IterateFolder(Folder*);
+
+	std::string selected = "";
 };

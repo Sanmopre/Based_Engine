@@ -60,7 +60,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	uint Find(const char* assetsFile) const;
+	uint Find(const char* assetsFile, bool noReference = false) const;
 	uint FindFromLibrary(const char* libraryFile) const;
 	uint ImportFile(const char* newAssetsFile, bool newFile, bool redo = false);
 
@@ -70,6 +70,8 @@ public:
 
 	const std::string GetCurrentFolder();
 	const Folder* const GetFolder(const char* folderName);
+
+	void DeleteResource(const char* assetsFile);
 
 private:
 

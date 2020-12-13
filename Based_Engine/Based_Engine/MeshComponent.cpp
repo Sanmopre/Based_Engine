@@ -200,8 +200,7 @@ bool MeshComponent::AddTexture(const char* path, bool library)
 {
 	if (path)
 	{
-		this->text_path = path;
-		text_path_buffer = path;
+		text_path = path;
 
 		if(!library)
 			texResource = App->resources->Find(path);

@@ -203,15 +203,12 @@ FileType FileSystem::GetFileType(std::string path)
 
 		type.push_back(path[i]);
 	}
-	LOG("File type: %s", type.c_str());
-
 
 	if (type == "fbx" || type == "FBX" || type == "obj" || type == "OBJ")
 		return FileType::MESH;
 	else if (type == "png" || type == "PNG" || type == "jpg" || type == "JPG" || type == "dds" || type == "DDS" || type == "tga" || type == "TGA")
 		return FileType::IMAGE;
 
-	LOG("Unable to load file, unknown file type");
 	return FileType::UNKNOWN;
 }
 
