@@ -48,7 +48,6 @@ public:
 	Frustum frustum;
 	bool cull = true;
 	Plane planes[6];
-	vec* corners;
 };
 
 #endif //__CAMERACOMPONENT_H__
