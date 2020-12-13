@@ -16,9 +16,9 @@
 CameraComponent::CameraComponent(char* name, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
-	frustum.SetPos(float3(0, 0, 0));
-	frustum.SetFront(float3::unitZ);
-	frustum.SetUp(float3::unitY);
+	frustum.SetPos(float3(20, 0, -40));
+	frustum.SetFront(float3::unitZ * 3);
+	frustum.SetUp(float3::unitY * 4);
 
 	frustum.SetViewPlaneDistances(0.1f, 10.0f);
 	frustum.SetPerspective(1.0f, 1.0f);
@@ -210,26 +210,27 @@ void CameraComponent::DrawFrustum()
 
 bool CameraComponent::IsObjectInFrustum(Mesh* mesh)
 {
-	float3 corners[8];
-	mesh->obb.GetCornerPoints(corners);
+	if (cull) {
+		float3 corners[8];
+		mesh->obb.GetCornerPoints(corners);
 
-	for (int plane = 0; plane < 6; ++plane) {
+		for (int plane = 0; plane < 6; ++plane) {
 
-		int iInCount = 8;
-		int iPtIn = 1;
+			int iInCount = 8;
+			int iPtIn = 1;
 
-		for (int i = 0; i < 8; ++i) {
-			if (planes[plane].IsOnPositiveSide(corners[i])) { 
-				iPtIn = 0;
-				--iInCount;
+			for (int i = 0; i < 8; ++i) {
+				if (planes[plane].IsOnPositiveSide(corners[i])) {
+					iPtIn = 0;
+					--iInCount;
+				}
 			}
+
+			if (iInCount == 0)
+				return false;
 		}
-
-		if (iInCount == 0)
-			return(false);
 	}
-
-	return(true);
+	return true;
 }
 
 
