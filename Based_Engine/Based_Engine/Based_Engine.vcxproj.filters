@@ -256,6 +256,9 @@
     <ClCompile Include="PhysicsEngine.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ColliderComponent.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -623,6 +626,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsEngine.h">
       <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
