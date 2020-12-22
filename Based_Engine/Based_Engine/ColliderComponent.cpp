@@ -13,6 +13,7 @@
 
 ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
+	isTrigger = false;
 	type = col_type;
 }
 

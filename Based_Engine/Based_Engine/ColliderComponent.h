@@ -25,6 +25,7 @@ public:
 
 private:
 
+	bool isTrigger;
 	colider_type type;
 };
 

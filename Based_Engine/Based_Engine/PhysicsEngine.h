@@ -14,4 +14,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+private:
+
+	bool gravity = true;
+	float gravityValue = 9.8f;
 };
