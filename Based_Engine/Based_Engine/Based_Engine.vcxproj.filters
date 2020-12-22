@@ -253,6 +253,9 @@
     <ClCompile Include="UI_Assets.cpp">
       <Filter>Engine\UI_Windows</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsEngine.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -617,6 +620,9 @@
     </ClInclude>
     <ClInclude Include="UI_Assets.h">
       <Filter>Engine\UI_Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsEngine.h">
+      <Filter>Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
