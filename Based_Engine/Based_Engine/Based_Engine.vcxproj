@@ -49,14 +49,14 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\Json\single_include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\Json\single_include;$(ProjectDir)\External\PhysX\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx;$(ProjectDir)\External\PhysX\libx86\_debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysX_32.lib;PhysXCharacterKinematic_static_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;PhysXTask_static_32.lib;PhysXVehicle_static_32.lib;SceneQuery_static_32.lib;SimulationController_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,7 +68,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\Json\single_include\nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\External\SDL\include;$(ProjectDir)\External\glew-2.1.0\include;$(ProjectDir)\External\glut\include;$(ProjectDir)\External\MathGeoLib\src;$(ProjectDir)\External\ImGui;$(ProjectDir)\External\Assimp\include;$(ProjectDir)\External\Devil\include;$(ProjectDir)\External\PhysFS\include;$(ProjectDir)\External\Json\single_include\nlohmann;$(ProjectDir)\External\PhysX\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -76,8 +76,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\External\glew-2.1.0\lib\Win32;$(ProjectDir)\External\MathGeoLib\libx86\ReleaseLib;$(ProjectDir)\External\SDL\lib\x86;$(ProjectDir)\External\glut\lib;$(ProjectDir)\External\Assimp\libx86;%(AdditionalLibraryDirectories);$(ProjectDir)\External\Devil\libx86;$(ProjectDir)\External\PhysFS\libx;$(ProjectDir)\External\PhysX\libx86\_release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glut32.lib;assimp.lib;zlibstatic.lib;DevIL.lib;ILU.lib;ILUT.lib;physfs.lib;LowLevel_static_32.lib;LowLevelAABB_static_32.lib;LowLevelDynamics_static_32.lib;PhysX_32.lib;PhysXCharacterKinematic_static_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;PhysXTask_static_32.lib;PhysXVehicle_static_32.lib;SceneQuery_static_32.lib;SimulationController_static_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
