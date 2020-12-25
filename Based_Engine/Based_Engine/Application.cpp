@@ -8,6 +8,7 @@
 #include "GUI.h"
 #include "ObjectManager.h"
 #include "ResourceManager.h"
+#include "PhysicsEngine.h"
 
 #include "FileSystem.h"
 
@@ -20,6 +21,7 @@ Application::Application()
 	ui = new GUI(this);
 	objects = new ObjectManager(this);
 	resources = new ResourceManager(this);
+	physics = new PhysicsEngine(this);
 
 	// Main Modules
 	AddModule(input);
@@ -27,6 +29,7 @@ Application::Application()
 	AddModule(resources);
 	AddModule(camera);
 	AddModule(objects);
+	AddModule(physics);
 	//Render
 	AddModule(renderer3D);
 	//UI last

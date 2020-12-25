@@ -10,6 +10,7 @@ class Renderer3D;
 class Window;
 class ObjectManager;
 class ResourceManager;
+class PhysicsEngine;
 
 class Application
 {
@@ -21,6 +22,7 @@ public:
 	GUI* ui = nullptr;
 	ObjectManager* objects = nullptr;
 	ResourceManager* resources = nullptr;
+	PhysicsEngine* physics = nullptr;
 
 private:
 
