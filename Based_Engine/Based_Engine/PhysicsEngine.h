@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "PxPhysicsAPI.h"
 
 class PhysicsEngine : public Module
 {

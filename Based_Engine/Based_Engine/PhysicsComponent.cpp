@@ -1,5 +1,8 @@
 #include "PhysicsComponent.h"
 
+#include "PxActor.h"
+#include "PxRigidActor.h"
+#include "PxRigidBody.h"
 #include "Application.h"
 #include "GameObject.h"
 #include "Transform.h"
@@ -18,7 +21,6 @@ PhysicsComponent::PhysicsComponent(char* name, GameObject* parent, Application* 
 
 PhysicsComponent::~PhysicsComponent()
 {
-
 }
 
 bool PhysicsComponent::Update(float dt)

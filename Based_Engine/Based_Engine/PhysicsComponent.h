@@ -2,6 +2,8 @@
 #define __PHYSICSCOMPONENT_H__
 
 #include "Component.h"
+#include "PxRigidActor.h"
+
 
 enum class State {
 	STATIC,
@@ -20,6 +22,8 @@ public:
 	void DisplayComponentMenu();
 
 private:
+
+	physx::PxRigidActor* ra = nullptr;
 
 	bool isTrigger;
 	bool freezedRotation;
