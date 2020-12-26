@@ -4,6 +4,19 @@
 #include "Transform.h"
 #include "Input.h"
 
+#include "extensions/PxDefaultAllocator.h"
+#include "extensions/PxDefaultErrorCallback.h"
+#include "pvd/PxPvd.h"
+#include "pvd/PxPvdSceneClient.h"
+#include "pvd/PxPvdTransport.h"
+#include "PxPhysicsAPI.h"
+#include "characterkinematic/PxControllerManager.h"
+#include "foundation/PxAllocatorCallback.h"
+#include "PxQueryReport.h"
+#include "PxQueryFiltering.h"
+#include "extensions/PxRaycastCCD.h"
+#include "cooking/PxCooking.h"
+
 PhysicsEngine::PhysicsEngine(Application* app, bool active) : Module(app, active)
 {
 
