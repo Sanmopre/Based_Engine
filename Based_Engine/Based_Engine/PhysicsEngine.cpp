@@ -28,8 +28,11 @@ PhysicsEngine::~PhysicsEngine()
 
 bool PhysicsEngine::Start()
 {
-	
-	//mFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
+/*
+	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
+	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
+
+	mFoundation = PxCreateFoundation(((1 << 24) + (0 << 16) + (0 << 8) + 0), gDefaultAllocatorCallback, gDefaultErrorCallback);
 	if (!mFoundation) {
 		LOG("PxCreateFoundation failed!");
 	}
@@ -44,7 +47,7 @@ bool PhysicsEngine::Start()
 		params.convexMeshCookingType = physx::PxConvexMeshCookingType::eQUICKHULL;
 		params.gaussMapLimit = 32;
 		mCooking->setParams(params);
-	}
+	}*/
 	return true;
 }
 
@@ -56,6 +59,8 @@ update_status PhysicsEngine::PreUpdate()
 update_status PhysicsEngine::Update(float dt)
 {
 //	mScene->simulate(dt);
+//	mScene->fetchResults(true);
+
 	return UPDATE_CONTINUE;
 }
 

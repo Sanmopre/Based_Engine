@@ -262,6 +262,9 @@
     <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -635,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsComponent.h">
       <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
