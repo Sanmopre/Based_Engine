@@ -11,6 +11,17 @@ MESH,
 NONE
 };
 
+namespace physx
+{
+	class PxRigidActor;
+	class PxRigidStatic;
+	class PxTransform;
+	class PxShape;
+	class PxConvexMesh;
+	class PxTriangleMesh;
+	class PxVec3;
+	typedef uint16_t PxU16;
+}
 
 class ColliderComponent : public Component
 {
@@ -20,6 +31,14 @@ public:
 	virtual ~ColliderComponent();
 
 	bool Update(float dt);
+	void Enable();
+	void Disable();
+
+	void UpdateCollider();
+
+	void UpdateLocalMatrix();
+
+	void UpdateTransformByRigidBody(physx::PxTransform* globalPos = nullptr);
 
 	void DisplayComponentMenu();
 

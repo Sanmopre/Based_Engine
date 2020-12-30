@@ -28,6 +28,26 @@ bool ColliderComponent::Update(float dt)
 	return true;
 }
 
+void ColliderComponent::Enable()
+{
+}
+
+void ColliderComponent::Disable()
+{
+}
+
+void ColliderComponent::UpdateCollider()
+{
+}
+
+void ColliderComponent::UpdateLocalMatrix()
+{
+}
+
+
+void ColliderComponent::UpdateTransformByRigidBody(physx::PxTransform* globalPos)
+{
+}
 
 void ColliderComponent::DisplayComponentMenu()
 {
