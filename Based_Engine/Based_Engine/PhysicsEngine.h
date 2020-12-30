@@ -1,6 +1,11 @@
-#pragma once
+#ifndef __PHYSICS_H__
+#define __PHYSICS_H__
+
 #include "Module.h"
-#include "PxPhysicsAPI.h"
+#include "MathGeoLib.h"
+
+#include "PxVolumeCache.h"
+#include "Math.h"
 
 namespace physx
 {
@@ -38,7 +43,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-public:
+private:
 
 	physx::PxPvd* mPvd = nullptr;
 	physx::PxCooking* mCooking = nullptr;
@@ -51,7 +56,7 @@ public:
 	physx::PxRigidStatic* plane = nullptr;
 	physx::RaycastCCDManager* raycastManager = nullptr;
 
-private:
-
-	float gravity = 9.8;
+	float gravity = 9.8f;
 };
+
+#endif //__PHYSICS_H__

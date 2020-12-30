@@ -1,8 +1,8 @@
-#include "ObjectManager.h"
 #include "Application.h"
+#include "ObjectManager.h"
 #include "PhysicsEngine.h"
-#include "Transform.h"
-#include "Input.h"
+#include "Application.h"
+#include "GameObject.h"
 
 #include "extensions/PxDefaultAllocator.h"
 #include "extensions/PxDefaultErrorCallback.h"
@@ -17,6 +17,26 @@
 #include "extensions/PxRaycastCCD.h"
 #include "cooking/PxCooking.h"
 
+#ifndef _DEBUG
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PhysX3_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PhysX3Common_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PhysX3Extensions.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PxFoundation_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PxPvdSDK_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PhysX3CharacterKinematic_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/SceneQuery.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Release/PhysX3Cooking_x86.lib")
+#else
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PhysX3CommonDEBUG_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PhysX3DEBUG_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PhysX3ExtensionsDEBUG.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PxFoundationDEBUG_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PxPvdSDKDEBUG_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PhysX3CharacterKinematicDEBUG_x86.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/SceneQueryDEBUG.lib")
+	#pragma comment(lib, "External/PhysX_3.4/libx86/Debug/PhysX3CookingDEBUG_x86.lib")
+#endif // _DEBUG
+
 PhysicsEngine::PhysicsEngine(Application* app, bool active) : Module(app, active)
 {
 
@@ -28,26 +48,26 @@ PhysicsEngine::~PhysicsEngine()
 
 bool PhysicsEngine::Start()
 {
-/*
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
-	mFoundation = PxCreateFoundation(((1 << 24) + (0 << 16) + (0 << 8) + 0), gDefaultAllocatorCallback, gDefaultErrorCallback);
-	if (!mFoundation) {
+	mFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
+	if (!mFoundation)
 		LOG("PxCreateFoundation failed!");
-	}
 
 	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, physx::PxCookingParams(physx::PxTolerancesScale()));
-	
-	if (!mCooking) {
+	if (!mCooking)
+	{
 		LOG("PxCreateCooking failed!");
 	}
-	else {
+	else 
+	{
 		physx::PxCookingParams params = mCooking->getParams();
 		params.convexMeshCookingType = physx::PxConvexMeshCookingType::eQUICKHULL;
 		params.gaussMapLimit = 32;
 		mCooking->setParams(params);
-	}*/
+	}
+
 	return true;
 }
 
@@ -58,9 +78,6 @@ update_status PhysicsEngine::PreUpdate()
 
 update_status PhysicsEngine::Update(float dt)
 {
-//	mScene->simulate(dt);
-//	mScene->fetchResults(true);
-
 	return UPDATE_CONTINUE;
 }
 
