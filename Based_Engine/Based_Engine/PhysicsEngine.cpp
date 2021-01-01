@@ -86,7 +86,7 @@ bool PhysicsEngine::Start()
 
 	physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), true, pvd);
 #else
-	mPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *mFoundation, physx::PxTolerancesScale(), recordMemoryAllocations);
+	physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), true);
 #endif
 	
 	if (!physics) 
