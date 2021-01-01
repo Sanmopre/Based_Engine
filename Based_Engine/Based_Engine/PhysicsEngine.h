@@ -7,6 +7,8 @@
 #include "PxVolumeCache.h"
 #include "Math.h"
 
+#define GRAVITY 9.8f
+
 namespace physx
 {
 	class PxPvd;
@@ -55,8 +57,6 @@ private:
 	physx::PxMaterial* material = nullptr;
 	physx::PxRigidStatic* plane = nullptr;
 	physx::RaycastCCDManager* raycastManager = nullptr;
-
-	float gravity = 9.8f;
 };
 
 #endif //__PHYSICS_H__
