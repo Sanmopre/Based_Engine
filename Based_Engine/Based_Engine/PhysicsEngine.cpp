@@ -39,7 +39,6 @@
 
 PhysicsEngine::PhysicsEngine(Application* app, bool active) : Module(app, active)
 {
-
 }
 
 PhysicsEngine::~PhysicsEngine()
@@ -51,22 +50,24 @@ bool PhysicsEngine::Start()
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
-	mFoundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
-	if (!mFoundation)
+	foundation = PxCreateFoundation(PX_FOUNDATION_VERSION, gDefaultAllocatorCallback, gDefaultErrorCallback);
+	if (!foundation)
+	{
 		LOG("PxCreateFoundation failed!");
+		return false;
+	}
 
-	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, physx::PxCookingParams(physx::PxTolerancesScale()));
-	if (!mCooking)
+	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
+	if (!cooking)
 	{
 		LOG("PxCreateCooking failed!");
+		return false;
 	}
-	else 
-	{
-		physx::PxCookingParams params = mCooking->getParams();
-		params.convexMeshCookingType = physx::PxConvexMeshCookingType::eQUICKHULL;
-		params.gaussMapLimit = 32;
-		mCooking->setParams(params);
-	}
+
+	physx::PxCookingParams params = cooking->getParams();
+	params.convexMeshCookingType = physx::PxConvexMeshCookingType::eQUICKHULL;
+	params.gaussMapLimit = 32;
+	cooking->setParams(params);
 
 	return true;
 }
@@ -78,6 +79,9 @@ update_status PhysicsEngine::PreUpdate()
 
 update_status PhysicsEngine::Update(float dt)
 {
+	scene->simulate(dt);
+	scene->fetchResults(true);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -88,6 +92,31 @@ update_status PhysicsEngine::PostUpdate()
 
 bool PhysicsEngine::CleanUp()
 {
+	if (controllerManager)
+		controllerManager->release();
+	if (material)
+		material->release();
+	if (cooking)
+		cooking->release();
+	if (scene)
+		scene->release();
+	if (physics)
+		physics->release();
+#ifdef _DEBUG
+	if (pvd)
+		pvd->release();
+#endif
+	if (foundation)
+		foundation->release();
+	if (raycastManager)
+		delete raycastManager;
+
+	controllerManager = nullptr;
+	physics = nullptr;
+	foundation = nullptr;
+	scene = nullptr;
+	pvd = nullptr;
+
 	return true;
 }
 

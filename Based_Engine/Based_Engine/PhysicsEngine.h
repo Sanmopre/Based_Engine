@@ -45,14 +45,14 @@ public:
 
 private:
 
-	physx::PxPvd* mPvd = nullptr;
-	physx::PxCooking* mCooking = nullptr;
+	physx::PxPvd* pvd = nullptr;
+	physx::PxCooking* cooking = nullptr;
 	physx::PxPvdSceneClient* pvdClient = nullptr;
-	physx::PxFoundation* mFoundation = nullptr;
-	physx::PxControllerManager* mControllerManager = nullptr;
-	physx::PxPhysics* mPhysics = nullptr;
-	physx::PxScene* mScene = nullptr;
-	physx::PxMaterial* mMaterial = nullptr;
+	physx::PxFoundation* foundation = nullptr;
+	physx::PxControllerManager* controllerManager = nullptr;
+	physx::PxPhysics* physics = nullptr;
+	physx::PxScene* scene = nullptr;
+	physx::PxMaterial* material = nullptr;
 	physx::PxRigidStatic* plane = nullptr;
 	physx::RaycastCCDManager* raycastManager = nullptr;
 
