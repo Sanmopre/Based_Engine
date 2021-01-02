@@ -4,9 +4,6 @@
 #include "Module.h"
 #include "MathGeoLib.h"
 
-#include "PxVolumeCache.h"
-#include "Math.h"
-
 #define GRAVITY 9.8f
 
 namespace physx
@@ -22,6 +19,7 @@ namespace physx
 	class PxRigidActor;
 	class PxVolumeCache;
 	class PxSimulationEventCallback;
+	class PxActor;
 	class PxActorShape;
 	class PxQueryFilterCallback;
 	class RaycastCCDManager;
@@ -44,6 +42,9 @@ public:
 	update_status Update(float dt);
 	update_status PostUpdate();
 	bool CleanUp();
+
+	void AddActor(physx::PxActor*);
+	void DeleteActor(physx::PxActor*);
 
 private:
 

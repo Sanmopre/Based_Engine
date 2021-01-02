@@ -39,6 +39,7 @@ PhysicsEngine::~PhysicsEngine()
 
 bool PhysicsEngine::Start()
 {
+	LOG("Initializing PhysX 3.4 ---");
 	static physx::PxDefaultErrorCallback gDefaultErrorCallback;
 	static physx::PxDefaultAllocator gDefaultAllocatorCallback;
 
@@ -48,6 +49,7 @@ bool PhysicsEngine::Start()
 		LOG("PxCreateFoundation failed!");
 		return false;
 	}
+	LOG("Physics Foundation created succesfully");
 
 	bool recordMemoryAllocations = true;
 
@@ -57,6 +59,7 @@ bool PhysicsEngine::Start()
 		LOG("PxCreatePhysics failed!");
 		return false;
 	}
+	LOG("Physics created succesfully");
 
 	cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 	if (!cooking)
@@ -64,6 +67,8 @@ bool PhysicsEngine::Start()
 		LOG("PxCreateCooking failed!");
 		return false;
 	}
+	LOG("Physics Cooking created succesfully");
+
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(0.0f, -GRAVITY, 0.0f);
 	sceneDesc.bounceThresholdVelocity = GRAVITY * BOUNCE_THRESHOLD;
@@ -71,6 +76,12 @@ bool PhysicsEngine::Start()
 	sceneDesc.flags |= physx::PxSceneFlag::eENABLE_KINEMATIC_PAIRS | physx::PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	scene = physics->createScene(sceneDesc);
+	if (!scene)
+	{
+		LOG("createScene failed!");
+		return false;
+	}
+	LOG("Physics Scene created succesfully");
 
 	controllerManager = PxCreateControllerManager(*scene);
 	if (!controllerManager)
@@ -79,6 +90,22 @@ bool PhysicsEngine::Start()
 		return false;
 	}
 
+	material = physics->createMaterial(1, 1, 1);
+
+	LOG("Physics Controller Manager created succesfully");
+	LOG("PhysX 3.4 Initialized correctly ---");
+
+	//physx::PxRigidDynamic* dyn = physics->createRigidDynamic(physx::PxTransform(physx::PxVec3(0.f, 2.5f, 0.f)));
+	//dyn->createShape(physx::PxBoxGeometry(2.f, 0.2f, 0.1f), *material);
+	//dyn->createShape(physx::PxBoxGeometry(0.2f, 2.f, 0.1f), *material);
+	//dyn->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
+	//dyn->setAngularVelocity(physx::PxVec3(0.f, 0.f, 5.f));
+	//dyn->setAngularDamping(0.f);
+	//physx::PxRigidStatic* st = physics->createRigidStatic(physx::PxTransform(physx::PxVec3(0.f, 1.5f, -1.f)));
+	//st->createShape(physx::PxBoxGeometry(0.5f, 1.5f, 0.8f), *material);
+	//AddActor(dyn);
+	//AddActor(st);
+	
 	return true;
 }
 
@@ -129,4 +156,16 @@ bool PhysicsEngine::CleanUp()
 	pvd = nullptr;
 
 	return true;
+}
+
+void PhysicsEngine::AddActor(physx::PxActor* actor)
+{
+	if (actor)
+		scene->addActor(*actor);
+}
+
+void PhysicsEngine::DeleteActor(physx::PxActor* actor)
+{
+	if (actor)
+		scene->removeActor(*actor);
 }
