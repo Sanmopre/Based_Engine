@@ -45,10 +45,6 @@ bool PhysicsComponent::Update(float dt)
 
 	UpdateRBValues();
 
-	if (to_delete) {
-		//Delete
-	}
-
 	return true;
 }
 
@@ -59,6 +55,11 @@ void PhysicsComponent::DisplayComponentMenu()
 
 void PhysicsComponent::StaticToDynamicRigidBody()
 {
+	if (/*parent->colliderComponent != nullptr &&*/ rigidBody == nullptr)
+	{
+		//parent->colliderComponent->collider->CreateCollider(collider->type, true);
+		update = true;
+	}
 }
 
 void PhysicsComponent::UpdateRBValues()
