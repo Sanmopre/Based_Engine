@@ -46,7 +46,7 @@ public:
 	void AddActor(physx::PxActor*);
 	void DeleteActor(physx::PxActor*);
 
-private:
+public:
 
 	physx::PxPvd* pvd = nullptr;
 	physx::PxCooking* cooking = nullptr;
