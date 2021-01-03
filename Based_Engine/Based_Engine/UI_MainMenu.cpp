@@ -2,6 +2,7 @@
 #include "UI_MainMenu.h"
 #include "Window.h"
 #include "Renderer3D.h"
+#include "PhysicsEngine.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -176,8 +177,10 @@ void MainMenu::Update(float dt)
 			ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "GB");
 		}
 
-		if (ImGui::CollapsingHeader("OpenGl Options"))
+		if (ImGui::CollapsingHeader("Options"))
 		{
+			ImGui::Text("OpenGL");
+			ImGui::Separator();
 			ImGui::Checkbox("GL_DEPTH_TEST", &depth);
 			ImGui::SameLine();
 			ImGui::Checkbox("GL_CULL_FACE", &cull_face);
@@ -187,6 +190,10 @@ void MainMenu::Update(float dt)
 			ImGui::Checkbox("GL_TEXTURE_2D", &texture2d);
 			ImGui::SameLine();
 			ImGui::Checkbox("WIREFRAME_MODE", &App->renderer3D->wireframe_mode);
+			ImGui::Text("Physics");
+			ImGui::Separator();
+			if(ImGui::InputFloat("Gravity", App->physics->GetGravityPtr()))
+				App->physics->SetGravity();
 		}
 	}
 	ImGui::End();

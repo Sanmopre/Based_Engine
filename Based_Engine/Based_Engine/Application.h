@@ -36,7 +36,10 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+
 	int FPS = 60;
+	bool paused = true;
+
 private:
 
 	Timer	ms_timer;

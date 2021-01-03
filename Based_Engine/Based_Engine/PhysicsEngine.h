@@ -4,8 +4,6 @@
 #include "Module.h"
 #include "MathGeoLib.h"
 
-#define GRAVITY 9.8f
-
 namespace physx
 {
 	class PxPvd;
@@ -46,6 +44,9 @@ public:
 	void AddActor(physx::PxActor*);
 	void DeleteActor(physx::PxActor*);
 
+	float* GetGravityPtr();
+	void SetGravity();
+
 public:
 
 	physx::PxPvd* pvd = nullptr;
@@ -58,6 +59,8 @@ public:
 	physx::PxMaterial* material = nullptr;
 	physx::PxRigidStatic* plane = nullptr;
 	physx::RaycastCCDManager* raycastManager = nullptr;
+
+	float gravity = 9.8f;
 };
 
 #endif //__PHYSICS_H__

@@ -70,8 +70,8 @@ bool PhysicsEngine::Start()
 	LOG("Physics Cooking created succesfully");
 
 	physx::PxSceneDesc sceneDesc(physics->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.0f, -GRAVITY, 0.0f);
-	sceneDesc.bounceThresholdVelocity = GRAVITY * BOUNCE_THRESHOLD;
+	sceneDesc.gravity = physx::PxVec3(0.0f, -gravity, 0.0f);
+	sceneDesc.bounceThresholdVelocity = gravity * BOUNCE_THRESHOLD;
 	sceneDesc.cpuDispatcher = physx::PxDefaultCpuDispatcherCreate(THREADS);
 	sceneDesc.flags |= physx::PxSceneFlag::eENABLE_KINEMATIC_PAIRS | physx::PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
@@ -95,6 +95,7 @@ bool PhysicsEngine::Start()
 	LOG("Physics Controller Manager created succesfully");
 	LOG("PhysX 3.4 Initialized correctly ---");
 
+	//EXAMPLE
 	//physx::PxRigidDynamic* dyn = physics->createRigidDynamic(physx::PxTransform(physx::PxVec3(0.f, 2.5f, 0.f)));
 	//dyn->createShape(physx::PxBoxGeometry(2.f, 0.2f, 0.1f), *material);
 	//dyn->createShape(physx::PxBoxGeometry(0.2f, 2.f, 0.1f), *material);
@@ -116,7 +117,7 @@ update_status PhysicsEngine::PreUpdate()
 
 update_status PhysicsEngine::Update(float dt)
 {
-	if (scene)
+	if (scene && !App->paused)
 	{
 		scene->simulate(dt);
 		scene->fetchResults(true);
@@ -168,4 +169,14 @@ void PhysicsEngine::DeleteActor(physx::PxActor* actor)
 {
 	if (actor)
 		scene->removeActor(*actor);
+}
+
+float* PhysicsEngine::GetGravityPtr()
+{
+	return &gravity;
+}
+
+void PhysicsEngine::SetGravity()
+{
+	scene->setGravity(physx::PxVec3(0.0f, -gravity, 0.0f));
 }

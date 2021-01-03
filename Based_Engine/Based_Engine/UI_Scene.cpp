@@ -24,6 +24,14 @@ void Scene::Update(float dt)
 
 	if (ImGui::Begin("Scene"))
 	{
+		char* pauseButton;
+		if (App->paused)
+			pauseButton = "Play";
+		else
+			pauseButton = "Pause";
+		if (ImGui::Button(pauseButton))
+			App->paused = !App->paused;
+
 		ImGui::BeginChild("SceneImage");
 
 		App->camera->CameraMovement();
