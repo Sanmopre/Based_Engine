@@ -47,6 +47,12 @@ public:
 
 	void DisplayComponentMenu();
 
+private:
+	template<class Geometry>
+	void CreateRigidbody(Geometry geometry, physx::PxTransform position);
+	template <class Geometry>
+	bool HasDynamicRigidBody(Geometry geometry, physx::PxTransform transform);
+
 public:
 	colider_type type = colider_type::NONE;
 	Mesh* mesh = nullptr;
@@ -84,3 +90,4 @@ private:
 };
 
 #endif //__COLLIDERCOMPONENT_H__
+
