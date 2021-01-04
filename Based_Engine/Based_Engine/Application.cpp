@@ -23,13 +23,13 @@ Application::Application()
 	resources = new ResourceManager(this);
 	physics = new PhysicsEngine(this);
 
-	// Main Modules
+	// Main Modules	
+	AddModule(physics);
 	AddModule(input);
 	AddModule(window);	
 	AddModule(resources);
 	AddModule(camera);
 	AddModule(objects);
-	AddModule(physics);
 	//Render
 	AddModule(renderer3D);
 	//UI last

@@ -17,6 +17,8 @@
 
 PhysicsComponent::PhysicsComponent(char* name, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
+	rigidBody = App->physics->physics->createRigidDynamic(physx::PxTransform(physx::PxVec3(0.f, 2.5f, 0.f)));
+
 	if (rigidBody != nullptr)
 	{
 		SetMass(mass);
@@ -43,9 +45,11 @@ PhysicsComponent::~PhysicsComponent()
 
 bool PhysicsComponent::Update(float dt)
 {
-
-	UpdateTransformByRigidBody(&rigidBody->getGlobalPose());
-	
+	if (rigidBody != nullptr)
+	{
+		physx::PxTransform tra = rigidBody->getGlobalPose();
+		UpdateTransformByRigidBody(&tra);
+	}
 	setRBValues();
 
 	UpdateRBValues();

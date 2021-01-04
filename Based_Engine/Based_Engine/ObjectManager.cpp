@@ -19,6 +19,7 @@ bool ObjectManager::Start()
 
 	GameObject* street = AddObject("street");
 	street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
+	street->AddRigidBodyComponent();
 
 	return true;
 }

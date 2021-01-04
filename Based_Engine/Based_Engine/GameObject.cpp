@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Component.h"
 #include "MeshComponent.h"
+#include "PhysicsComponent.h"
 #include "CameraComponent.h"
 
 GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
@@ -146,6 +147,13 @@ void GameObject::AddCameraComponent(char* name)
 
 	CameraComponent* cameraptr = new CameraComponent(name, this, App, true);
 	Component* comp = cameraptr;
+	components.push_back(comp);
+}
+
+void GameObject::AddRigidBodyComponent()
+{
+	PhysicsComponent* meshptr = new PhysicsComponent("cuck", this, App, active);
+	Component* comp = meshptr;
 	components.push_back(comp);
 }
 
