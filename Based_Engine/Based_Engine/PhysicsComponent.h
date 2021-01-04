@@ -64,7 +64,7 @@ public:
 	float mass = 10.f;
 	float density = 1.f;
 	bool use_gravity = true;
-	bool is_kinematic = false;;
+	bool is_kinematic = false;
 	float3 linear_vel = float3::zero;
 	float3 angular_vel = float3::zero;
 	float linear_damping = 0.f;

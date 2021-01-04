@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Input.h"
+#include "PhysicsEngine.h"
 
 #include "GL/glew.h"
 
@@ -33,6 +34,7 @@ PhysicsComponent::PhysicsComponent(char* name, GameObject* parent, Application* 
 		FreezeRotation_Y(freezeRotation_Y);
 		FreezeRotation_Z(freezeRotation_Z);
 	}
+	App->physics->AddActor(rigidBody);
 }
 
 PhysicsComponent::~PhysicsComponent()
@@ -41,6 +43,9 @@ PhysicsComponent::~PhysicsComponent()
 
 bool PhysicsComponent::Update(float dt)
 {
+
+	UpdateTransformByRigidBody(&rigidBody->getGlobalPose());
+	
 	setRBValues();
 
 	UpdateRBValues();
