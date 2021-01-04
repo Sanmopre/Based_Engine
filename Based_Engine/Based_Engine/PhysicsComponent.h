@@ -55,6 +55,7 @@ private:
 	void UpdateRBValues();
 	void setRBValues();
 
+	void UpdateTransformByRigidBody(physx::PxTransform* globalPos = nullptr);
 
 public:
 	physx::PxRigidDynamic* rigidBody = nullptr;
@@ -72,6 +73,9 @@ public:
 	bool freezeRotation_X = false, freezeRotation_Y = false, freezeRotation_Z = false;
 	bool toPlay = false;
 	bool update = false;
+
+	float4x4 localMatrix = float4x4::identity;
+	float4x4 globalMatrix = float4x4::identity;
 };
 
 #endif //__PHYSICSCOMPONENT_H__

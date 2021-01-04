@@ -95,3 +95,26 @@ void PhysicsComponent::setRBValues()
 	}
 }
 
+void PhysicsComponent::UpdateTransformByRigidBody(physx::PxTransform* globalPos)
+{
+	physx::PxTransform transform;
+	if (rigidBody != nullptr) {
+
+		rigidBody->setGlobalPose(*globalPos);
+
+		transform = rigidBody->getGlobalPose();
+		float3 position = float3(
+
+			(transform.p.x - globalMatrix.x) + parent->transform->global_transformation.x,
+			(transform.p.y - globalMatrix.y) + parent->transform->global_transformation.y,
+			(transform.p.z - globalMatrix.z) + parent->transform->global_transformation.z);
+
+		float4x4 new_transform = float4x4::FromTRS(
+			position,
+			Quat(transform.q.x, transform.q.y, transform.q.z, transform.q.w),
+			parent->transform->global_transformation.Transposed().GetScale());
+
+		parent->transform->SetTransform(new_transform);
+	}
+}
+
