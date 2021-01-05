@@ -58,6 +58,7 @@ MeshComponent::MeshComponent(char* name, Mesh mesh, const char* path, const char
 
 MeshComponent::~MeshComponent()
 {
+	parent->meshComp = nullptr;
 	App->renderer3D->DeleteMesh(&mesh);
 
 	App->resources->ReleaseResource(resource);
@@ -249,6 +250,7 @@ void MeshComponent::PushMesh(const char* path, const char* texture_path, bool li
 		App->resources->ReleaseResource(resource);
 		resource = 0;
 		to_delete = true;
+		parent->meshComp = nullptr;
 	}
 }
 

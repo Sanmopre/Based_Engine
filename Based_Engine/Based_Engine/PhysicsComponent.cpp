@@ -17,7 +17,11 @@
 
 PhysicsComponent::PhysicsComponent(char* name, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
-	rigidBody = App->physics->physics->createRigidDynamic(physx::PxTransform(physx::PxVec3(0.f, 2.5f, 0.f)));
+	float3 position = parent->transform->GetGlobalPosition();
+	Quat rotation = parent->transform->GetGlobalRotation();
+	rigidBody = App->physics->physics->createRigidDynamic(
+		physx::PxTransform(physx::PxVec3(position.x, position.y, position.z), 
+		physx::PxQuat(rotation.x, rotation.y, rotation.z, rotation.w)));
 
 	if (rigidBody != nullptr)
 	{
@@ -36,6 +40,7 @@ PhysicsComponent::PhysicsComponent(char* name, GameObject* parent, Application* 
 		FreezeRotation_Y(freezeRotation_Y);
 		FreezeRotation_Z(freezeRotation_Z);
 	}
+
 	App->physics->AddActor(rigidBody);
 }
 
@@ -47,12 +52,11 @@ bool PhysicsComponent::Update(float dt)
 {
 	if (rigidBody != nullptr)
 	{
-		physx::PxTransform tra = rigidBody->getGlobalPose();
-		UpdateTransformByRigidBody(&tra);
+		UpdateTransformByRigidBody();
 	}
-	setRBValues();
-
-	UpdateRBValues();
+	//setRBValues();
+	//
+	//UpdateRBValues();
 
 	return true;
 }
@@ -73,23 +77,24 @@ void PhysicsComponent::StaticToDynamicRigidBody()
 
 void PhysicsComponent::UpdateRBValues()
 {
-	if (rigidBody != nullptr && update) {
-	SetMass(mass);
-	SetDensity(density);
-	UseGravity(use_gravity);
-	SetKinematic(is_kinematic);
-	SetLinearVelocity(linear_vel);
-	SetAngularVelocity(angular_vel);
-	SetLinearDamping(linear_damping);
-	SetAngularDamping(angular_damping);
-	FeezePosition_X(freezePosition_X);
-	FeezePosition_Y(freezePosition_Y);
-	FeezePosition_Z(freezePosition_Z);
-	FreezeRotation_X(freezeRotation_X);
-	FreezeRotation_Y(freezeRotation_Y);
-	FreezeRotation_Z(freezeRotation_Z);
-	update = false;
-}
+	if (rigidBody != nullptr && update) 
+	{
+		SetMass(mass);
+		SetDensity(density);
+		UseGravity(use_gravity);
+		SetKinematic(is_kinematic);
+		SetLinearVelocity(linear_vel);
+		SetAngularVelocity(angular_vel);
+		SetLinearDamping(linear_damping);
+		SetAngularDamping(angular_damping);
+		FeezePosition_X(freezePosition_X);
+		FeezePosition_Y(freezePosition_Y);
+		FeezePosition_Z(freezePosition_Z);
+		FreezeRotation_X(freezeRotation_X);
+		FreezeRotation_Y(freezeRotation_Y);
+		FreezeRotation_Z(freezeRotation_Z);
+		update = false;
+	}
 }
 
 void PhysicsComponent::setRBValues()
@@ -104,16 +109,13 @@ void PhysicsComponent::setRBValues()
 	}
 }
 
-void PhysicsComponent::UpdateTransformByRigidBody(physx::PxTransform* globalPos)
+void PhysicsComponent::UpdateTransformByRigidBody()
 {
 	physx::PxTransform transform;
-	if (rigidBody != nullptr) {
-
-		rigidBody->setGlobalPose(*globalPos);
-
+	if (rigidBody != nullptr) 
+	{
 		transform = rigidBody->getGlobalPose();
 		float3 position = float3(
-
 			(transform.p.x - globalMatrix.x) + parent->transform->global_transformation.x,
 			(transform.p.y - globalMatrix.y) + parent->transform->global_transformation.y,
 			(transform.p.z - globalMatrix.z) + parent->transform->global_transformation.z);

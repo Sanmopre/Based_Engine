@@ -55,7 +55,7 @@ private:
 	void UpdateRBValues();
 	void setRBValues();
 
-	void UpdateTransformByRigidBody(physx::PxTransform* globalPos = nullptr);
+	void UpdateTransformByRigidBody();
 
 public:
 	physx::PxRigidDynamic* rigidBody = nullptr;
