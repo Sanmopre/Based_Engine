@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Input.h"
 #include "PhysicsEngine.h"
+#include "RigidBodyComponent.h"
+#include "MeshComponent.h"
 
 #include "GL/glew.h"
 
@@ -17,6 +19,7 @@
 
 ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
 {
+	type = col_type;
 	isTrigger = false;
 	type = col_type;
 }
@@ -28,7 +31,7 @@ ColliderComponent::~ColliderComponent()
 
 bool ColliderComponent::Update(float dt)
 {
-
+	UpdateCollider();
 	return true;
 }
 
@@ -45,11 +48,11 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 	if (shape != nullptr && (lastIndex != (int)type || createAgain)) {
 		shape->release();
 		shape = nullptr;
-		if (/*parent->physicsComponent != nullptr*/true)
+		if (parent->rigidbody != nullptr)
 		{
-			if (/*parent->physicsComponent->rigidBody != nullptr*/true) {
-				//App->physics->DeleteActor(parent->physicsComponent->rigidBody);
-				//parent->physicsComponent->rigidBody = nullptr;
+			if (parent->rigidbody->rigidBody != nullptr) {
+				App->physics->DeleteActor(parent->rigidbody->rigidBody);
+				parent->rigidbody->rigidBody = nullptr;
 			}
 			if (createAgain && rigidStatic) {
 				App->physics->DeleteActor(rigidStatic);
@@ -61,11 +64,6 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 			rigidStatic = nullptr;
 		}
 
-
-		/*if (mesh && mesh->IsInMemory())
-		{
-			mesh->Release();
-		}*/
 	}
 
 	if (lastIndex == (int)type && !createAgain) {
@@ -80,8 +78,6 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 	Quat quat;
 	parent->transform->global_transformation.Decompose(pos, quat, scale);
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-
 	switch (type) {
 	case colider_type::BOX: {
 
@@ -94,16 +90,14 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 		{
 			qInverse.InverseAndNormalize();
 			Quat tmp = q * qInverse;
-			//parent->transform->global_transformation->SetRotation(tmp);
-
-			//UpdateAABB();
+			parent->transform->SetLocalRotation(tmp);
 
 			if (parent->meshComp != nullptr)
-				originalSize = {0,0,0}; //GetOBB().Size().Div(scale);
+				originalSize = parent->meshComp->mesh.obb.Size().Div(scale);
 			else
 				originalSize = float3::one;
 
-			//center = GetAABB().CenterPoint();
+			center = parent->meshComp->mesh.global_aabb.CenterPoint();
 
 		}
 
@@ -117,14 +111,13 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 		if (!firstCreation)
 		{
-			//transform->SetRotation(q); //RESET TO ORIGNAL ROTATION
-
-			//UpdateAABB();
+			parent->transform->SetLocalRotation(q); //RESET TO ORIGNAL ROTATION
 			firstCreation = true;
 
-			//center = GO->GetOBB().CenterPoint();
+			center = parent->meshComp->mesh.obb.CenterPoint();
+
 			float3 dir = center - transform->GetGlobalPosition();
-			float3 dir2 = quat.Inverted().Mul(dir); // rotate it
+			float3 dir2 = quat.Inverted().Mul(dir); 
 			offset = (dir2.Div(scale));
 
 			offset.Mul(scale);
@@ -133,6 +126,7 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 		lastIndex = (int)colider_type::BOX;
 		break;
 	}
+
 	case colider_type::SPHERE: {
 		physx::PxSphereGeometry SphereGeometry(radius);
 		shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
@@ -169,6 +163,7 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 void ColliderComponent::UpdateCollider()
 {
+	CreateCollider(type, true);
 }
 
 void ColliderComponent::UpdateLocalMatrix()
@@ -186,6 +181,7 @@ void ColliderComponent::DisplayComponentMenu()
 
 template <class Geometry>
 void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform position) {
+
 	if (!HasDynamicRigidBody(geometry, position))
 	{
 		if (rigidStatic)
@@ -210,7 +206,7 @@ void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform po
 
 		rigidStatic = PxCreateStatic(*App->physics->mPhysics, position, *shape);
 
-		App->physics->addActor(rigidStatic, GO);
+		App->physics->addActor(rigidStatic);
 
 	}
 }
@@ -218,9 +214,7 @@ void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform po
 template <class Geometry>
 bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransform transform)
 {
-	ComponentDynamicRigidBody* dynamicRB = GO->GetComponent<ComponentDynamicRigidBody>();
-
-	if (dynamicRB != nullptr)
+	if (parent->rigidbody != nullptr)
 	{
 
 		float3 position, scale = float3::zero;
@@ -231,11 +225,11 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 		if (rigidStatic) {
 			App->physics->DeleteActor(rigidStatic);
 		}
-		if (dynamicRB->rigidBody) {
+		if (parent->rigidbody->rigidBody) {
 			App->physics->DeleteActor(dynamicRB->rigidBody);
 		}
 
-		shape = App->physics->mPhysics->createShape(geometry, *App->physics->mMaterial);
+		shape = App->physics->physics->createShape(geometry, *App->physics->mMaterial);
 
 		if (isTrigger) {
 			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -254,13 +248,13 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setQueryFilterData(filterData);
 
-		dynamicRB->rigidBody = PxCreateDynamic(*App->physics->mPhysics, transform, *shape, 1.0f);
-		dynamicRB->update = true;
-		dynamicRB->UpdateRBValues();
+		parent->rigidbody->rigidBody = PxCreateDynamic(*App->physics->mPhysics, transform, *shape, 1.0f);
+		parent->rigidbody->update = true;
+		parent->rigidbody->UpdateRBValues();
 
-		dynamicRB->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
+		parent->rigidbody->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
 
-		App->physics->addActor(dynamicRB->rigidBody, GO);
+		App->physics->addActor(parent->rigidbody->rigidBody);
 
 		return true;
 	}
