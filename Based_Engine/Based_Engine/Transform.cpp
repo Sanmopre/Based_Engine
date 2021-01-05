@@ -96,7 +96,7 @@ void Transform::AddRotation(const float3 rot)
 
 void Transform::SetTransform(float4x4 transform)
 {
-	local_transformation = transform;
+	global_transformation = transform;
 }
 
 void Transform::Reparent(const float4x4& transform)
