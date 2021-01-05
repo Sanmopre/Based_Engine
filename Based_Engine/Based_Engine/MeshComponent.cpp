@@ -115,7 +115,7 @@ void MeshComponent::DisplayComponentMenu()
 		if (ImGui::Checkbox("AABB", &to_draw_AABB))
 			mesh.show_bounding_box = to_draw_AABB;
 
-		if(ImGui::Button("aelete"))
+		if(ImGui::Button("delete"))
 			to_delete = true;
 
 		if (ImGui::InputText("name", &name_buffer, ImGuiInputTextFlags_EnterReturnsTrue))

@@ -49,6 +49,13 @@ RigidBodyComponent::RigidBodyComponent(char* name, GameObject* parent, Applicati
 
 RigidBodyComponent::~RigidBodyComponent()
 {
+	if (rigidBody)
+	{
+		App->physics->DeleteActor(rigidBody);
+		rigidBody->release();
+
+		parent->rigidbody = nullptr;
+	}
 }
 
 bool RigidBodyComponent::Update(float dt)
@@ -70,8 +77,12 @@ void RigidBodyComponent::DisplayComponentMenu()
 {
 	if (ImGui::CollapsingHeader("RigidBody", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		//float mass = 10.f;
-		//float density = 1.f;
+		ImGui::Checkbox("active", &to_activate);
+		ImGui::SameLine();
+
+		if (ImGui::Button("delete"))
+			to_delete = true;
+
 		if(ImGui::InputFloat("Mass", &massBuffer, 0, 0, "%.3f", ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			mass = massBuffer;
