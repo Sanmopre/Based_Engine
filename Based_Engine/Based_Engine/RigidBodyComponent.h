@@ -1,5 +1,5 @@
-#ifndef __PHYSICSCOMPONENT_H__
-#define __PHYSICSCOMPONENT_H__
+#ifndef __RIGIDBODYCOMPONENT_H__
+#define __RIGIDBODYCOMPONENT_H__
 
 #include "Component.h"
 #include "PxRigidActor.h"
@@ -11,12 +11,12 @@ enum class State {
 	KINEMATIC,
 	NONE
 };
-class PhysicsComponent : public Component
+class RigidBodyComponent : public Component
 {
 public:
 
-	PhysicsComponent(char* name , GameObject* parent, Application* app, bool active = true);
-	virtual ~PhysicsComponent();
+	RigidBodyComponent(char* name , GameObject* parent, Application* app, bool active = true);
+	virtual ~RigidBodyComponent();
 
 	bool Update(float dt);
 
@@ -42,37 +42,41 @@ public:
 	inline void AddForce(physx::PxVec3 force, physx::PxForceMode::Enum mode) { if (rigidBody) rigidBody->addForce(force, mode); }
 	inline void AddTorque(physx::PxVec3 force, physx::PxForceMode::Enum mode) { if (rigidBody)rigidBody->addTorque(force, mode); }
 	
-	inline void FeezePosition_X(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, enable); }
-	inline void FeezePosition_Y(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, enable); }
-	inline void FeezePosition_Z(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, enable); }
+	inline void FreezePosition_X(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X, enable); }
+	inline void FreezePosition_Y(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Y, enable); }
+	inline void FreezePosition_Z(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, enable); }
 	inline void FreezeRotation_X(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, enable); }
 	inline void FreezeRotation_Y(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, enable); }
 	inline void FreezeRotation_Z(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, enable); }
 
+	physx::PxRigidDynamic* rigidBody = nullptr;
+
 private:
+
 	void StaticToDynamicRigidBody();
 
 	void UpdateRBValues();
 	void setRBValues();
 
+	void ApplyPhysicsChanges();
+
 	void UpdateTransformByRigidBody();
 
-public:
-	physx::PxRigidDynamic* rigidBody = nullptr;
-
-public:
 	float mass = 10.f;
 	float density = 1.f;
-	bool use_gravity = true;
-	bool is_kinematic = false;
-	float3 linear_vel = float3::zero;
-	float3 angular_vel = float3::zero;
-	float linear_damping = 0.f;
-	float angular_damping = 0.f;
-	bool freezePosition_X = false, freezePosition_Y = false, freezePosition_Z = false;
-	bool freezeRotation_X = false, freezeRotation_Y = false, freezeRotation_Z = false;
+	bool useGravity = true;
+	bool isKinematic = false;
+	float3 linearVel = float3::zero;
+	float3 angularVel = float3::zero;
+	float linearDamping = 0.f;
+	float angularDamping = 0.f;
+	bool freezePositionX = false, freezePositionY = false, freezePositionZ = false;
+	bool freezeRotationX = false, freezeRotationY = false, freezeRotationZ = false;
 	bool toPlay = false;
 	bool update = false;
+
+	float massBuffer = 0.0f;
+	float densityBuffer = 0.0f;
 
 	float4x4 localMatrix = float4x4::identity;
 	float4x4 globalMatrix = float4x4::identity;

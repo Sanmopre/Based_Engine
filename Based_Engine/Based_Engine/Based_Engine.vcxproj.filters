@@ -259,11 +259,11 @@
     <ClCompile Include="ColliderComponent.cpp">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Engine\Tools\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyComponent.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,11 +636,11 @@
     <ClInclude Include="ColliderComponent.h">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Engine\Tools\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

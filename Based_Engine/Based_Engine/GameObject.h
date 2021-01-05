@@ -7,6 +7,7 @@ class Application;
 class Mesh;
 class Transform;
 class MeshComponent;
+class RigidBodyComponent;
 class Component;
 
 
@@ -22,6 +23,7 @@ public:
 
 	Transform* transform = nullptr;
 	MeshComponent* meshComp = nullptr;
+	RigidBodyComponent* rigidbody = nullptr;
 
 	std::vector<Component*> components;
 
