@@ -60,13 +60,12 @@ RigidBodyComponent::~RigidBodyComponent()
 
 bool RigidBodyComponent::Update(float dt)
 {
+	if (App->paused)
+		return true;
 	if (rigidBody != nullptr)
 	{
 		UpdateTransformByRigidBody();
 	}
-
-	if (!App->paused && rigidBody->isSleeping())
-		LOG("SLEEPY TIME widepeepoHappy");
 	
 	UpdateRBValues();
 
@@ -77,10 +76,10 @@ void RigidBodyComponent::DisplayComponentMenu()
 {
 	if (ImGui::CollapsingHeader("RigidBody", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Checkbox("active", &to_activate);
+		ImGui::Checkbox("Is active", &to_activate);
 		ImGui::SameLine();
 
-		if (ImGui::Button("delete"))
+		if (ImGui::Button("delete rigidbody"))
 			to_delete = true;
 
 		if(ImGui::InputFloat("Mass", &massBuffer, 0, 0, "%.3f", ImGuiInputTextFlags_EnterReturnsTrue))

@@ -90,6 +90,10 @@ void GameObject_Inspector::Update(float dt)
 				{
 					object->AddMeshComponent(nullptr);
 				}
+				if (ImGui::Selectable("RigidBody Component"))
+				{
+					object->AddRigidBodyComponent();
+				}
 
 				ImGui::EndCombo();
 			}
