@@ -31,7 +31,7 @@ ColliderComponent::~ColliderComponent()
 
 bool ColliderComponent::Update(float dt)
 {
-	UpdateCollider();
+	//UpdateCollider();
 	return true;
 }
 

@@ -97,6 +97,17 @@ void Transform::AddRotation(const float3 rot)
 void Transform::SetTransform(float4x4 transform)
 {
 	global_transformation = transform;
+	
+	float3 position, scale;
+	Quat rotation;
+	transform.Decompose(position, rotation, scale);
+	this->local_scale = scale;
+	this->local_position = position;
+	this->local_rotation = rotation;
+	euler_rotation = local_rotation.ToEulerXYZ();
+	euler_rotation.x = RadToDeg(euler_rotation.x);
+	euler_rotation.y = RadToDeg(euler_rotation.y);
+	euler_rotation.z = RadToDeg(euler_rotation.z);
 }
 
 void Transform::Reparent(const float4x4& transform)
