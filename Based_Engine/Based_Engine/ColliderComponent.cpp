@@ -31,7 +31,7 @@ ColliderComponent::~ColliderComponent()
 
 bool ColliderComponent::Update(float dt)
 {
-	//UpdateCollider();
+	UpdateCollider();
 	return true;
 }
 
@@ -97,7 +97,9 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 			else
 				originalSize = float3::one;
 
-			center = parent->meshComp->mesh.global_aabb.CenterPoint();
+			//center = parent->meshComp->mesh.global_aabb.CenterPoint();
+			//TEMPORAL
+			center = float3::zero;
 
 		}
 
@@ -111,10 +113,12 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 		if (!firstCreation)
 		{
-			parent->transform->SetLocalRotation(q); //RESET TO ORIGNAL ROTATION
+			parent->transform->SetLocalRotation(q);
 			firstCreation = true;
 
-			center = parent->meshComp->mesh.obb.CenterPoint();
+			//TEMPORAL
+			//center = parent->meshComp->mesh.obb.CenterPoint();
+			center = float3::zero;
 
 			float3 dir = center - transform->GetGlobalPosition();
 			float3 dir2 = quat.Inverted().Mul(dir); 
@@ -252,8 +256,9 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 		parent->rigidbody->update = true;
 		parent->rigidbody->UpdateRBValues();
 
-		parent->rigidbody->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
 
+		App->physics->DeleteActor(parent->rigidbody->rigidBody);
+		parent->rigidbody->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
 		App->physics->AddActor(parent->rigidbody->rigidBody);
 
 		return true;
