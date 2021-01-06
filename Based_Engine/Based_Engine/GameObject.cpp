@@ -5,6 +5,7 @@
 #include "MeshComponent.h"
 #include "RigidBodyComponent.h"
 #include "CameraComponent.h"
+#include "ColliderComponent.h"
 
 GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
 {
@@ -155,6 +156,28 @@ void GameObject::AddRigidBodyComponent()
 	RigidBodyComponent* rigidbodyptr = new RigidBodyComponent("cuck", this, App, active);
 	rigidbody = rigidbodyptr;
 	Component* comp = rigidbodyptr;
+	components.push_back(comp);
+}
+
+void GameObject::AddColliderComponent(char* name)
+{
+	if (!name)
+	{
+		char str[10];
+		sprintf_s(str, "%d", comp_id);
+		name = str;
+	}
+	comp_id++;
+
+	ColliderComponent* collidercomp = new ColliderComponent(name, colider_type::BOX, this, App, true);
+	Component* comp = collidercomp;
+	components.push_back(comp);
+}
+
+void GameObject::AddColliderComponent()
+{
+	ColliderComponent* collidercomp = new ColliderComponent("cuck", colider_type::BOX, this, App, active);
+	Component* comp = collidercomp;
 	components.push_back(comp);
 }
 

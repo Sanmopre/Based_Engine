@@ -36,6 +36,9 @@ public:
 	void AddCameraComponent(char* name = nullptr);
 	void AddRigidBodyComponent();
 
+	void AddColliderComponent(char* name = nullptr);
+	void AddColliderComponent();
+
 	void DontTransformChilds() { transform_child = false; }
 
 	bool active;

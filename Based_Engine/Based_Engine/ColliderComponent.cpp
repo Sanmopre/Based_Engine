@@ -31,7 +31,7 @@ ColliderComponent::~ColliderComponent()
 
 bool ColliderComponent::Update(float dt)
 {
-	UpdateCollider();
+	//UpdateCollider();
 	return true;
 }
 
@@ -107,7 +107,7 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 		shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
 
-		//CreateRigidbody(boxGeometry, position);
+		CreateRigidbody(boxGeometry, position);
 
 		if (!firstCreation)
 		{
@@ -188,8 +188,8 @@ void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform po
 			App->physics->DeleteActor(rigidStatic);
 
 		physx::PxFilterData filterData;
-		filterData.word0 = (1 << GO->layer); // word0 = own ID
-		filterData.word1 = App->physics->layer_list.at(GO->layer).LayerGroup; // word1 = ID mask to filter pairs that trigger a contact callback;
+	//	filterData.word0 = (1 << GO->layer); // word0 = own ID
+	//	filterData.word1 = App->physics->layer_list.at(GO->layer).LayerGroup; // word1 = ID mask to filter pairs that trigger a contact callback;
 
 		if (isTrigger) {
 			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -204,9 +204,9 @@ void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform po
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setQueryFilterData(filterData);
 
-		rigidStatic = PxCreateStatic(*App->physics->mPhysics, position, *shape);
+		rigidStatic = PxCreateStatic(*App->physics->physics, position, *shape);
 
-		App->physics->addActor(rigidStatic);
+		App->physics->AddActor(rigidStatic);
 
 	}
 }
@@ -226,10 +226,10 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 			App->physics->DeleteActor(rigidStatic);
 		}
 		if (parent->rigidbody->rigidBody) {
-			App->physics->DeleteActor(dynamicRB->rigidBody);
+			App->physics->DeleteActor(parent->rigidbody->rigidBody);
 		}
 
-		shape = App->physics->physics->createShape(geometry, *App->physics->mMaterial);
+		shape = App->physics->physics->createShape(geometry, *App->physics->material);
 
 		if (isTrigger) {
 			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
@@ -241,20 +241,20 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 		}
 
 		physx::PxFilterData filterData;
-		filterData.word0 = (1 << GO->layer); // word0 = own ID
-		filterData.word1 = App->physics->layer_list.at(GO->layer).LayerGroup; // word1 = ID mask to filter pairs that trigger a contact callback;
+	//	filterData.word0 = (1 << GO->layer); // word0 = own ID
+	//	filterData.word1 = App->physics->layer_list.at(GO->layer).LayerGroup; // word1 = ID mask to filter pairs that trigger a contact callback;
 
 		shape->setSimulationFilterData(filterData);
 		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
 		shape->setQueryFilterData(filterData);
 
-		parent->rigidbody->rigidBody = PxCreateDynamic(*App->physics->mPhysics, transform, *shape, 1.0f);
+		parent->rigidbody->rigidBody = PxCreateDynamic(*App->physics->physics, transform, *shape, 1.0f);
 		parent->rigidbody->update = true;
 		parent->rigidbody->UpdateRBValues();
 
 		parent->rigidbody->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
 
-		App->physics->addActor(parent->rigidbody->rigidBody);
+		App->physics->AddActor(parent->rigidbody->rigidBody);
 
 		return true;
 	}

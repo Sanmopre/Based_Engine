@@ -50,13 +50,14 @@ public:
 	inline void FreezeRotation_Z(bool enable) { if (rigidBody)rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, enable); }
 
 	physx::PxRigidDynamic* rigidBody = nullptr;
+	bool update = false;
+	
+	void UpdateRBValues();
+	void setRBValues();
 
 private:
 
 	void StaticToDynamicRigidBody();
-
-	void UpdateRBValues();
-	void setRBValues();
 
 	void ApplyPhysicsChanges();
 
@@ -73,7 +74,7 @@ private:
 	bool freezePositionX = false, freezePositionY = false, freezePositionZ = false;
 	bool freezeRotationX = false, freezeRotationY = false, freezeRotationZ = false;
 	bool toPlay = false;
-	bool update = false;
+
 
 	float massBuffer = 0.0f;
 	float densityBuffer = 0.0f;
