@@ -26,7 +26,6 @@ ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObje
 
 ColliderComponent::~ColliderComponent()
 {
-
 }
 
 bool ColliderComponent::Update(float dt)
@@ -181,6 +180,44 @@ void ColliderComponent::UpdateTransformByRigidBody(physx::PxTransform* globalPos
 
 void ColliderComponent::DisplayComponentMenu()
 {
+	std::string uiName;
+	switch (type)
+	{
+	case colider_type::BOX:
+		uiName = "Box Colider";
+		break;
+	case colider_type::SPHERE:
+		uiName = "Sphere Colider";
+		break;
+	case colider_type::CAPSULE:
+		uiName = "Capsule Colider";
+		break;
+	case colider_type::MESH: 
+		uiName = "Mesh Colider";
+		break;
+	}
+	std::string active = "active [" + name + "]";
+	std::string deleted = "delete [" + name + "]";
+	std::string trigger = "is triger [" + name + "]";
+	std::string centr = "center [" + name + "]";
+	std::string sze = "size [" + name + "]";
+	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Checkbox(active.c_str(), &to_activate);
+		ImGui::SameLine();
+
+		if (ImGui::Button(deleted.c_str()))
+			to_delete = true;
+
+		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
+			isTrigger = !isTrigger;
+
+		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
+		ImGui::InputFloat3(centr.c_str(), c);
+
+		float s[3] = { colliderSize.x, colliderSize.y, colliderSize.z };
+		ImGui::InputFloat3(sze.c_str(), s);
+	}
 }
 
 template <class Geometry>

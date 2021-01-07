@@ -94,6 +94,22 @@ void GameObject_Inspector::Update(float dt)
 				{
 					object->AddRigidBodyComponent();
 				}
+				if (ImGui::Selectable("Box Colider"))
+				{
+					object->AddColliderComponent();
+				}
+				if (ImGui::Selectable("Sphere Colider"))
+				{
+
+				}
+				if (ImGui::Selectable("Capsule Colider"))
+				{
+
+				}
+				if (ImGui::Selectable("Mesh Colider"))
+				{
+
+				}
 
 				ImGui::EndCombo();
 			}

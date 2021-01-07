@@ -153,10 +153,15 @@ void GameObject::AddCameraComponent(char* name)
 
 void GameObject::AddRigidBodyComponent()
 {
-	RigidBodyComponent* rigidbodyptr = new RigidBodyComponent("cuck", this, App, active);
-	rigidbody = rigidbodyptr;
-	Component* comp = rigidbodyptr;
-	components.push_back(comp);
+	if (!rigidbody)
+	{
+		RigidBodyComponent* rigidbodyptr = new RigidBodyComponent("cuck", this, App, active);
+		rigidbody = rigidbodyptr;
+		Component* comp = rigidbodyptr;
+		components.push_back(comp);
+	}
+	else
+		LOG("This GameObject aready has a RigidBody");
 }
 
 void GameObject::AddColliderComponent(char* name)
@@ -170,13 +175,6 @@ void GameObject::AddColliderComponent(char* name)
 	comp_id++;
 
 	ColliderComponent* collidercomp = new ColliderComponent(name, colider_type::BOX, this, App, true);
-	Component* comp = collidercomp;
-	components.push_back(comp);
-}
-
-void GameObject::AddColliderComponent()
-{
-	ColliderComponent* collidercomp = new ColliderComponent("cuck", colider_type::BOX, this, App, active);
 	Component* comp = collidercomp;
 	components.push_back(comp);
 }

@@ -34,10 +34,10 @@ public:
 	void AddMeshComponent(Mesh mesh, const char* path, const char* texture_path = nullptr, char* name = nullptr, bool active = true);
 
 	void AddCameraComponent(char* name = nullptr);
+
 	void AddRigidBodyComponent();
 
 	void AddColliderComponent(char* name = nullptr);
-	void AddColliderComponent();
 
 	void DontTransformChilds() { transform_child = false; }
 

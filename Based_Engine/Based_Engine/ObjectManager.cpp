@@ -25,13 +25,13 @@ bool ObjectManager::Start()
 	GameObject* ground = AddObject("ground");
 	ground->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	ground->transform->AddScale(float3(9, 0, 9));
-	ground->AddColliderComponent("sm");
+	ground->AddColliderComponent();
 
 	GameObject* box = AddObject("box");
 	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	box->transform->AddPosition(float3(0, 5, 0));
 	box->AddRigidBodyComponent();
-	box->AddColliderComponent("sm");
+	box->AddColliderComponent();
 
 	return true;
 }

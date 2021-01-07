@@ -117,7 +117,6 @@ void RigidBodyComponent::DisplayComponentMenu()
 		ImGui::SameLine();
 		if (ImGui::Checkbox("rotation Z", &freezeRotationZ))
 			update = true;
-
 	}
 }
 
