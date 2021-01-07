@@ -17,10 +17,21 @@ bool ObjectManager::Start()
 {
 	parent = new GameObject("BASEDObject", nullptr, App, true);
 
-	GameObject* street = AddObject("street");
-	street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
-	street->AddRigidBodyComponent();
-	street->AddColliderComponent("sm");
+	//GameObject* street = AddObject("street");
+	//street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
+	//street->AddRigidBodyComponent();
+	//street->AddColliderComponent("sm");
+
+	GameObject* ground = AddObject("ground");
+	ground->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+	ground->transform->AddScale(float3(9, 0, 9));
+	ground->AddColliderComponent("sm");
+
+	GameObject* box = AddObject("box");
+	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+	box->transform->AddPosition(float3(0, 5, 0));
+	box->AddRigidBodyComponent();
+	box->AddColliderComponent("sm");
 
 	return true;
 }
