@@ -33,8 +33,12 @@ bool GameObject::Update(float dt)
 
 	while (!end)
 	{
-		if (transform != nullptr) 
-		this->transform->RecalculateTransform();
+		if (transform->ToUdate())
+		{
+			this->transform->RecalculateTransform();
+			if (rigidbody)
+				rigidbody->UpdateRigidBodyByTransform(true);
+		}
 
 		std::vector<Component*>::iterator comp = components.begin() + last;
 		for (comp; comp != components.end(); comp++)

@@ -184,16 +184,16 @@ void ColliderComponent::DisplayComponentMenu()
 	switch (type)
 	{
 	case colider_type::BOX:
-		uiName = "Box Colider";
+		uiName = "Box Colider [" + name + "]";
 		break;
 	case colider_type::SPHERE:
-		uiName = "Sphere Colider";
+		uiName = "Sphere Colider [" + name + "]";
 		break;
 	case colider_type::CAPSULE:
-		uiName = "Capsule Colider";
+		uiName = "Capsule Colider [" + name + "]";
 		break;
 	case colider_type::MESH: 
-		uiName = "Mesh Colider";
+		uiName = "Mesh Colider [" + name + "]";
 		break;
 	}
 	std::string active = "active [" + name + "]";
@@ -291,7 +291,7 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 
 		parent->rigidbody->rigidBody = PxCreateDynamic(*App->physics->physics, transform, *shape, 1.0f);
 		parent->rigidbody->update = true;
-		parent->rigidbody->UpdateRBValues();
+		parent->rigidbody->ApplyPhysicsChanges();
 
 
 		App->physics->DeleteActor(parent->rigidbody->rigidBody);

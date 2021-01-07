@@ -62,12 +62,11 @@ bool RigidBodyComponent::Update(float dt)
 {
 	if (App->paused)
 		return true;
+
 	if (rigidBody != nullptr)
-	{
 		UpdateTransformByRigidBody();
-	}
 	
-	UpdateRBValues();
+	ApplyPhysicsChanges();
 
 	return true;
 }
@@ -120,16 +119,7 @@ void RigidBodyComponent::DisplayComponentMenu()
 	}
 }
 
-void RigidBodyComponent::StaticToDynamicRigidBody()
-{
-	if (/*parent->colliderComponent != nullptr &&*/ rigidBody == nullptr)
-	{
-		//parent->colliderComponent->collider->CreateCollider(collider->type, true);
-		update = true;
-	}
-}
-
-void RigidBodyComponent::UpdateRBValues()
+void RigidBodyComponent::ApplyPhysicsChanges()
 {
 	if (rigidBody != nullptr && update) 
 	{
@@ -169,26 +159,38 @@ void RigidBodyComponent::setRBValues()
 	}
 }
 
-void RigidBodyComponent::ApplyPhysicsChanges()
-{
-
-
-}
-
 void RigidBodyComponent::UpdateTransformByRigidBody()
 {
-	physx::PxTransform transform;
-	if (rigidBody != nullptr) 
-	{
-		transform = rigidBody->getGlobalPose();
-		float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
+	if (!rigidBody)
+		return;
 
-		float4x4 newTransform = float4x4::FromTRS(
-			position,
-			Quat(transform.q.x, transform.q.y, transform.q.z, transform.q.w),
-			parent->transform->global_transformation.Transposed().GetScale());
+	physx::PxTransform transform = rigidBody->getGlobalPose();
+	float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
+	Quat rotation = Quat(transform.q.x, transform.q.y, transform.q.z, transform.q.w);
+	float3 scale = parent->transform->GetGlobalScale();
 
-		parent->transform->SetTransform(newTransform);
-	}
+	float4x4 newTransform = float4x4::FromTRS(position, rotation, scale);
+	parent->transform->SetTransform(newTransform);
+}
+
+void RigidBodyComponent::UpdateRigidBodyByTransform(bool stop)
+{
+	if (!rigidBody)
+		return;
+
+	if (stop)
+		SetLinearVelocity(float3::zero);
+
+	App->physics->DeleteActor(rigidBody);
+
+	float3 position = parent->transform->GetGlobalPosition();
+	physx::PxVec3 newPosition = physx::PxVec3(position.x, position.y, position.z);
+	Quat rotation = parent->transform->GetGlobalRotation();
+	physx::PxQuat newRotation = physx::PxQuat(rotation.x, rotation.y, rotation.z, rotation.w);
+
+	physx::PxTransform transform = physx::PxTransform(newPosition, newRotation);
+	rigidBody->setGlobalPose(transform, true);
+
+	App->physics->AddActor(rigidBody);
 }
 

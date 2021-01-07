@@ -22,6 +22,8 @@ Transform::Transform(GameObject* game_object)
 	}
 	else 
 		global_transformation = local_transformation;
+
+	last_transformation = global_transformation;
 }
 
 Transform::Transform(GameObject* game_object, float4x4 transform)
@@ -108,6 +110,8 @@ void Transform::SetTransform(float4x4 transform)
 	euler_rotation.x = RadToDeg(euler_rotation.x);
 	euler_rotation.y = RadToDeg(euler_rotation.y);
 	euler_rotation.z = RadToDeg(euler_rotation.z);
+
+	last_transformation = global_transformation;
 }
 
 void Transform::Reparent(const float4x4& transform)
@@ -195,12 +199,7 @@ const float3 Transform::GetLocalScale() const
 
 const float3 Transform::GetGlobalScale() const
 {
-	float3 pos, scale;
-	Quat rot;
-
-	global_transformation.Decompose(pos, rot, scale);
-
-	return scale;
+	return 	global_transformation.Transposed().GetScale();
 }
 
 void Transform::SetLocalRotation(const Quat& new_local_rotation)
@@ -243,6 +242,20 @@ const Quat Transform::GetGlobalRotation() const
 	global_transformation.Decompose(pos, rot, scale);
 
 	return rot;
+}
+
+bool Transform::ToUdate()
+{
+	Quat last_rotation = Quat::FromEulerXYZ(DegToRad(euler_rotation.x), DegToRad(euler_rotation.y), DegToRad(euler_rotation.z));
+	float4x4 last_transformation = float4x4::FromTRS(local_position, last_rotation, local_scale);
+
+	if (object->parent && object->parent->transform)
+		last_transformation = object->parent->transform->global_transformation * last_transformation;
+
+
+	bool output = !global_transformation.Equals(last_transformation);
+
+	return output;
 }
 
 

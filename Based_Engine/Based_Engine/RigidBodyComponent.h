@@ -52,14 +52,12 @@ public:
 	physx::PxRigidDynamic* rigidBody = nullptr;
 	bool update = false;
 	
-	void UpdateRBValues();
+	void ApplyPhysicsChanges();
 	void setRBValues();
 
+	void UpdateRigidBodyByTransform(bool stop);
+
 private:
-
-	void StaticToDynamicRigidBody();
-
-	void ApplyPhysicsChanges();
 
 	void UpdateTransformByRigidBody();
 
@@ -73,14 +71,9 @@ private:
 	float angularDamping = 0.f;
 	bool freezePositionX = false, freezePositionY = false, freezePositionZ = false;
 	bool freezeRotationX = false, freezeRotationY = false, freezeRotationZ = false;
-	bool toPlay = false;
-
 
 	float massBuffer = 0.0f;
 	float densityBuffer = 0.0f;
-
-	float4x4 localMatrix = float4x4::identity;
-	float4x4 globalMatrix = float4x4::identity;
 };
 
 #endif //__PHYSICSCOMPONENT_H__

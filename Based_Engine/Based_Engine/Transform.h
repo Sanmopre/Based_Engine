@@ -9,6 +9,7 @@ class GameObject;
 class Transform
 {
 public:
+
 	Transform(GameObject* game_object);
 	Transform(GameObject* game_object, float4x4 transform);
 	virtual ~Transform();
@@ -38,8 +39,6 @@ public:
 	void Reparent(const float4x4& transform);
 	void Reset();
 
-public:
-
 	void SetLocalPosition(const float3& new_local_pos);
 	void SetLocalPosition(const float& x, const float& y, const float& z);
 
@@ -57,4 +56,10 @@ public:
 
 	const Quat GetLocalRotation() const;
 	const Quat GetGlobalRotation() const;
+
+	bool ToUdate();
+
+private:
+
+	float4x4 last_transformation = float4x4::identity;
 };
