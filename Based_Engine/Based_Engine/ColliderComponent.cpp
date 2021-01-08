@@ -53,7 +53,7 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 	}
 
 		float3 size = parent->transform->GetGlobalScale();
-		physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x, size.y, size.z));
+		physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x/2, size.y/2, size.z/2));
 
 		shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
 

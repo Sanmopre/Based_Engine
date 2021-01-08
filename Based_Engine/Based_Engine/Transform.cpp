@@ -199,7 +199,7 @@ const float3 Transform::GetLocalScale() const
 
 const float3 Transform::GetGlobalScale() const
 {
-	return 	global_transformation.Transposed().GetScale();
+	return 	global_transformation.GetScale();
 }
 
 void Transform::SetLocalRotation(const Quat& new_local_rotation)
