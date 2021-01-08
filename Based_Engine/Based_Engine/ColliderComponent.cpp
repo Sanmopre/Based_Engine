@@ -45,25 +45,62 @@ void ColliderComponent::Disable()
 
 void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 {
-	if (shape) 
+	if (shape)
 	{
 		shape->release();
 		shape = nullptr;
 		App->physics->DeleteActor(parent->rigidbody->rigidBody);
 	}
 
-		float3 size = parent->transform->GetGlobalScale();
-		physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x/2, size.y/2, size.z/2));
+	float3 size = parent->transform->GetGlobalScale();
+
+	switch (type) {
+
+	case colider_type::BOX: {
+		physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x / 2, size.y / 2, size.z / 2));
 
 		shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
 
-		parent->rigidbody->rigidBody->attachShape(*shape); 
+		parent->rigidbody->rigidBody->attachShape(*shape);
 		parent->rigidbody->update = true;
 		parent->rigidbody->ApplyPhysicsChanges();
 
 		App->physics->AddActor(parent->rigidbody->rigidBody);
-}
+		break;
+	}
 
+	case colider_type::SPHERE: {
+
+		physx::PxSphereGeometry SphereGeometry(radius);
+		shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
+
+		parent->rigidbody->rigidBody->attachShape(*shape);
+		parent->rigidbody->update = true;
+		parent->rigidbody->ApplyPhysicsChanges();
+
+		App->physics->AddActor(parent->rigidbody->rigidBody);
+		break;
+	}
+
+	case colider_type::CAPSULE: {
+
+		physx::PxCapsuleGeometry CapsuleGeometry(radius, height);
+		shape = App->physics->physics->createShape(CapsuleGeometry, *App->physics->material);
+
+		parent->rigidbody->rigidBody->attachShape(*shape);
+		parent->rigidbody->update = true;
+		parent->rigidbody->ApplyPhysicsChanges();
+
+		App->physics->AddActor(parent->rigidbody->rigidBody);
+		break;
+	}
+
+	case colider_type::NONE: {
+		break;
+	}
+
+	}
+}
 void ColliderComponent::UpdateCollider()
 {
 	CreateCollider(type, true);
@@ -163,7 +200,7 @@ bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransfor
 		}
 
 		shape = App->physics->physics->createShape(geometry, *App->physics->material);
-
+		
 		if (isTrigger) {
 			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
 			shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
