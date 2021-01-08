@@ -57,6 +57,10 @@ public:
 
 	void UpdateRigidBodyByTransform(bool stop);
 
+	bool IsStatic() { return isStatic; }
+	void MakeStatic();
+	void MakeDynamic();
+
 private:
 
 	void UpdateTransformByRigidBody();
@@ -74,6 +78,8 @@ private:
 
 	float massBuffer = 0.0f;
 	float densityBuffer = 0.0f;
+
+	bool isStatic = false;
 };
 
 #endif //__PHYSICSCOMPONENT_H__

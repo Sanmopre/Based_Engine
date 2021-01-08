@@ -73,6 +73,12 @@ bool RigidBodyComponent::Update(float dt)
 
 void RigidBodyComponent::DisplayComponentMenu()
 {
+	if (isStatic)
+	{
+		ImGui::CollapsingHeader("Static RigidBody", ImGuiTreeNodeFlags_Leaf);
+		return;
+	}
+
 	if (ImGui::CollapsingHeader("RigidBody", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Checkbox("Is active", &to_activate);
@@ -81,7 +87,7 @@ void RigidBodyComponent::DisplayComponentMenu()
 		if (ImGui::Button("delete rigidbody"))
 			to_delete = true;
 
-		if(ImGui::InputFloat("Mass", &massBuffer, 0, 0, "%.3f", ImGuiInputTextFlags_EnterReturnsTrue))
+		if (ImGui::InputFloat("Mass", &massBuffer, 0, 0, "%.3f", ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			mass = massBuffer;
 			update = true;
@@ -192,5 +198,39 @@ void RigidBodyComponent::UpdateRigidBodyByTransform(bool stop)
 	rigidBody->setGlobalPose(transform, true);
 
 	App->physics->AddActor(rigidBody);
+}
+
+void RigidBodyComponent::MakeStatic()
+{
+	isStatic = true;
+
+	freezePositionX = true;
+	freezePositionY = true;
+	freezePositionZ = true;
+	freezeRotationX = true;
+	freezeRotationY = true;
+	freezeRotationZ = true;
+	useGravity = false;
+	massBuffer = 1000.0f;
+
+	update = true;
+	ApplyPhysicsChanges();
+}
+
+void RigidBodyComponent::MakeDynamic()
+{
+	isStatic = false;
+
+	freezePositionX = false;
+	freezePositionY = false;
+	freezePositionZ = false;
+	freezeRotationX = false;
+	freezeRotationY = false;
+	freezeRotationZ = false;
+	useGravity = true;
+	massBuffer = 10.0f;
+
+	update = true;
+	ApplyPhysicsChanges();
 }
 

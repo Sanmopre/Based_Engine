@@ -27,11 +27,15 @@ ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObje
 
 ColliderComponent::~ColliderComponent()
 {
+	if (parent->rigidbody && parent->rigidbody->IsStatic())
+		parent->rigidbody->to_delete = true;
+
+	if (shape)
+		shape->release();
 }
 
 bool ColliderComponent::Update(float dt)
 {
-	//UpdateCollider();
 	return true;
 }
 
@@ -49,57 +53,45 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 	{
 		shape->release();
 		shape = nullptr;
+	}
+
+	if (parent->rigidbody)
 		App->physics->DeleteActor(parent->rigidbody->rigidBody);
+	else
+	{
+		parent->AddRigidBodyComponent();
+		parent->rigidbody->MakeStatic();
 	}
 
 	float3 size = parent->transform->GetGlobalScale();
 
-	switch (type) {
-
-	case colider_type::BOX: {
-		physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x / 2, size.y / 2, size.z / 2));
-
-		shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
-
-		parent->rigidbody->rigidBody->attachShape(*shape);
-		parent->rigidbody->update = true;
-		parent->rigidbody->ApplyPhysicsChanges();
-
-		App->physics->AddActor(parent->rigidbody->rigidBody);
-		break;
+	switch (type) 
+	{
+		case colider_type::BOX:
+		{
+			physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x / 2, size.y / 2, size.z / 2));
+			shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
+			break;
+		}
+		case colider_type::SPHERE:
+		{
+			physx::PxSphereGeometry SphereGeometry(radius);
+			shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
+			break;
+		}
+		case colider_type::CAPSULE:
+		{
+			physx::PxCapsuleGeometry CapsuleGeometry(radius, height);
+			shape = App->physics->physics->createShape(CapsuleGeometry, *App->physics->material);
+			break;
+		}
 	}
 
-	case colider_type::SPHERE: {
+	parent->rigidbody->rigidBody->attachShape(*shape);
+	parent->rigidbody->update = true;
+	parent->rigidbody->ApplyPhysicsChanges();
 
-		physx::PxSphereGeometry SphereGeometry(radius);
-		shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
-
-		parent->rigidbody->rigidBody->attachShape(*shape);
-		parent->rigidbody->update = true;
-		parent->rigidbody->ApplyPhysicsChanges();
-
-		App->physics->AddActor(parent->rigidbody->rigidBody);
-		break;
-	}
-
-	case colider_type::CAPSULE: {
-
-		physx::PxCapsuleGeometry CapsuleGeometry(radius, height);
-		shape = App->physics->physics->createShape(CapsuleGeometry, *App->physics->material);
-
-		parent->rigidbody->rigidBody->attachShape(*shape);
-		parent->rigidbody->update = true;
-		parent->rigidbody->ApplyPhysicsChanges();
-
-		App->physics->AddActor(parent->rigidbody->rigidBody);
-		break;
-	}
-
-	case colider_type::NONE: {
-		break;
-	}
-
-	}
+	App->physics->AddActor(parent->rigidbody->rigidBody);
 }
 void ColliderComponent::UpdateCollider()
 {

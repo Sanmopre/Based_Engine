@@ -164,6 +164,10 @@ void GameObject::AddRigidBodyComponent()
 		Component* comp = rigidbodyptr;
 		components.push_back(comp);
 	}
+	else if(rigidbody->IsStatic())
+	{
+		rigidbody->MakeDynamic();
+	}
 	else
 		LOG("This GameObject aready has a RigidBody");
 }
