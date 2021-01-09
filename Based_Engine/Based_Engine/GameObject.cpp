@@ -173,20 +173,25 @@ void GameObject::AddColliderComponent(colider_type type, char* name)
 	components.push_back(comp);
 }
 
-void GameObject::AddConstraintComponent(char* name)
+void GameObject::AddConstraintComponent(JointType type, char* name)
 {
-	if (!name)
+	if (rigidbody)
 	{
-		char str[10];
-		sprintf_s(str, "%d", comp_id);
-		name = str;
-	}
-	comp_id++;
+		if (!name)
+		{
+			char str[10];
+			sprintf_s(str, "%d", comp_id);
+			name = str;
+		}
+		comp_id++;
 
-	ConstraintComponent* constraintptr = new ConstraintComponent(name, this, App, active);
-	Component* comp = constraintptr;
-	constraint = constraintptr;
-	components.push_back(comp);
+		ConstraintComponent* constraintptr = new ConstraintComponent(name, type, this, App, active);
+		Component* comp = constraintptr;
+		constraint = constraintptr;
+		components.push_back(comp);
+	}
+	else
+		LOG("A RigidBody is required to create a Constrain Component");
 }
 
 void GameObject::AddPlayerController()

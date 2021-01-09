@@ -6,6 +6,7 @@
 #include "Transform.h"
 
 #include "ColliderComponent.h"
+#include "ConstraintComponent.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -114,7 +115,7 @@ void GameObject_Inspector::Update(float dt)
 				}
 				if (ImGui::Selectable("Constraint"))
 				{
-					object->AddConstraintComponent("Constraint");
+					object->AddConstraintComponent(JointType::SINGLE);
 				}
 
 				ImGui::EndCombo();

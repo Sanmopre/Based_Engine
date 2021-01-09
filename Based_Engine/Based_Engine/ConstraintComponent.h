@@ -2,27 +2,38 @@
 #define __CONSTRAINTCOMPONENT_H__
 
 #include "Component.h"
-#include "PxRigidActor.h"
 #include "MathGeoLib.h"
-#include "PxPhysicsAPI.h"
 
-using namespace physx;
+enum class JointType
+{
+	SINGLE
+};
+
+namespace physx
+{
+	class PxRigidActor;
+	class PxTransform;
+	class PxRevoluteJoint;
+}
 
 class ConstraintComponent : public Component
 {
 public:
 
-	ConstraintComponent(char* name, GameObject* parent, Application* app, bool active = true);
+	ConstraintComponent(char* name, JointType type, GameObject* parent, Application* app, bool active = true);
 	virtual ~ConstraintComponent();
 
 	bool Update(float dt);
 	void DisplayComponentMenu();
 
-	void CreateConstraint(PxRigidActor* actor0, const PxTransform& localFrame0, PxRigidActor* actor1, const PxTransform& localFrame1);
+	void CreateConstraint(const physx::PxTransform& localFrame);
 
 private:
 
-	PxRevoluteJoint* constraint = nullptr;
+	JointType type = JointType::SINGLE;
+	physx::PxRevoluteJoint* constraint = nullptr;
+
+	float3 position = float3::zero;
 };
 
 #endif //__CONSTRAINTCOMPONENT_H__

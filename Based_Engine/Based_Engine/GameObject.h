@@ -13,6 +13,7 @@ class ConstraintComponent;
 class PlayerController;
 
 enum class colider_type;
+enum class JointType;
 
 class GameObject
 {
@@ -44,7 +45,7 @@ public:
 
 	void AddColliderComponent(colider_type type, char* name = nullptr);
 
-	void AddConstraintComponent(char* name = nullptr);
+	void AddConstraintComponent( JointType type, char* name = nullptr);
 
 	void AddPlayerController();
 
