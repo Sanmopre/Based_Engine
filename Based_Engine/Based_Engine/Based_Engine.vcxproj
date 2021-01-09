@@ -180,6 +180,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MeshResource.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="RigidBodyComponent.h" />
     <ClInclude Include="PhysicsEngine.h" />
     <ClInclude Include="Resource.h" />
@@ -271,6 +272,7 @@
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="MeshResource.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
     <ClCompile Include="PhysicsEngine.cpp" />
     <ClCompile Include="Resource.cpp" />

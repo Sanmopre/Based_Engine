@@ -7,6 +7,7 @@
 #include "CameraComponent.h"
 #include "ColliderComponent.h"
 #include "ConstraintComponent.h"
+#include "PlayerController.h"
 
 GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
 {
@@ -109,14 +110,6 @@ void GameObject::AddMeshComponent(const char* path, const char* texture_path, ch
 {
 	if (!meshComp)
 	{
-		if (!name)
-		{
-			char str[10];
-			sprintf_s(str, "%d", comp_id);
-			name = str;
-		}
-		comp_id++;
-
 		Component* comp = new MeshComponent(name, path, texture_path, this, App, active);
 		meshComp = (MeshComponent*)comp;
 		components.push_back(comp);
@@ -127,14 +120,6 @@ void GameObject::AddMeshComponent(const char* path, const char* texture_path, ch
 
 void GameObject::AddMeshComponent(Mesh mesh, const char* path, const char* texture_path, char* name, bool active)
 {
-	if (!name)
-	{
-		char str[10];
-		sprintf_s(str, "%d", comp_id); 
-		name = str;
-	}
-	comp_id++;
-
 	MeshComponent* meshptr = new MeshComponent(name, mesh, path, texture_path, this, App, active);
 	Component* comp = meshptr;
 	meshComp = meshptr;
@@ -202,6 +187,18 @@ void GameObject::AddConstraintComponent(char* name)
 	Component* comp = constraintptr;
 	constraint = constraintptr;
 	components.push_back(comp);
+}
+
+void GameObject::AddPlayerController()
+{
+	if (!controller)
+	{
+		Component* comp = new PlayerController(nullptr, this, App, active);
+		controller = (PlayerController*)comp;
+		components.push_back(comp);
+	}
+	else
+		LOG("This GameObject aready has a Player Controller Component");
 }
 
 

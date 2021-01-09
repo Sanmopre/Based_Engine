@@ -29,7 +29,4 @@ private:
 	std::vector <std::vector<GameObject*>::iterator> to_delete;
 
 	int go_id;
-
-	GameObject* box = nullptr;
-	GameObject* box2 = nullptr;
 };

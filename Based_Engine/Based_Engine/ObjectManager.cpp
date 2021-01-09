@@ -42,42 +42,31 @@ bool ObjectManager::Start()
 	wall2->transform->AddScale(float3(0, 15, 1));
 	wall2->AddColliderComponent(colider_type::BOX);
 	
-	box = AddObject("box");
+	GameObject* box = AddObject("box");
 	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	box->transform->AddPosition(float3(10, 20, 0));	
 	box->AddRigidBodyComponent();
 	box->AddColliderComponent(colider_type::BOX);
 
 
-	box2 = AddObject("box2");
+	GameObject* box2 = AddObject("box2");
 	box2->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	box2->transform->AddPosition(float3(-10, 20, 0));
 	box2->AddRigidBodyComponent();
 	box2->AddColliderComponent(colider_type::BOX);
 
+	GameObject* ball = AddObject("ball");
+	ball->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+	ball->transform->AddPosition(float3(0, 5, 0));
+	ball->AddRigidBodyComponent();
+	ball->AddColliderComponent(colider_type::SPHERE);
+	ball->AddPlayerController();
 
 	return true;
 }
 
 update_status ObjectManager::Update(float dt)
 {
-	if(!App->paused)
-		if (selected && selected->rigidbody)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-			{
-				selected->rigidbody->rigidBody->addForce(physx::PxVec3(0.0f, 0, 1000.0f));
-				box2->rigidbody->rigidBody->addForce(physx::PxVec3(-1000.0f, 0, 0));
-				box->rigidbody->rigidBody->addForce(physx::PxVec3(1000.0f, 0, 0));
-			}
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-				selected->rigidbody->rigidBody->addForce(physx::PxVec3(0.0f, 0, -1000.0f));
-			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-				selected->rigidbody->rigidBody->addForce(physx::PxVec3(1000.0f, 0, 0));
-			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-				selected->rigidbody->rigidBody->addForce(physx::PxVec3(-1000.0f, 0, 0));
-		}
-
 	parent->Update(dt);
 
 	return UPDATE_CONTINUE;

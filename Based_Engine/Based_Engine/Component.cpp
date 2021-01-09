@@ -3,8 +3,11 @@
 
 Component::Component(char* name, GameObject* parent, Application* app, bool active)
 {
-	this->name = name;
-	name_buffer = name;
+	if (name)
+	{
+		this->name = name;
+		name_buffer = name;
+	}
 	this->parent = parent;
 	App = app;
 	this->active = active;

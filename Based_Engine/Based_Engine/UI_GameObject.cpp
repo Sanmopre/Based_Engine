@@ -108,9 +108,9 @@ void GameObject_Inspector::Update(float dt)
 				{
 					object->AddColliderComponent(colider_type::CAPSULE);
 				}
-				if (ImGui::Selectable("Mesh Colider"))
+				if (ImGui::Selectable("Player Controller"))
 				{
-
+					object->AddPlayerController();
 				}
 				if (ImGui::Selectable("Constraint"))
 				{

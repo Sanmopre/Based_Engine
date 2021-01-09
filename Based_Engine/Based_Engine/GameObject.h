@@ -10,6 +10,7 @@ class MeshComponent;
 class RigidBodyComponent;
 class Component;
 class ConstraintComponent;
+class PlayerController;
 
 enum class colider_type;
 
@@ -27,7 +28,7 @@ public:
 	MeshComponent* meshComp = nullptr;
 	RigidBodyComponent* rigidbody = nullptr;
 	ConstraintComponent* constraint = nullptr;
-
+	PlayerController* controller = nullptr;
 
 	std::vector<Component*> components;
 
@@ -44,6 +45,8 @@ public:
 	void AddColliderComponent(colider_type type, char* name = nullptr);
 
 	void AddConstraintComponent(char* name = nullptr);
+
+	void AddPlayerController();
 
 	void DontTransformChilds() { transform_child = false; }
 

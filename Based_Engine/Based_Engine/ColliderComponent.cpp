@@ -101,7 +101,6 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 void ColliderComponent::DisplayComponentMenu()
 {
-	std::string uiName;
 	switch (type)
 	{
 	case colider_type::BOX:
