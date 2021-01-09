@@ -17,12 +17,14 @@
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
 
-ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObject* parent, Application* app, bool active) 
+ColliderComponent::ColliderComponent(char* name, colider_type col_type, float3 offset, float3 size, GameObject* parent, Application* app, bool active)
 	: Component(name, parent, app, active)
 {
 	type = col_type;
 	isTrigger = false;
 	type = col_type;
+	colliderSize = size;
+	centerPosition = offset;
 	CreateCollider(type, false);
 }
 
@@ -64,7 +66,11 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 		parent->rigidbody->MakeStatic();
 	}
 
-	float3 size = parent->transform->GetGlobalScale();
+	float3 size;
+	if(colliderSize.IsZero())
+		size = parent->transform->GetGlobalScale();
+	else
+		size = colliderSize;
 
 	switch (type) 
 	{

@@ -43,7 +43,7 @@ public:
 
 	void AddRigidBodyComponent();
 
-	void AddColliderComponent(colider_type type, char* name = nullptr);
+	void AddColliderComponent(colider_type type, float3 offset = float3::zero, float3 size = float3::zero, char* name = nullptr);
 
 	void AddConstraintComponent( JointType type, char* name = nullptr);
 

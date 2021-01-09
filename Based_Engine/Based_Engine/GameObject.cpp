@@ -158,7 +158,7 @@ void GameObject::AddRigidBodyComponent()
 		LOG("This GameObject aready has a RigidBody");
 }
 
-void GameObject::AddColliderComponent(colider_type type, char* name)
+void GameObject::AddColliderComponent(colider_type type, float3 offset, float3 size, char* name)
 {
 	if (!name)
 	{
@@ -168,7 +168,7 @@ void GameObject::AddColliderComponent(colider_type type, char* name)
 	}
 	comp_id++;
 
-	ColliderComponent* collidercomp = new ColliderComponent(name, type, this, App, true);
+	ColliderComponent* collidercomp = new ColliderComponent(name, type, offset, size, this, App, true);
 	Component* comp = collidercomp;
 	components.push_back(comp);
 }

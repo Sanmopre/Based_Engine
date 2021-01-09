@@ -6,6 +6,7 @@
 
 #include "ColliderComponent.h"
 #include "RigidBodyComponent.h"
+#include "PlayerController.h"
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
@@ -20,40 +21,26 @@ bool ObjectManager::Start()
 {
 	parent = new GameObject("BASEDObject", nullptr, App, true);
 
-	//GameObject* street = AddObject("street");
-	//street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
-	//street->AddRigidBodyComponent();
-	//street->AddColliderComponent("sm");
-
-	GameObject* ground = AddObject("ground");
-	ground->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	ground->transform->AddScale(float3(99, 0, 99));
-	ground->AddColliderComponent(colider_type::BOX);
-
-	GameObject* wall = AddObject("wall");
-	wall->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	wall->transform->AddPosition(float3(15, 10, 0));
-	wall->transform->AddScale(float3(0, 15, 1));
-	wall->AddColliderComponent(colider_type::BOX);
-
-	GameObject* wall2 = AddObject("wall2");
-	wall2->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	wall2->transform->AddPosition(float3(-15, 10, 0));
-	wall2->transform->AddScale(float3(0, 15, 1));
-	wall2->AddColliderComponent(colider_type::BOX);
+	GameObject* street = AddObject("street");
+	street->AddMeshComponent("Assets/Meshes/Street environment_V01.FBX");
 	
-	GameObject* box = AddObject("box");
-	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	box->transform->AddPosition(float3(10, 20, 0));	
-	box->AddRigidBodyComponent();
-	box->AddColliderComponent(colider_type::BOX);
-
-
-	GameObject* box2 = AddObject("box2");
-	box2->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	box2->transform->AddPosition(float3(-10, 20, 0));
-	box2->AddRigidBodyComponent();
-	box2->AddColliderComponent(colider_type::BOX);
+	for (uint i = 0; i < street->children.size(); i++)
+	{
+		if(street->children[i]->name != "Plane001")
+		{
+			street->children[i]->transform->AddPosition(float3(0, 5, 0));
+			street->children[i]->AddRigidBodyComponent();
+			float3 offset = float3(0, 0, 0);
+			float3 size = float3(10, 10, 10);
+			street->children[i]->AddColliderComponent(colider_type::BOX, offset, size);
+		}
+		else
+		{
+			float3 offset = float3(0, -1.5, 0);
+			float3 size = float3(97, 1, 97);
+			street->children[i]->AddColliderComponent(colider_type::BOX, offset, size);
+		}
+	}
 
 	GameObject* ball = AddObject("ball");
 	ball->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
@@ -61,6 +48,8 @@ bool ObjectManager::Start()
 	ball->AddRigidBodyComponent();
 	ball->AddColliderComponent(colider_type::SPHERE);
 	ball->AddPlayerController();
+	ball->rigidbody->ChangeMassAndDensity(1000, 100);
+	ball->controller->SetAccAndDec(50000, 30000);
 
 	return true;
 }

@@ -14,11 +14,13 @@ public:
 
 	void DisplayComponentMenu();
 
+	void SetAccAndDec(float acceleration, float deceleration);
+
 private:
 
 	float maxVelocity = 20;
-	float acceleration = 500;
-	float deceleration = 100;
+	float acceleration = 100;
+	float deceleration = 50;
 };
 
 #endif //__PLAYERCONTROLLER_H__

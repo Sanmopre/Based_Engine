@@ -114,3 +114,9 @@ void PlayerController::DisplayComponentMenu()
 		ImGui::InputFloat("deceleration", &deceleration);
 	}
 }
+
+void PlayerController::SetAccAndDec(float acceleration, float deceleration)
+{
+	this->acceleration = acceleration;
+	this->deceleration = deceleration;
+}

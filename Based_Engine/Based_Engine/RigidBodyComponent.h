@@ -52,6 +52,7 @@ public:
 	physx::PxRigidDynamic* rigidBody = nullptr;
 	bool update = false;
 	
+	void ChangeMassAndDensity(float mass, float density);
 	void ApplyPhysicsChanges();
 	void setRBValues();
 

@@ -32,7 +32,7 @@ class ColliderComponent : public Component
 {
 public:
 
-	ColliderComponent(char* name,colider_type type, GameObject* parent, Application* app, bool active = true);
+	ColliderComponent(char* name,colider_type type, float3 offset, float3 size, GameObject* parent, Application* app, bool active = true);
 	virtual ~ColliderComponent();
 
 	bool Update(float dt);

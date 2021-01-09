@@ -123,6 +123,14 @@ void RigidBodyComponent::DisplayComponentMenu()
 	}
 }
 
+void RigidBodyComponent::ChangeMassAndDensity(float mass, float density)
+{
+	this->mass = mass;
+	this->density = density;
+	update = true;
+	ApplyPhysicsChanges();
+}
+
 void RigidBodyComponent::ApplyPhysicsChanges()
 {
 	if (rigidBody != nullptr && update) 
