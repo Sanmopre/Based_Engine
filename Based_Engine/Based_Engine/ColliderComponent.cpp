@@ -69,13 +69,14 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 	{
 		case colider_type::BOX:
 		{
+			colliderSize = { size.x, size.y, size.z };
 			physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x / 2, size.y / 2, size.z / 2));
 			shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
 			break;
 		}
 		case colider_type::SPHERE:
 		{
-			physx::PxSphereGeometry SphereGeometry(radius);
+			physx::PxSphereGeometry SphereGeometry(radius * 1.5);
 			shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
 			break;
 		}
@@ -93,19 +94,6 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 
 	App->physics->AddActor(parent->rigidbody->rigidBody);
 }
-void ColliderComponent::UpdateCollider()
-{
-	CreateCollider(type, true);
-}
-
-void ColliderComponent::UpdateLocalMatrix()
-{
-}
-
-
-void ColliderComponent::UpdateTransformByRigidBody(physx::PxTransform* globalPos)
-{
-}
 
 void ColliderComponent::DisplayComponentMenu()
 {
@@ -113,25 +101,34 @@ void ColliderComponent::DisplayComponentMenu()
 	switch (type)
 	{
 	case colider_type::BOX:
-		uiName = "Box Colider [" + name + "]";
+		BoxColliderUI();
 		break;
 	case colider_type::SPHERE:
-		uiName = "Sphere Colider [" + name + "]";
+		SphereColliderUI();
 		break;
 	case colider_type::CAPSULE:
-		uiName = "Capsule Colider [" + name + "]";
+		CapsuleColliderUI();
 		break;
-	case colider_type::MESH: 
-		uiName = "Mesh Colider [" + name + "]";
+	//case colider_type::MESH: 
+	//	uiName = "Mesh Colider [" + name + "]";
 		break;
 	}
-	std::string active = "active [" + name + "]";
-	std::string deleted = "delete [" + name + "]";
-	std::string trigger = "is triger [" + name + "]";
-	std::string centr = "center [" + name + "]";
-	std::string sze = "size [" + name + "]";
+}
+
+void ColliderComponent::BoxColliderUI()
+{
+	std::string uiName = "Box Colider [" + name + "]";
 	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		std::string active = "active [" + name + "]";
+		std::string deleted = "delete [" + name + "]";
+		std::string trigger = "is triger [" + name + "]";
+		std::string centr = "offset [" + name + "]";
+
+		bool toUpdate = false;
+
+		std::string sze = "size [" + name + "]";
+
 		ImGui::Checkbox(active.c_str(), &to_activate);
 		ImGui::SameLine();
 
@@ -142,84 +139,165 @@ void ColliderComponent::DisplayComponentMenu()
 			isTrigger = !isTrigger;
 
 		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
-		ImGui::InputFloat3(centr.c_str(), c);
+		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			centerPosition.x = c[0];
+			centerPosition.y = c[1];
+			centerPosition.z = c[2];
+
+			toUpdate = true;
+		}
 
 		float s[3] = { colliderSize.x, colliderSize.y, colliderSize.z };
-		ImGui::InputFloat3(sze.c_str(), s);
-	}
-}
-
-template <class Geometry>
-void ColliderComponent::CreateRigidbody(Geometry geometry, physx::PxTransform position) {
-
-	if (!HasDynamicRigidBody(geometry, position))
-	{
-		if (rigidStatic)
-			App->physics->DeleteActor(rigidStatic);
-
-		if (isTrigger) {
-			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
-			shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
-		}
-		else {
-			shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
-			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-		}
-
-		physx::PxFilterData filterData;
-
-		shape->setSimulationFilterData(filterData);
-		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-		shape->setQueryFilterData(filterData);
-
-		rigidStatic = PxCreateStatic(*App->physics->physics, position, *shape);
-
-		App->physics->AddActor(rigidStatic);
-
-	}
-}
-
-template <class Geometry>
-bool ColliderComponent::HasDynamicRigidBody(Geometry geometry, physx::PxTransform transform)
-{
-	if (parent->rigidbody != nullptr)
-	{
-		if (rigidStatic) {
-			App->physics->DeleteActor(rigidStatic);
-		}
-		if (parent->rigidbody->rigidBody) {
-			App->physics->DeleteActor(parent->rigidbody->rigidBody);
-		}
-
-		shape = App->physics->physics->createShape(geometry, *App->physics->material);
-		
-		if (isTrigger) {
-			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
-			shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
-		}
-		else {
-			shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
-			shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
-		}
-
-		physx::PxFilterData filterData;
-		shape->setSimulationFilterData(filterData);
-		shape->setFlag(physx::PxShapeFlag::eSCENE_QUERY_SHAPE, true);
-		shape->setQueryFilterData(filterData);
-
-
-		if (parent->rigidbody->rigidBody) 
+		if (ImGui::InputFloat3(sze.c_str(), s, 4, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			parent->rigidbody->rigidBody->attachShape(*shape); // = PxCreateDynamic(*App->physics->physics, transform, *shape, 1.0f);
+			colliderSize.x = s[0];
+			colliderSize.y = s[1];
+			colliderSize.z = s[2];
+
+			toUpdate = true;
+		}
+
+		if (toUpdate)
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			shape->release();
+
+			physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(colliderSize.x / 2, colliderSize.y / 2, colliderSize.z / 2));
+			shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
+
+			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y, centerPosition.z);
+			shape->setLocalPose(physx::PxTransform(p));
+
+			parent->rigidbody->rigidBody->attachShape(*shape);
 			parent->rigidbody->update = true;
 			parent->rigidbody->ApplyPhysicsChanges();
-		
-
-	//	App->physics->DeleteActor(parent->rigidbody->rigidBody);
-	//	parent->rigidbody->rigidBody->setGlobalPose(physx::PxTransform(position.x, position.y, position.z, physx::PxQuat(rot.x, rot.y, rot.z, rot.w)));
-		App->physics->AddActor(parent->rigidbody->rigidBody);
 		}
-		return true;
 	}
-	return false;
+}
+
+void ColliderComponent::SphereColliderUI()
+{
+	std::string uiName = "Sphere Colider [" + name + "]";
+	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		std::string active = "active [" + name + "]";
+		std::string deleted = "delete [" + name + "]";
+		std::string trigger = "is triger [" + name + "]";
+		std::string centr = "offset [" + name + "]";
+
+		bool toUpdate = false;
+
+		std::string rad = "radius [" + name + "]";
+
+		ImGui::Checkbox(active.c_str(), &to_activate);
+		ImGui::SameLine();
+
+		if (ImGui::Button(deleted.c_str()))
+			to_delete = true;
+
+		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
+			isTrigger = !isTrigger;
+
+		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
+		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			centerPosition.x = c[0];
+			centerPosition.y = c[1];
+			centerPosition.z = c[2];
+
+			toUpdate = true;
+		}
+
+		float r = radius;
+		if (ImGui::InputFloat(rad.c_str(), &r, 1, 1, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			radius = r;
+
+			toUpdate = true;
+		}
+
+		if (toUpdate)
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			shape->release();
+
+			physx::PxSphereGeometry SphereGeometry(radius);
+			shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
+
+			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y, centerPosition.z);
+			shape->setLocalPose(physx::PxTransform(p));
+
+			parent->rigidbody->rigidBody->attachShape(*shape);
+			parent->rigidbody->update = true;
+			parent->rigidbody->ApplyPhysicsChanges();
+		}
+	}
+}
+
+void ColliderComponent::CapsuleColliderUI()
+{
+	std::string uiName = "Capsule Colider [" + name + "]";
+	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		std::string active = "active [" + name + "]";
+		std::string deleted = "delete [" + name + "]";
+		std::string trigger = "is triger [" + name + "]";
+		std::string centr = "offset [" + name + "]";
+
+		bool toUpdate = false;
+
+		std::string rad = "radius [" + name + "]";
+		std::string he = "height [" + name + "]";
+
+		ImGui::Checkbox(active.c_str(), &to_activate);
+		ImGui::SameLine();
+
+		if (ImGui::Button(deleted.c_str()))
+			to_delete = true;
+
+		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
+			isTrigger = !isTrigger;
+
+		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
+		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			centerPosition.x = c[0];
+			centerPosition.y = c[1];
+			centerPosition.z = c[2];
+
+			toUpdate = true;
+		}
+
+		float r = radius;
+		if (ImGui::InputFloat(rad.c_str(), &r, 1, 1, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			radius = r;
+
+			toUpdate = true;
+		}
+		float h = height;
+		if (ImGui::InputFloat(he.c_str(), &h, 1, 1, 4, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			height = h;
+
+			toUpdate = true;
+		}
+
+		if (toUpdate)
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			shape->release();
+
+			physx::PxCapsuleGeometry CapsuleGeometry(radius, height);
+			shape = App->physics->physics->createShape(CapsuleGeometry, *App->physics->material);
+
+			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y, centerPosition.z);
+			shape->setLocalPose(physx::PxTransform(p));
+
+			parent->rigidbody->rigidBody->attachShape(*shape);
+			parent->rigidbody->update = true;
+			parent->rigidbody->ApplyPhysicsChanges();
+		}
+	}
 }

@@ -10,6 +10,7 @@ class MeshComponent;
 class RigidBodyComponent;
 class Component;
 
+enum class colider_type;
 
 class GameObject
 {
@@ -37,7 +38,7 @@ public:
 
 	void AddRigidBodyComponent();
 
-	void AddColliderComponent(char* name = nullptr);
+	void AddColliderComponent(colider_type type, char* name = nullptr);
 
 	void DontTransformChilds() { transform_child = false; }
 

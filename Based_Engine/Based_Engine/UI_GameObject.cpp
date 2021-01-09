@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "Transform.h"
 
+#include "ColliderComponent.h"
+
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
@@ -96,15 +98,15 @@ void GameObject_Inspector::Update(float dt)
 				}
 				if (ImGui::Selectable("Box Colider"))
 				{
-					object->AddColliderComponent();
+					object->AddColliderComponent(colider_type::BOX);
 				}
 				if (ImGui::Selectable("Sphere Colider"))
 				{
-
+					object->AddColliderComponent(colider_type::SPHERE);
 				}
 				if (ImGui::Selectable("Capsule Colider"))
 				{
-
+					object->AddColliderComponent(colider_type::CAPSULE);
 				}
 				if (ImGui::Selectable("Mesh Colider"))
 				{

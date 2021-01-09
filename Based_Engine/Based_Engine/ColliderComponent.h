@@ -4,7 +4,8 @@
 #include "Component.h"
 #include "MathGeoLib.h"
 
-enum class colider_type {
+enum class colider_type 
+{
 BOX,
 SPHERE,
 CAPSULE,
@@ -39,36 +40,26 @@ public:
 	void Disable();
 
 	void CreateCollider(colider_type type, bool createAgain = false);
-	void UpdateCollider();
-
-	void UpdateLocalMatrix();
-
-	void UpdateTransformByRigidBody(physx::PxTransform* globalPos = nullptr);
 
 	void DisplayComponentMenu();
-
-private:
-
-	template<class Geometry>
-	void CreateRigidbody(Geometry geometry, physx::PxTransform position);
-	template <class Geometry>
-	bool HasDynamicRigidBody(Geometry geometry, physx::PxTransform transform);
-
-public:
 
 	colider_type type = colider_type::NONE;
 
 	float3 centerPosition = float3::zero;
-	float3 offset = float3::zero;
 
 	bool isTrigger = false;
 
 private:
 
+	void BoxColliderUI();
+	void SphereColliderUI();
+	void CapsuleColliderUI();
+
 	physx::PxShape* shape = nullptr;
 	float3 colliderSize = float3(10, 10, 10);
 
-	float radius = 1.0f, height = 1.0f;
+	float radius = 1.0f;
+	float height = 2.0f;
 };
 
 #endif //__COLLIDERCOMPONENT_H__

@@ -4,6 +4,8 @@
 #include "Transform.h"
 #include "Input.h"
 
+#include "ColliderComponent.h"
+
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
 	go_id = 0;
@@ -25,13 +27,13 @@ bool ObjectManager::Start()
 	GameObject* ground = AddObject("ground");
 	ground->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	ground->transform->AddScale(float3(9, 0, 9));
-	ground->AddColliderComponent();
+	ground->AddColliderComponent(colider_type::BOX);
 	
 	GameObject* box = AddObject("box");
 	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
 	box->transform->AddPosition(float3(0, 5, 0));	
 	box->AddRigidBodyComponent();
-	box->AddColliderComponent();
+	box->AddColliderComponent(colider_type::BOX);
 
 	return true;
 }
