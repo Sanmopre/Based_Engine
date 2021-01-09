@@ -112,6 +112,10 @@ void GameObject_Inspector::Update(float dt)
 				{
 
 				}
+				if (ImGui::Selectable("Constraint"))
+				{
+					object->AddConstraintComponent("Constraint");
+				}
 
 				ImGui::EndCombo();
 			}
