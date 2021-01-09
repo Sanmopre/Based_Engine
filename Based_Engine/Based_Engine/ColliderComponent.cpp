@@ -17,7 +17,8 @@
 #include "imgui_impl_opengl3.h"
 #include "misc/cpp/imgui_stdlib.h" 
 
-ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObject* parent, Application* app, bool active) : Component(name, parent, app, active)
+ColliderComponent::ColliderComponent(char* name, colider_type col_type, GameObject* parent, Application* app, bool active) 
+	: Component(name, parent, app, active)
 {
 	type = col_type;
 	isTrigger = false;
@@ -72,6 +73,9 @@ void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 			colliderSize = { size.x, size.y, size.z };
 			physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(size.x / 2, size.y / 2, size.z / 2));
 			shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
+
+			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y + colliderSize.y / 2, centerPosition.z);
+			shape->setLocalPose(physx::PxTransform(p));
 			break;
 		}
 		case colider_type::SPHERE:
@@ -108,9 +112,6 @@ void ColliderComponent::DisplayComponentMenu()
 		break;
 	case colider_type::CAPSULE:
 		CapsuleColliderUI();
-		break;
-	//case colider_type::MESH: 
-	//	uiName = "Mesh Colider [" + name + "]";
 		break;
 	}
 }
@@ -166,7 +167,7 @@ void ColliderComponent::BoxColliderUI()
 			physx::PxBoxGeometry boxGeometry = physx::PxBoxGeometry(physx::PxVec3(colliderSize.x / 2, colliderSize.y / 2, colliderSize.z / 2));
 			shape = App->physics->physics->createShape(boxGeometry, *App->physics->material);
 
-			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y, centerPosition.z);
+			physx::PxVec3 p = physx::PxVec3(centerPosition.x, centerPosition.y + colliderSize.y / 2, centerPosition.z);
 			shape->setLocalPose(physx::PxTransform(p));
 
 			parent->rigidbody->rigidBody->attachShape(*shape);

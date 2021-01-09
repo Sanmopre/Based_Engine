@@ -5,6 +5,7 @@
 #include "Input.h"
 
 #include "ColliderComponent.h"
+#include "RigidBodyComponent.h"
 
 ObjectManager::ObjectManager(Application* app, bool active) : Module(app, active)
 {
@@ -26,20 +27,57 @@ bool ObjectManager::Start()
 
 	GameObject* ground = AddObject("ground");
 	ground->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	ground->transform->AddScale(float3(9, 0, 9));
+	ground->transform->AddScale(float3(99, 0, 99));
 	ground->AddColliderComponent(colider_type::BOX);
+
+	GameObject* wall = AddObject("wall");
+	wall->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+	wall->transform->AddPosition(float3(15, 10, 0));
+	wall->transform->AddScale(float3(0, 15, 1));
+	wall->AddColliderComponent(colider_type::BOX);
+
+	GameObject* wall2 = AddObject("wall2");
+	wall2->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+	wall2->transform->AddPosition(float3(-15, 10, 0));
+	wall2->transform->AddScale(float3(0, 15, 1));
+	wall2->AddColliderComponent(colider_type::BOX);
 	
-	GameObject* box = AddObject("box");
+	box = AddObject("box");
 	box->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
-	box->transform->AddPosition(float3(0, 5, 0));	
+	box->transform->AddPosition(float3(10, 20, 0));	
 	box->AddRigidBodyComponent();
 	box->AddColliderComponent(colider_type::BOX);
+
+
+	box2 = AddObject("box2");
+	box2->AddMeshComponent("Assets/Meshes/Primitives/cube.fbx");
+	box2->transform->AddPosition(float3(-10, 20, 0));
+	box2->AddRigidBodyComponent();
+	box2->AddColliderComponent(colider_type::BOX);
+
 
 	return true;
 }
 
 update_status ObjectManager::Update(float dt)
 {
+	if(!App->paused)
+		if (selected && selected->rigidbody)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+			{
+				selected->rigidbody->rigidBody->addForce(physx::PxVec3(0.0f, 0, 1000.0f));
+				box2->rigidbody->rigidBody->addForce(physx::PxVec3(-1000.0f, 0, 0));
+				box->rigidbody->rigidBody->addForce(physx::PxVec3(1000.0f, 0, 0));
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+				selected->rigidbody->rigidBody->addForce(physx::PxVec3(0.0f, 0, -1000.0f));
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+				selected->rigidbody->rigidBody->addForce(physx::PxVec3(1000.0f, 0, 0));
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+				selected->rigidbody->rigidBody->addForce(physx::PxVec3(-1000.0f, 0, 0));
+		}
+
 	parent->Update(dt);
 
 	return UPDATE_CONTINUE;
