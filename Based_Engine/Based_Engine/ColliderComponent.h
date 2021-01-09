@@ -59,24 +59,16 @@ public:
 	colider_type type = colider_type::NONE;
 
 	float3 centerPosition = float3::zero;
-	float3 originalSize = float3::one;
-	physx::PxRigidStatic* rigidStatic = nullptr;
 	float3 offset = float3::zero;
 
 	bool isTrigger = false;
-	bool isConvex = false;
 
 private:
 
 	physx::PxShape* shape = nullptr;
-	physx::PxConvexMesh* convex_mesh = nullptr;
-	physx::PxTriangleMesh* triangle_mesh = nullptr;
-	float3 colliderSize = float3(1, 1, 1);
+	float3 colliderSize = float3(10, 10, 10);
 
 	float radius = 1.0f, height = 1.0f;
-
-	bool draw = false;
-	bool localMesh = false;
 };
 
 #endif //__COLLIDERCOMPONENT_H__

@@ -90,7 +90,7 @@ bool PhysicsEngine::Start()
 		return false;
 	}
 
-	material = physics->createMaterial(1, 1, 1);
+	material = physics->createMaterial(1, 1, 0.25);
 
 	LOG("Physics Controller Manager created succesfully");
 	LOG("PhysX 3.4 Initialized correctly ---");
