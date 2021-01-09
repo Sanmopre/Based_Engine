@@ -9,6 +9,7 @@ class Transform;
 class MeshComponent;
 class RigidBodyComponent;
 class Component;
+class ConstraintComponent;
 
 enum class colider_type;
 
@@ -25,6 +26,8 @@ public:
 	Transform* transform = nullptr;
 	MeshComponent* meshComp = nullptr;
 	RigidBodyComponent* rigidbody = nullptr;
+	ConstraintComponent* constraint = nullptr;
+
 
 	std::vector<Component*> components;
 
@@ -39,6 +42,8 @@ public:
 	void AddRigidBodyComponent();
 
 	void AddColliderComponent(colider_type type, char* name = nullptr);
+
+	void AddConstraintComponent(char* name = nullptr);
 
 	void DontTransformChilds() { transform_child = false; }
 

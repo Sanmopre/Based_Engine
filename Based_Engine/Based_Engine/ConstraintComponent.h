@@ -21,6 +21,8 @@ public:
 	void CreateConstraint(PxRigidActor* actor0, const PxTransform& localFrame0, PxRigidActor* actor1, const PxTransform& localFrame1);
 
 private:
+
+	PxRevoluteJoint* constraint = nullptr;
 };
 
 #endif //__CONSTRAINTCOMPONENT_H__

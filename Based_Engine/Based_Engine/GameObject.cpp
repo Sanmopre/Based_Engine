@@ -6,6 +6,7 @@
 #include "RigidBodyComponent.h"
 #include "CameraComponent.h"
 #include "ColliderComponent.h"
+#include "ConstraintComponent.h"
 
 GameObject::GameObject(std::string name, GameObject* parent, Application* app, bool active)
 {
@@ -186,4 +187,22 @@ void GameObject::AddColliderComponent(colider_type type, char* name)
 	Component* comp = collidercomp;
 	components.push_back(comp);
 }
+
+void GameObject::AddConstraintComponent(char* name)
+{
+	if (!name)
+	{
+		char str[10];
+		sprintf_s(str, "%d", comp_id);
+		name = str;
+	}
+	comp_id++;
+
+	ConstraintComponent* constraintptr = new ConstraintComponent(name, this, App, active);
+	Component* comp = constraintptr;
+	constraint = constraintptr;
+	components.push_back(comp);
+}
+
+
 

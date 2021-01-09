@@ -33,5 +33,5 @@ void ConstraintComponent::DisplayComponentMenu()
 
 void ConstraintComponent::CreateConstraint(PxRigidActor* actor0, const PxTransform& localFrame0, PxRigidActor* actor1, const PxTransform& localFrame1)
 {
-	physx::PxRevoluteJointCreate(*App->physics->physics, actor0, localFrame0, actor1, localFrame1);
+	constraint = physx::PxRevoluteJointCreate(*App->physics->physics, actor0, localFrame0, actor1, localFrame1);
 }
