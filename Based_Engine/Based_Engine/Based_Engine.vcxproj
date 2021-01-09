@@ -88,6 +88,7 @@
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ConstraintComponent.h" />
     <ClInclude Include="External\ImGui\imconfig.h" />
     <ClInclude Include="External\ImGui\imgui.h" />
     <ClInclude Include="External\ImGui\imgui_impl_opengl3.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ConstraintComponent.cpp" />
     <ClCompile Include="External\MathGeoLib\src\Algorithm\GJK.cpp" />
     <ClCompile Include="External\MathGeoLib\src\Algorithm\GJK2D.cpp" />
     <ClCompile Include="External\MathGeoLib\src\Algorithm\Random\LCG.cpp" />

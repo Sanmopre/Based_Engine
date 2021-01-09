@@ -265,6 +265,9 @@
     <ClCompile Include="RigidBodyComponent.cpp">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="ConstraintComponent.cpp">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -640,6 +643,9 @@
       <Filter>Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="RigidBodyComponent.h">
+      <Filter>Engine\Tools\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstraintComponent.h">
       <Filter>Engine\Tools\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
