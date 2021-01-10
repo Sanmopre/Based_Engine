@@ -1,6 +1,6 @@
 ## Based Engine:
 
-Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine: [OpenGL](https://www.opengl.org//) , [PhysX](https://developer.nvidia.com/physx-sdk%20) , [Assimp](https://www.assimp.org//) , [ImGui](https://github.com/ocornut/imgui) , [MathGeoLib](https://github.com/juj/MathGeoLib) , [PhysFS](https://icculus.org/physfs/) , [SDL](https://www.libsdl.org//) , [DevIL](http://openil.sourceforge.net) .
+Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine: [OpenGL](https://www.opengl.org//) , [PhysX](https://developer.nvidia.com/physx-sdk%20) , [Assimp](https://www.assimp.org//) , [ImGui](https://github.com/ocornut/imgui) , [MathGeoLib](https://github.com/juj/MathGeoLib) , [PhysFS](https://icculus.org/physfs/) , [SDL](https://www.libsdl.org//) , [DevIL](http://openil.sourceforge.net).
 
 
 ## Controls:
@@ -19,7 +19,7 @@ ESC         -> Quit application
 
 ## UI:
 
-## GameObjects Tree window
+### GameObjects Tree window
 	- Create Group: hover or click to open the GameObject creating menu 
 	(all GameObjects created from here are child to the selected GameObject at the moment of creation)
 		- Create GameObject Button: Create a new empty GameObject
@@ -32,10 +32,10 @@ ESC         -> Quit application
 	- Deselect Button: deselects selected GameObject
 	- Drag and drop: use the drag and drop fucntionality to reparent objects to a new game object
 
-## Play/Pause Button
+### Play/Pause Button
 	-Start and pause al the physics simulations in the engine
 
-## Selected GameObject Window
+### Selected GameObject Window
 
 	- GameObject Name Text Input: write and press Enter to change the GameObject name (if the name is already in use by one of its siblings this will fail)
 	- Delete GameObject Button: deletes the GameObject
@@ -43,7 +43,7 @@ ESC         -> Quit application
 	- Rotation Float3 Input: write to modify the GameObjects rotation
 	- Scale Float3 Input: write to modify the GameObjects scale (if a 0 is inputed it will be ignored and changed for the previous value)
 	
-## GameObjects Components
+### GameObjects Components
 
 	- Mesh Component:
 		- Active CheckBox: activates and deactivates the rendering of the mesh
