@@ -1,22 +1,6 @@
 ## Based Engine:
 
-Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine:
-
-	[OpenGL](https://www.opengl.org//)
-
-	[PhysX](https://developer.nvidia.com/physx-sdk%20)
-
-	[Assimp](https://www.assimp.org//)
-
-	[ImGui](https://github.com/ocornut/imgui)
-
-	[MathGeoLib](https://github.com/juj/MathGeoLib)
-
-	[PhysFS](https://icculus.org/physfs/)
-
-	[SDL](https://www.libsdl.org//)
-
-	[DevIL](http://openil.sourceforge.net)
+Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine: [OpenGL](https://www.opengl.org//) , [PhysX](https://developer.nvidia.com/physx-sdk%20) , [Assimp](https://www.assimp.org//) , [ImGui](https://github.com/ocornut/imgui) , [MathGeoLib](https://github.com/juj/MathGeoLib) , [PhysFS](https://icculus.org/physfs/) , [SDL](https://www.libsdl.org//) , [DevIL](http://openil.sourceforge.net) .
 
 
 ## Controls:
