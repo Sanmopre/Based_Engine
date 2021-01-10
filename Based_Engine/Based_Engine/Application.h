@@ -39,6 +39,7 @@ public:
 
 	int FPS = 60;
 	bool paused = true;
+	bool MONKIMODE = false;
 
 private:
 

@@ -194,6 +194,9 @@ void MainMenu::Update(float dt)
 			ImGui::Separator();
 			if(ImGui::InputFloat("Gravity", App->physics->GetGravityPtr()))
 				App->physics->SetGravity();
+			ImGui::Text("BASED");
+			ImGui::Separator();
+			ImGui::Checkbox("MONKI MODE", &App->MONKIMODE);
 		}
 	}
 	ImGui::End();

@@ -97,12 +97,18 @@ update_status Camera3D::Update(float dt)
 
 	if (!App->paused && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
+		char* nam = "ball";
+		if (App->MONKIMODE)
+			nam = "banana";
 		char str[64];
-		sprintf_s(str, "ball%d", balls);
+		sprintf_s(str, "%s%d", nam, balls);
 		balls++;
 
 		GameObject* ball = App->objects->AddObject(str);
-		ball->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+		if(!App->MONKIMODE)
+			ball->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+		else
+			ball->AddMeshComponent("Assets/Meshes/Primitives/banana.fbx");
 
 		float3 spawn = { Position.x + (-Z.x) * 4, Position.y + (-Z.y) * 4, Position.z + (-Z.z) * 4, };
 		ball->transform->AddPosition(spawn);
