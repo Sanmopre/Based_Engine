@@ -90,22 +90,10 @@ bool PhysicsEngine::Start()
 		return false;
 	}
 
-	material = physics->createMaterial(1, 1, 0.25);
+	material = physics->createMaterial(2, 1, 0.25);
 
 	LOG("Physics Controller Manager created succesfully");
 	LOG("PhysX 3.4 Initialized correctly ---");
-
-	//EXAMPLE
-	//physx::PxRigidDynamic* dyn = physics->createRigidDynamic(physx::PxTransform(physx::PxVec3(0.f, 2.5f, 0.f)));
-	//dyn->createShape(physx::PxBoxGeometry(2.f, 0.2f, 0.1f), *material);
-	//dyn->createShape(physx::PxBoxGeometry(0.2f, 2.f, 0.1f), *material);
-	//dyn->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
-	//dyn->setAngularVelocity(physx::PxVec3(0.f, 0.f, 5.f));
-	//dyn->setAngularDamping(0.f);
-	//physx::PxRigidStatic* st = physics->createRigidStatic(physx::PxTransform(physx::PxVec3(0.f, 1.5f, -1.f)));
-	//st->createShape(physx::PxBoxGeometry(0.5f, 1.5f, 0.8f), *material);
-	//AddActor(dyn);
-	//AddActor(st);
 	
 	return true;
 }

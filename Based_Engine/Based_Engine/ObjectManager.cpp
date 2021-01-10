@@ -28,7 +28,7 @@ bool ObjectManager::Start()
 	{
 		if(street->children[i]->name != "Plane001")
 		{
-			street->children[i]->transform->AddPosition(float3(0, 5, 0));
+			street->children[i]->transform->AddPosition(float3(0, 1, 0));
 			street->children[i]->AddRigidBodyComponent();
 			float3 offset = float3(0, 0, 0);
 			float3 size = float3(10, 10, 10);

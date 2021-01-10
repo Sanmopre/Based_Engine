@@ -217,7 +217,10 @@ void RigidBodyComponent::MakeStatic()
 	freezeRotationY = true;
 	freezeRotationZ = true;
 	useGravity = false;
-	massBuffer = 1000.0f;
+	mass = 1000000.0f;
+	massBuffer = mass;
+	density = 1000.0f;
+	densityBuffer = density;
 
 	update = true;
 	ApplyPhysicsChanges();
@@ -234,7 +237,10 @@ void RigidBodyComponent::MakeDynamic()
 	freezeRotationY = false;
 	freezeRotationZ = false;
 	useGravity = true;
-	massBuffer = 10.0f;
+	mass = 10.0f;
+	massBuffer = mass;
+	density = 1.0f;
+	densityBuffer = density;
 
 	update = true;
 	ApplyPhysicsChanges();
