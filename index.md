@@ -1,6 +1,6 @@
 ## Based Engine:
 
-Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine:
+Based Engine is a Game engine developed by [Santiago Moliner](https://github.com/Sanmopre) and [David Rami](https://github.com/Paideieitor) at CITM UPC. Our focus on developing the engine was crating a physics engine that can simulate rigidbodies and different collider shapes, Unity like. Here are the different libraries used on the creation of Based Engine
 
 	[OpenGL](https://www.opengl.org//)
 
