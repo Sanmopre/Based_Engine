@@ -43,4 +43,5 @@ private:
 
 	mat4x4 ViewMatrix, ViewMatrixInverse;
 
+	int balls = 0;
 };

@@ -36,8 +36,6 @@ public:
 	virtual ~ColliderComponent();
 
 	bool Update(float dt);
-	void Enable();
-	void Disable();
 
 	void CreateCollider(colider_type type, bool createAgain = false);
 

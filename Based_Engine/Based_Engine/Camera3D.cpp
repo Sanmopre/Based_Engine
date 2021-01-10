@@ -2,6 +2,13 @@
 #include "Camera3D.h"
 #include "Input.h"
 #include "PhysicsEngine.h"
+#include "ObjectManager.h"
+
+#include "GameObject.h"
+#include "Transform.h"
+#include "ColliderComponent.h"
+#include "RigidBodyComponent.h"
+
 #include "PxPhysicsAPI.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -81,12 +88,30 @@ update_status Camera3D::Update(float dt)
 	}
 	else 
 	{	
-		rigidBody->setLinearVelocity(physx::PxVec3(0, 0, 0));
 		physx::PxTransform transform = rigidBody->getGlobalPose();
 		float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
 		Position.x = transform.p.x;
 		Position.y = transform.p.y;
 		Position.z = transform.p.z;
+	}
+
+	if (!App->paused && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		char str[64];
+		sprintf_s(str, "ball%d", balls);
+		balls++;
+
+		GameObject* ball = App->objects->AddObject(str);
+		ball->AddMeshComponent("Assets/Meshes/Primitives/sphere.fbx");
+
+		float3 spawn = { Position.x + (-Z.x) * 4, Position.y + (-Z.y) * 4, Position.z + (-Z.z) * 4, };
+		ball->transform->AddPosition(spawn);
+		ball->AddRigidBodyComponent();
+		ball->AddColliderComponent(colider_type::SPHERE);
+		ball->AddPlayerController();
+		ball->rigidbody->ChangeMassAndDensity(1000, 100);
+
+		ball->rigidbody->rigidBody->addForce(physx::PxVec3(-Z.x * 5000000, -Z.y * 5000000, -Z.z * 5000000));
 	}
 
 	return UPDATE_CONTINUE;
@@ -158,11 +183,15 @@ bool Camera3D::CameraMovement()
 		speed = speed_normal * multiplier;
 	}
 
-	
+	physx::PxVec3 velocity = physx::PxVec3(0, 0, 0);
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (!App->paused)
-			rigidBody->setLinearVelocity(physx::PxVec3(-Z.x * speed, -Z.y * speed, -Z.z * speed));
+		{
+			velocity.x -= Z.x * speed;
+			velocity.y -= Z.y * speed;
+			velocity.z -= Z.z * speed;
+		}
 		else
 			newPos -= Z * speed;
 
@@ -171,7 +200,11 @@ bool Camera3D::CameraMovement()
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
 	{
 		if (!App->paused)
-			rigidBody->setLinearVelocity(physx::PxVec3(Z.x * speed, Z.y * speed, Z.z * speed));
+		{
+			velocity.x += Z.x * speed;
+			velocity.y += Z.y * speed;
+			velocity.z += Z.z * speed;
+		}
 		else
 			newPos += Z * speed;
 		output = true;
@@ -179,7 +212,11 @@ bool Camera3D::CameraMovement()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if (!App->paused)
-			rigidBody->setLinearVelocity(physx::PxVec3(-X.x * speed, -X.y * speed, -X.z * speed));
+		{
+			velocity.x -= X.x * speed;
+			velocity.y -= X.y * speed;
+			velocity.z -= X.z * speed;
+		}
 		else
 			newPos -= X * speed;
 		output = true;
@@ -187,11 +224,16 @@ bool Camera3D::CameraMovement()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if (!App->paused)
-			rigidBody->setLinearVelocity(physx::PxVec3(X.x * speed, X.y * speed, X.z * speed));
+		{
+			velocity.x += X.x * speed;
+			velocity.y += X.y * speed;
+			velocity.z += X.z * speed;
+		}
 		else
 			newPos += X * speed;
 		output = true;
 	}
+	rigidBody->setLinearVelocity(velocity);
 
 	Position += newPos;
 	Reference += newPos;

@@ -42,14 +42,6 @@ bool ColliderComponent::Update(float dt)
 	return true;
 }
 
-void ColliderComponent::Enable()
-{
-}
-
-void ColliderComponent::Disable()
-{
-}
-
 void ColliderComponent::CreateCollider(colider_type type, bool createAgain)
 {
 	if (shape)
@@ -123,12 +115,12 @@ void ColliderComponent::DisplayComponentMenu()
 
 void ColliderComponent::BoxColliderUI()
 {
-	std::string uiName = "Box Colider [" + name + "]";
+	std::string uiName = "Box Collider [" + name + "]";
 	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		std::string active = "active [" + name + "]";
 		std::string deleted = "delete [" + name + "]";
-		std::string trigger = "is triger [" + name + "]";
+		std::string trigger = "is trigger [" + name + "]";
 		std::string centr = "offset [" + name + "]";
 
 		bool toUpdate = false;
@@ -142,7 +134,20 @@ void ColliderComponent::BoxColliderUI()
 			to_delete = true;
 
 		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
-			isTrigger = !isTrigger;
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			if (isTrigger)
+			{
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+			}
+			else
+			{
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+			}
+			parent->rigidbody->rigidBody->attachShape(*shape);
+		}
 
 		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
 		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -184,12 +189,12 @@ void ColliderComponent::BoxColliderUI()
 
 void ColliderComponent::SphereColliderUI()
 {
-	std::string uiName = "Sphere Colider [" + name + "]";
+	std::string uiName = "Sphere Collider [" + name + "]";
 	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		std::string active = "active [" + name + "]";
 		std::string deleted = "delete [" + name + "]";
-		std::string trigger = "is triger [" + name + "]";
+		std::string trigger = "is trigger [" + name + "]";
 		std::string centr = "offset [" + name + "]";
 
 		bool toUpdate = false;
@@ -203,7 +208,20 @@ void ColliderComponent::SphereColliderUI()
 			to_delete = true;
 
 		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
-			isTrigger = !isTrigger;
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			if (isTrigger)
+			{
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+			}
+			else
+			{
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+			}
+			parent->rigidbody->rigidBody->attachShape(*shape);
+		}
 
 		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
 		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -243,12 +261,12 @@ void ColliderComponent::SphereColliderUI()
 
 void ColliderComponent::CapsuleColliderUI()
 {
-	std::string uiName = "Capsule Colider [" + name + "]";
+	std::string uiName = "Capsule Collider [" + name + "]";
 	if (ImGui::CollapsingHeader(uiName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		std::string active = "active [" + name + "]";
 		std::string deleted = "delete [" + name + "]";
-		std::string trigger = "is triger [" + name + "]";
+		std::string trigger = "is trigger [" + name + "]";
 		std::string centr = "offset [" + name + "]";
 
 		bool toUpdate = false;
@@ -263,7 +281,20 @@ void ColliderComponent::CapsuleColliderUI()
 			to_delete = true;
 
 		if (ImGui::Checkbox(trigger.c_str(), &isTrigger))
-			isTrigger = !isTrigger;
+		{
+			parent->rigidbody->rigidBody->detachShape(*shape);
+			if (isTrigger)
+			{
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+			}
+			else
+			{
+				shape->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+				shape->setFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+			}
+			parent->rigidbody->rigidBody->attachShape(*shape);
+		}
 
 		float c[3] = { centerPosition.x, centerPosition.y, centerPosition.z };
 		if (ImGui::InputFloat3(centr.c_str(), c, 4, ImGuiInputTextFlags_EnterReturnsTrue))
