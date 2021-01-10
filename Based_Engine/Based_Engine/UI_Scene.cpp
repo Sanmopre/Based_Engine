@@ -34,7 +34,7 @@ void Scene::Update(float dt)
 
 		ImGui::BeginChild("SceneImage");
 
-		App->camera->CameraMovement();
+		//App->camera->CameraMovement();
 
 		ImVec2 winSize = ImGui::GetWindowSize();
 		if (winSize.x != windowSize.x || winSize.y != windowSize.y)

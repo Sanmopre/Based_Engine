@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "Camera3D.h"
 #include "Input.h"
+#include "PhysicsEngine.h"
+#include "PxPhysicsAPI.h"
 
 Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -10,8 +12,8 @@ Camera3D::Camera3D(Application* app, bool start_enabled) : Module(app, start_ena
 	Y = vec3(0.0f, 1.0f, 0.0f);
 	Z = vec3(0.0f, 0.0f, 1.0f);
 
-	Position = vec3(0.0f, 0.0f, 5.0f);
-	Reference = vec3(0.0f, 0.0f, 0.0f);
+	Position = vec3(0.0f, 10.0f, 0.0f);
+	Reference = vec3(0.0f, 10.0f, 0.0f);
 }
 
 Camera3D::~Camera3D()
@@ -23,6 +25,20 @@ bool Camera3D::Start()
 	LOG("Setting up the camera");
 	bool ret = true;
 
+	physx::PxVec3 p = physx::PxVec3(Position.x, Position.y , Position.z);
+	rigidBody = App->physics->physics->createRigidDynamic(physx::PxTransform(p));
+
+	physx::PxSphereGeometry SphereGeometry(radius * 1.5);
+	shape = App->physics->physics->createShape(SphereGeometry, *App->physics->material);
+
+	rigidBody->attachShape(*shape);
+	App->physics->AddActor(rigidBody);
+
+	rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X, true);
+	rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y, true);
+	rigidBody->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z, true);
+
+	rigidBody->setActorFlag(physx::PxActorFlag::eDISABLE_GRAVITY, true);
 	return ret;
 }
 
@@ -30,7 +46,10 @@ bool Camera3D::Start()
 bool Camera3D::CleanUp()
 {
 	LOG("Cleaning camera");
-
+	App->physics->DeleteActor(rigidBody);
+	rigidBody->detachShape(*shape);
+	shape->release();
+	rigidBody->release();
 	return true;
 }
 
@@ -38,6 +57,37 @@ bool Camera3D::CleanUp()
 update_status Camera3D::Update(float dt)
 {
 	CalculateViewMatrix();
+
+	if (CameraMovement()) 
+	{
+		if (App->paused)
+		{
+			App->physics->DeleteActor(rigidBody);
+
+			physx::PxVec3 newPosition = physx::PxVec3(Position.x, Position.y, Position.z);
+			physx::PxTransform transform = physx::PxTransform(newPosition);
+			rigidBody->setGlobalPose(transform, true);
+
+			App->physics->AddActor(rigidBody);
+		}
+		else
+		{
+			physx::PxTransform transform = rigidBody->getGlobalPose();
+			float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
+			Position.x = transform.p.x;
+			Position.y = transform.p.y;
+			Position.z = transform.p.z;
+		}
+	}
+	else 
+	{	
+		rigidBody->setLinearVelocity(physx::PxVec3(0, 0, 0));
+		physx::PxTransform transform = rigidBody->getGlobalPose();
+		float3 position = float3(transform.p.x, transform.p.y, transform.p.z);
+		Position.x = transform.p.x;
+		Position.y = transform.p.y;
+		Position.z = transform.p.z;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -89,22 +139,59 @@ float* Camera3D::GetViewMatrix()
 	return &ViewMatrix;
 }
 
-void Camera3D::CameraMovement()
+bool Camera3D::CameraMovement()
 {
+	bool output = false;
+
 	vec3 newPos(0, 0, 0);
+
+	float multiplier = 1.0f;
+
+	if (!App->paused)
+		multiplier = 100.0f;
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
-		speed = speed_shift;
+		speed = speed_shift * multiplier;
 	}
 	else {
-		speed = speed_normal;
+		speed = speed_normal * multiplier;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed;
+	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		if (!App->paused)
+			rigidBody->setLinearVelocity(physx::PxVec3(-Z.x * speed, -Z.y * speed, -Z.z * speed));
+		else
+			newPos -= Z * speed;
+
+		output = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
+	{
+		if (!App->paused)
+			rigidBody->setLinearVelocity(physx::PxVec3(Z.x * speed, Z.y * speed, Z.z * speed));
+		else
+			newPos += Z * speed;
+		output = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		if (!App->paused)
+			rigidBody->setLinearVelocity(physx::PxVec3(-X.x * speed, -X.y * speed, -X.z * speed));
+		else
+			newPos -= X * speed;
+		output = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		if (!App->paused)
+			rigidBody->setLinearVelocity(physx::PxVec3(X.x * speed, X.y * speed, X.z * speed));
+		else
+			newPos += X * speed;
+		output = true;
+	}
 
 	Position += newPos;
 	Reference += newPos;
@@ -143,6 +230,7 @@ void Camera3D::CameraMovement()
 
 		Position = Reference + Z * length(Position);
 	}
+	return output;
 }
 
 // -----------------------------------------------------------------

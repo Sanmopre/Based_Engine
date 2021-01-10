@@ -2,6 +2,10 @@
 #include "Module.h"
 #include "glmath.h"
 
+#include "PxRigidActor.h"
+#include "MathGeoLib.h"
+#include "PxPhysicsAPI.h"
+
 class Camera3D : public Module
 {
 public:
@@ -17,7 +21,7 @@ public:
 	void Move(const vec3 &Movement);
 	float* GetViewMatrix();
 
-	void CameraMovement();
+	bool CameraMovement();
 
 private:
 
@@ -33,5 +37,10 @@ public:
 
 private:
 
+	physx::PxRigidDynamic* rigidBody = nullptr;	
+	physx::PxShape* shape = nullptr;
+	float radius = 2.0f;
+
 	mat4x4 ViewMatrix, ViewMatrixInverse;
+
 };
