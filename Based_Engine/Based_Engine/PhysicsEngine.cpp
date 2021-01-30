@@ -159,6 +159,12 @@ void PhysicsEngine::DeleteActor(physx::PxActor* actor)
 		scene->removeActor(*actor);
 }
 
+physx::PxAggregate* PhysicsEngine::CreateAggregateGroup(physx::PxU32 maxActors, bool selfCollisions)
+{
+	physx::PxAggregate* aggregate = physics->createAggregate(maxActors, selfCollisions);
+	return aggregate;
+}
+
 float* PhysicsEngine::GetGravityPtr()
 {
 	return &gravity;

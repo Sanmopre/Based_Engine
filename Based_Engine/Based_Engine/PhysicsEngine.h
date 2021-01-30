@@ -24,6 +24,7 @@ namespace physx
 	class PxCooking;
 	class PxConvexMesh;
 	class PxBase;
+	class PxAggregate;
 
 	typedef uint32_t PxU32;
 };
@@ -43,6 +44,8 @@ public:
 
 	void AddActor(physx::PxActor*);
 	void DeleteActor(physx::PxActor*);
+
+	physx::PxAggregate* CreateAggregateGroup(physx::PxU32 maxActors, bool selfCollisions = true);
 
 	float* GetGravityPtr();
 	void SetGravity();
